@@ -1,4 +1,9 @@
-<>
+import './home.css';
+import '../Globals/globals.css';
+
+function Home() {
+  return (
+    <>
   <title>Home Page</title>
   {/* Link from https://getbootstrap.com/ */}
   <link
@@ -7,8 +12,6 @@
     integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
     crossOrigin="anonymous"
   />
-  <link rel="stylesheet" href="globals.css" />
-  <link rel="stylesheet" href="home_page.css" />
   <meta charSet="utf-8" />
   {/* Nav bar template from https://getbootstrap.com/docs/5.3/components/navbar/ */}
   {/* Nav bar that should be used across all pages */}
@@ -537,3 +540,7 @@
     </div>
   </div>
 </>
+  );
+}
+
+export default Home;

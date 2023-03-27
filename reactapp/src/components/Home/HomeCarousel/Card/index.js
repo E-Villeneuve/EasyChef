@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import Container from 'react-bootstrap/Container';
 import './card.css'
 
 /* Most Card CSS from: https://www.youtube.com/watch?v=FLt2TveqHQM */
@@ -18,7 +17,7 @@ function Card(item) {
     // </div>
     const [defaultImage] = useState({});
     return (
-    <div className="card">
+    <div className="card" key={item.id}>
         <div className="card-top img_wrap">
             <img
                 src={

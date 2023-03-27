@@ -34,10 +34,10 @@ function AboutUs() {
         With us, you're always just a few clicks away from being a master chef in your own kitchen.
         <br />
         <br />
+        </p>
         <div className='center'>
         <b>Let's get cooking!</b>
         </div>
-        </p>
         </Container>
     </div>
     );

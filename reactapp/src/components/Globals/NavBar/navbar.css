@@ -1,0 +1,132 @@
+@import url('https://fonts.googleapis.com/css2?family=Courgette&display=swap');
+
+@media screen and (min-width: 992px) {
+    .navbar-brand {
+        margin: 0!important;
+        padding-right: 0.5em!important;
+        padding-left: 0.4em!important;
+        margin-right: 1em!important;
+    }
+    #navbar-items {
+        margin-left: 0.3em!important;
+    }
+
+    #globnavsearc {
+        margin-right: 1em!important;
+    }
+
+}
+
+.searchcategory {
+    display: grid!important;
+    grid-template-columns: repeat(2, 1fr)!important;
+}
+
+.rightcol {
+    margin-right: 0.5em!important;
+    margin-left: 0.5em!important;
+}
+
+.leftcol {
+    margin-left: 0.5em!important;
+}
+
+
+#navbarlogo {
+    background-color: transparent!important; /* does not work lol */
+    margin-right: 0.3em!important;
+}
+
+nav {
+    margin-bottom: 3em!important;
+}
+
+.navbar-brand {
+    font-family: 'Courgette', cursive!important;
+    font-size: 30px!important;
+    color: #a06024!important;
+    display: flex!important;
+    flex-flow: column nowrap!important;
+    background-color: rgb(236, 192, 133)!important;
+    margin: 0!important;
+    padding-left: 0.4em!important;
+}
+
+#nav-brand {
+    margin-left: 0em!important;
+}
+
+.navbar-brand:hover {opacity: 1}
+
+#navbar-container {
+    padding-left: 0!important;
+    padding-right: 0!important;
+}
+
+#globnavsearc {
+    margin-bottom: 0.3em!important;
+    margin-right: 0.5em!important;
+    margin-left: 0.5em!important;
+}
+
+.nav-link {
+    color: #945921!important;
+    margin-left: 0.5em!important;
+}
+
+#myprofiledrop {
+    background-color: #d3cba1!important;
+    border-color: #d3cba1!important;
+}
+
+#profiledropmenu {
+    margin-top: -0.4em!important;
+    background-color: #d3cba1!important;
+    border-color: #945921!important;
+    padding: 0!important;
+}
+
+#profiledropmenu .dropdown-item {
+    color: #945921!important;
+    border-color: #945921!important;
+    border-bottom: solid 1px!important;
+}
+
+#profiledropmenu .dropdown-item:hover {
+    background-color: rgb(236, 192, 133)!important;
+}
+
+#profiledropmenu .dropdown-item#fstprofileitem:hover {
+    background-color: rgb(236, 192, 133)!important;
+    border-top-left-radius: 7px!important;
+    border-top-right-radius: 7px!important;
+}
+
+#profiledropmenu .dropdown-item#lastprofileitem {
+    border: solid 0px!important;
+}
+
+#profiledropmenu .dropdown-item#lastprofileitem:hover {
+    background-color: rgb(236, 192, 133)!important;
+    border-bottom-left-radius: 7px!important;
+    border-bottom-right-radius: 7px!important;
+    border: solid 0px!important;
+}
+
+#profilepic {
+    height: 4em!important;
+    width: 4em!important;
+    border-radius: 50%!important;
+    border: 1px solid!important;
+}
+
+#globalnavbar {
+    background-color: #d3cba1!important;
+    padding-top: 0!important;
+    padding-bottom: 0!important;
+    /* margin-bottom: 0; no navbar separation from actual page - remove? */
+}
+
+#slogan {
+    font-size: 15px!important;
+}

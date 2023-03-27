@@ -1,0 +1,16 @@
+/* Base carousel code from: https://www.youtube.com/watch?v=FLt2TveqHQM */
+
+.homecarousel {
+    width: 90%!important;
+    margin: auto;
+    margin-top: 3em!important;
+    margin-bottom: 3em!important;
+}
+
+.slick-slide > div {
+    margin: 0 10px!important;
+}
+
+/* .slick-list {
+    margin: 0 -10px!important;
+} */

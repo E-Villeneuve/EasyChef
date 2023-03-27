@@ -1,5 +1,8 @@
 import './home.css';
 import '../Globals/globals.css';
+import NavBar from '../Globals/NavBar';
+import AboutUs from './AboutUs';
+import HomeCarousel from './HomeCarousel';
 
 function Home() {
   return (
@@ -323,6 +326,7 @@ function Home() {
       </div>
     </div>
   </nav>
+  <NavBar></NavBar>
   <nav className="navbar navbar-expand-lg bg-body-tertiary">
     <div className="container-fluid">
       <div className="navbar-collapse" id="featuredtitle">
@@ -331,173 +335,7 @@ function Home() {
       </div>
     </div>
   </nav>
-  {/* Carousel template from https://getbootstrap.com/docs/5.3/components/carousel/
-    Note: Carousel buttons will not work w/o JS (which is for future phases) */}
-  <div className="carousel slide">
-    <div className="carousel-inner">
-      <div className="carousel-item active">
-        {/* Card template from https://getbootstrap.com/docs/5.3/components/card/ */}
-        <div className="card">
-          <div className="img_wrap">
-            <img
-              src="https://cdn.cdkitchen.com/recipes/images/2017/09/92201-7644-mx.jpg"
-              alt="Card image cap"
-            />
-          </div>
-          <div className="card-body">
-            <h4 className="card-title">Chocolate Spaghetti</h4>
-            <h6>Cook Time: 1hr 15min</h6>
-            <p className="card-text">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit...
-            </p>
-            <a href="recipe.html" className="btn btn-primary">
-              View
-            </a>
-          </div>
-        </div>
-      </div>
-      <div className="carousel-item">
-        <div className="card">
-          <div className="img_wrap">
-            <img
-              src="https://cdn.cdkitchen.com/recipes/images/2017/09/92201-7644-mx.jpg"
-              alt="Card image cap"
-            />
-          </div>
-          <div className="card-body">
-            <h4 className="card-title">Chocolate Spaghetti</h4>
-            <h6>Cook Time: 1hr 15min</h6>
-            <p className="card-text">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit...
-            </p>
-            <a href="recipe.html" className="btn btn-primary">
-              View
-            </a>
-          </div>
-        </div>
-      </div>
-      <div className="carousel-item">
-        <div className="card">
-          <div className="img_wrap">
-            <img
-              src="https://cdn.cdkitchen.com/recipes/images/2017/09/92201-7644-mx.jpg"
-              alt="Card image cap"
-            />
-          </div>
-          <div className="card-body">
-            <h4 className="card-title">Chocolate Spaghetti</h4>
-            <h6>Cook Time: 1hr 15min</h6>
-            <p className="card-text">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit...
-            </p>
-            <a
-              href="recipe.html"
-              className="btn btn-primary"
-              action="recipe.html"
-            >
-              View
-            </a>
-          </div>
-        </div>
-      </div>
-      <div className="carousel-item">
-        <div className="card">
-          <div className="img_wrap">
-            <img
-              src="https://cdn.cdkitchen.com/recipes/images/2017/09/92201-7644-mx.jpg"
-              alt="Card image cap"
-            />
-          </div>
-          <div className="card-body">
-            <h4 className="card-title">Chocolate Spaghetti</h4>
-            <h6>Cook Time: 1hr 15min</h6>
-            <p className="card-text">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit...
-            </p>
-            <a href="recipe.html" className="btn btn-primary">
-              View
-            </a>
-          </div>
-        </div>
-      </div>
-      <div className="carousel-item">
-        <div className="card">
-          <div className="img_wrap">
-            <img
-              src="https://cdn.cdkitchen.com/recipes/images/2017/09/92201-7644-mx.jpg"
-              alt="Card image cap"
-            />
-          </div>
-          <div className="card-body">
-            <h4 className="card-title">Chocolate Spaghetti</h4>
-            <h6>Cook Time: 1hr 15min</h6>
-            <p className="card-text">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit...
-            </p>
-            <a href="recipe.html" className="btn btn-primary">
-              View
-            </a>
-          </div>
-        </div>
-      </div>
-      <div className="carousel-item">
-        <div className="card">
-          <div className="img_wrap">
-            <img
-              src="https://cdn.cdkitchen.com/recipes/images/2017/09/92201-7644-mx.jpg"
-              alt="Card image cap"
-            />
-          </div>
-          <div className="card-body">
-            <h4 className="card-title">Chocolate Spaghetti</h4>
-            <h6>Cook Time: 1hr 15min</h6>
-            <p className="card-text">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit...
-            </p>
-            <a href="recipe.html" className="btn btn-primary">
-              View
-            </a>
-          </div>
-        </div>
-      </div>
-      <div className="carousel-item">
-        <div className="card">
-          <div className="img_wrap">
-            <img
-              src="https://cdn.cdkitchen.com/recipes/images/2017/09/92201-7644-mx.jpg"
-              alt="Card image cap"
-            />
-          </div>
-          <div className="card-body">
-            <h4 className="card-title">Chocolate Spaghetti</h4>
-            <h6>Cook Time: 1hr 15min</h6>
-            <p className="card-text">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit...
-            </p>
-            <a href="recipe.html" className="btn btn-primary">
-              View
-            </a>
-          </div>
-        </div>
-      </div>
-      <button
-        className="carousel-control-prev"
-        type="button"
-        data-bs-slide="prev"
-      >
-        <span className="carousel-control-prev-icon" aria-hidden="true" />
-        <span className="visually-hidden">Previous</span>
-      </button>
-      <button
-        className="carousel-control-next"
-        type="button"
-        data-bs-slide="next"
-      >
-        <span className="carousel-control-next-icon" aria-hidden="true" />
-        <span className="visually-hidden">Next</span>
-      </button>
-    </div>
-  </div>
+  <HomeCarousel></HomeCarousel>
   <nav className="navbar navbar-expand-lg bg-body-tertiary">
     <div className="container-fluid">
       <br />
@@ -506,39 +344,7 @@ function Home() {
       <br />
     </div>
   </nav>
-  <div className="about_us_wrap">
-    <div className="about_us_title">
-      <h3>About Us</h3>
-    </div>
-    <div className="container-lg about_us_text">
-      <p>
-        Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in
-        laying out print, graphic or web designs. The passage is attributed to
-        an unknown typesetter in the 15th century who is thought to have
-        scrambled parts of Cicero's De Finibus Bonorum et Malorum for use in a
-        type specimen book. It usually begins with:
-        <br />
-        <br />
-        “Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua.”
-        <br />
-        <br />
-        The purpose of lorem ipsum is to create a natural looking block of text
-        (sentence, paragraph, page, etc.) that doesn't distract from the layout.
-        A practice not without controversy, laying out pages with meaningless
-        filler text can be very useful when the focus is meant to be on design,
-        not content.
-        <br />
-        <br />
-        The passage experienced a surge in popularity during the 1960s when
-        Letraset used it on their dry-transfer sheets, and again during the 90s
-        as desktop publishers bundled the text with their software. Today it's
-        seen all around the web; on templates, websites, and stock designs. Use
-        our generator to get your own, or read on for the authoritative history
-        of lorem ipsum.
-      </p>
-    </div>
-  </div>
+  <AboutUs></AboutUs>
 </>
   );
 }

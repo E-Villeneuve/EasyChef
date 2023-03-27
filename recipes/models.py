@@ -33,7 +33,7 @@ class Recipe(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField(null=True, blank=True)  # TextField - allows for > 255 chars
     star_rating = models.DecimalField(decimal_places=2, max_digits=3, validators=[MinValueValidator(1),
-        MaxValueValidator(5)], default=1)  # not FloatField: see https://docs.python.org/3/library/decimal.html#module-decimal
+        MaxValueValidator(5)], default=0)  # not FloatField: see https://docs.python.org/3/library/decimal.html#module-decimal
     likes = models.PositiveIntegerField(default=0)  # could be BigInteger too, but the range of the Integer is very large already
     cookingtimetag = models.CharField(max_length=7, choices=CookingTimeTags.choices, blank=True)
     cuisine = models.CharField(max_length=7, choices=Cuisines.choices, blank=True)

@@ -1,0 +1,47 @@
+@media screen and (min-width: 992px) { /* CSS here will only apply if
+    screen is at least 750px wide*/
+    #about_us_title {
+        width: 49em!important; 
+        margin: auto!important; /*Essential to center sections */
+        text-align: center!important;
+        padding: 0.5em!important;
+        border-radius: 20px!important;
+        background-color: #fafafa!important;
+        border-bottom-right-radius: 0px!important;
+        border-bottom-left-radius: 0px!important;
+    }
+}
+
+.about_us_title {
+    margin: auto!important; /*Essential to center sections */
+    width: 100%!important;
+    text-align: center!important;
+    padding: 0.5em!important;
+    border-radius: 20px!important;
+    background-color: #f8f8f8!important;
+    border-bottom-right-radius: 0px!important;
+    border-bottom-left-radius: 0px!important;
+}
+ 
+.about_us_text {
+    padding: 1.5em!important;
+}
+
+.about_us_wrap {
+    margin: auto!important;
+    margin-bottom: 2em!important;
+    padding-top: 0em!important;
+    width: 50%!important;
+    height: 10%!important;
+    justify-content: center!important;
+    display: flex!important;
+    align-items: center!important;
+    flex-flow: column!important;
+    border-radius: 20px!important;
+    background-color: white!important;
+    
+}
+
+.center {
+    text-align: center;
+}

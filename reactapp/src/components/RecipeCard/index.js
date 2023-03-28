@@ -17,8 +17,8 @@ function RecipeCard(item) {
     // </div>
     const [defaultImage] = useState({});
     return (
-    <div className="card" key={item.id}>
-        <div className="card-top img_wrap">
+    <div className="recipecard" key={item.id}>
+        <div className="recipecard-top img_wrap">
             <img
                 src={
                     defaultImage[item.title] === item.title
@@ -29,9 +29,9 @@ function RecipeCard(item) {
             />
         <h1>{item.title}</h1>
         </div>
-        <div className="card-bottom">
+        <div className="recipecard-bottom">
               <h3>{item.price}</h3>
-              <span className="category">{item.category}</span>
+              <span className="recipecat">{item.category}</span>
         </div>
     </div>
     );

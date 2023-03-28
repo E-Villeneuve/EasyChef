@@ -31,36 +31,36 @@ function NavBar() {
             <LinkContainer to='/createrecipe'>
                 <Nav.Link>Create Recipes</Nav.Link>
             </LinkContainer>
-                <NavDropdown title="My Profile">
-                    <NavDropdown.Item id='fstprofileitem'>
+                <NavDropdown title="My Profile" id='navbar_profile_dropdown'>
+                    <NavDropdown.Item id='fstprofileitem' className='navbar_drop_item'>
                         <LinkContainer to='/profile'>
                             <Nav.Link>
                                 {ProfileDropItem(test_profile[0])}
                             </Nav.Link>
                         </LinkContainer>
                     </NavDropdown.Item>
-                    <NavDropdown.Item>
+                    <NavDropdown.Item className='navbar_drop_item'>
                         <LinkContainer to='/editprofile'>
                             <Nav.Link>
                                 Edit Profile
                             </Nav.Link>
                         </LinkContainer>
                     </NavDropdown.Item>
-                    <NavDropdown.Item>
+                    <NavDropdown.Item className='navbar_drop_item'>
                         <LinkContainer to='/myrecipes'>
                             <Nav.Link>
                                 My Recipes
                             </Nav.Link>
                         </LinkContainer>
                     </NavDropdown.Item>
-                    <NavDropdown.Item>
+                    <NavDropdown.Item className='navbar_drop_item'>
                         <LinkContainer to='/myshoppinglist'>
                             <Nav.Link>
                             My Shopping List
                             </Nav.Link>
                         </LinkContainer>
                     </NavDropdown.Item>
-                    <NavDropdown.Item id='lastprofileitem'>
+                    <NavDropdown.Item id='lastprofileitem' className='navbar_drop_item'>
                         <LinkContainer to='/logout'>
                             <Nav.Link>
                             Logout

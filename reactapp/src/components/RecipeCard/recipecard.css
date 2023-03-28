@@ -1,6 +1,6 @@
 /* Most Card CSS from: https://www.youtube.com/watch?v=FLt2TveqHQM */
 
-.card {
+.recipecard {
     border: 1px solid #fff!important;
     background: black!important;
     border-radius: 8px!important;
@@ -12,27 +12,27 @@
     box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
 }
 
-.card-top h1 {
+.recipecard-top h1 {
     font-size: 0.9rem!important;
     margin: 20px!important;
 }
 
-.card-top > img {
+.recipecard-top > img {
     width: 100%!important;
     height: 200px!important;
     object-fit: cover!important;
     background: black!important;
 }
 
-.card-bottom {
+.recipecard-bottom {
     margin: 10px 20px!important;
 }
 
-.category {
+.recipecat {
     position: relative!important;
 }
 
-.category::before {
+.recipecat::before {
     content: ''!important;
     background: rgb(255, 61, 61)!important;
     position: absolute!important;

@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import Home from './pages/Home';
 import MyShoppingList from './pages/MyShoppingList';
 import NotFound from './pages/NotFound';
+import NavBar from './components/NavBar';
 
 const App = () => {
     return (
@@ -14,6 +15,7 @@ const App = () => {
             crossOrigin="anonymous"
         />
         <Router>
+        <NavBar />
             <Routes>
                 <Route exact path="" element={<Home/>}/>
                 <Route exact path="/" element={<Home/>}/>

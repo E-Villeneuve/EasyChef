@@ -75,16 +75,12 @@ nav {
     padding-right: 0!important;
 }
 
-.navbar-nav {
-    --bs-nav-link-hover-color: red!important;
-}
-
 .nav-link {
     color: #945921!important;
     margin-left: 0.5em!important;
 }
 
-.dropdown-item .nav-link {
+.navbar_drop_item .nav-link {
     padding: 0!important;
     margin: 0!important;
 }
@@ -130,32 +126,32 @@ https://stackoverflow.com/questions/12115833/adding-a-slide-effect-to-bootstrap-
 
 /* Transition code for dropdown from "MadisonTrash":
 https://stackoverflow.com/questions/12115833/adding-a-slide-effect-to-bootstrap-dropdown/32233048#32233048 */
-.dropdown.show .dropdown-menu { /* For Bootstrap 4, use .dropdown.show instead of .dropdown.open */
+.dropdown.show .dropdown-menu {
     max-height: 300px;
     opacity: 1;
 }
 
-.dropdown-item {
+.navbar_drop_item {
     color: #945921!important;
     border-color: #945921!important;
     border-bottom: solid 1px!important;
 }
 
-.dropdown-item:hover {
+.navbar_drop_item:hover {
     background-color: rgb(236, 192, 133)!important;
 }
 
-.dropdown-item#fstprofileitem:hover {
+.navbar_drop_item#fstprofileitem:hover {
     background-color: rgb(236, 192, 133)!important;
     border-top-left-radius: 7px!important;
     border-top-right-radius: 7px!important;
 }
 
-.dropdown-item#lastprofileitem {
+.navbar_drop_item#lastprofileitem {
     border: solid 0px!important;
 }
 
-.dropdown-item#lastprofileitem:hover {
+.navbar_drop_item#lastprofileitem:hover {
     background-color: rgb(236, 192, 133)!important;
     border-bottom-left-radius: 7px!important;
     border-bottom-right-radius: 7px!important;

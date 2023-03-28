@@ -1,6 +1,5 @@
 import './home.css';
 import '../../components/globals.css';
-import NavBar from '../../components/NavBar';
 import AboutUs from '../../components/AboutUs';
 import RecipeCarousel from '../../components/RecipeCarousel';
 
@@ -8,7 +7,6 @@ function Home() {
   return (
     <>
   <title>Home Page</title>
-  <NavBar></NavBar>
   <nav className="navbar navbar-expand-lg bg-body-tertiary">
     <div className="container-fluid">
       <div className="navbar-collapse" id="featuredtitle">

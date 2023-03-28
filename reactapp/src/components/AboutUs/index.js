@@ -43,6 +43,8 @@ function AboutUs() {
     return (
     <div className='about_us'>
         {aboutustext()}
+        {/* Image from:
+        https://www.pxfuel.com/en/desktop-wallpaper-aomvl */}
         <div className='about_us_pic_sec'>
             <span id='text'>Cooking has never been easier</span>
         </div>

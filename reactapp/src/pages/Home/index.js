@@ -1,8 +1,8 @@
 import './home.css';
-import '../Globals/globals.css';
-import NavBar from '../Globals/NavBar';
-import AboutUs from './AboutUs';
-import HomeCarousel from './HomeCarousel';
+import '../../components/globals.css';
+import NavBar from '../../components/NavBar';
+import AboutUs from '../../components/AboutUs';
+import RecipeCarousel from '../../components/RecipeCarousel';
 
 function Home() {
   return (
@@ -25,7 +25,7 @@ function Home() {
       </div>
     </div>
   </nav>
-  <HomeCarousel></HomeCarousel>
+  <RecipeCarousel></RecipeCarousel>
   <nav className="navbar navbar-expand-lg bg-body-tertiary">
     <div className="container-fluid">
       <br />

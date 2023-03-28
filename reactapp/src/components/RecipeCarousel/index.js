@@ -2,14 +2,14 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
-import './carousel.css';
-import Card from './Card';
+import './recipecarousel.css';
+import Card from '../RecipeCard';
 import { dataDigitalBestSeller } from './data';
 
 // Most carousel code from: https://www.youtube.com/watch?v=FLt2TveqHQM
 // and https://react-slick.neostack.com/docs/example/custom-arrows
 
-function HomeCarousel() {
+function RecipeCarousel() {
     function SampleNextArrow(props) {
         const { className, style, onClick } = props;
         return (
@@ -48,7 +48,7 @@ function HomeCarousel() {
   };
 
   return (
-    <div className="homecarousel">
+    <div className="recipecarousel">
       <Slider {...settings}>
         {dataDigitalBestSeller.map((item) => (
             Card(item)
@@ -58,4 +58,4 @@ function HomeCarousel() {
   );
 }
 
-export default HomeCarousel;
+export default RecipeCarousel;

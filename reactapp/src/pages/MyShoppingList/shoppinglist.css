@@ -1,0 +1,193 @@
+body {
+    background-color: #e8e4ce;
+    min-width: 870px;
+}
+
+.shop_title_bar {
+    margin: auto; /*Essential to center sections */
+    width: 100%;
+    text-align: center;
+    padding: 0.5em;
+    border-radius: 20px;
+    background-color: #f8f8f8;
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 0px;
+    display: flex;
+    flex-flow: column nowrap;
+}
+
+/*  w/o this = cards invade the space of others (text, other cards, etc.)*/
+.card {
+    display: flex;
+    align-items: center;
+    max-width: 100%;
+    max-height: 100%;
+}
+
+#shop_title {
+    margin-bottom: 0.7em;
+    font-size: calc(max(calc(1.325rem + .9vw), 28.73px))
+}
+
+#shop_search {
+    margin-bottom: 1em;
+    margin-left: 1em;
+    margin-right: 1em;
+}
+
+.shop_wrap {
+    margin: auto;
+    margin-top: 2em;
+    margin-bottom: 2em;
+    padding-top: 0em;
+    width: 65%;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    flex-flow: column;
+    border-radius: 20px!important;
+    background-color: white!important;
+    
+}
+
+#shop_items {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-evenly;
+    width: 100%;
+    height: 100%;
+}
+
+.shop_item {
+    margin: auto;
+    width: 100%;
+    height: 100%;
+    margin-top: 0.25em;
+    margin-bottom: 0.25em;
+    opacity: 0.5;
+}
+
+.shop_item:hover {
+    opacity: 1;
+    --bs-btn-hover-border-color: solid;
+}
+
+.shop_item#fst_item {
+    margin-top: 0.5em;
+}
+
+.shop_item#last_item {
+    margin-bottom: 0.5em;
+}
+
+.shop_item.recipe {
+    opacity: 1
+}
+
+#search_btn {
+    display: flex;
+    margin: auto;
+}
+
+.recipe_item {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 0em;
+}
+
+.shop_item_pic_area {
+    max-width: 100%;
+    height: 10em;
+    display: flex;
+    justify-content: center;
+    margin: auto;
+    align-items: flex-start;
+    margin-left: 1em;
+    margin-right: 1em;
+}
+
+.shop_item_pic {
+    display: flex;
+    border: solid 1px;
+    height: 9em;
+    align-self: center;
+    border-radius: 10%;
+}
+
+.recipe_name {
+    max-width: 100%;
+    width: 100%;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    height: 100%;
+    margin: auto;
+    margin-right: 1em
+}
+
+.shop_item_details {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-between;
+    max-width: 100%;
+    width: 100%;
+    height: 100%;
+    margin: auto;
+    max-width: 100%;
+    margin-right: 1em;
+    margin-bottom: 0.5em;
+    margin-top: 0.5em;
+}
+
+.shop_item_button {
+    margin-top: 0.5em;
+    width: 100%;
+}
+
+#brief_info {
+    margin-bottom: 0;
+}
+
+#close_item {
+    width: 1.5em;
+    height: 1.5em;
+    background:
+      conic-gradient(from 90deg at var(--b) var(--b),white 90deg, grey 0) 
+      calc(100% + var(--b)/2) calc(100% + var(--b)/2)/ /*Vertical line*/
+      calc(50%  + var(--b))   calc(50%  + var(--b)); /*Horizontal line*/
+    transform: rotate(45deg);
+    border: 0;
+    margin-top: 0.5em;
+    margin-right: 0.5em;
+}
+
+#allingredientstitle {
+    font-size: calc(max(calc(1.275rem + .3vw), 23.1px));
+}
+
+#allingredientslst {
+    margin: 1em;
+}
+
+#export_btn {
+    margin: auto;
+    margin-bottom: 1em;
+    width: 90%;
+}
+
+.servings {
+    display: flex;
+    flex-flow: row wrap;
+    margin-bottom: 0.5em;
+}
+
+.col-form-label {
+    margin-right: 1em;
+}
+
+.inputserving {
+    min-width: 45.1px;
+    width: 45.1px;
+    margin: auto;
+}

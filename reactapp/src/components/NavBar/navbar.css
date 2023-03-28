@@ -84,6 +84,11 @@ nav {
     margin-left: 0.5em!important;
 }
 
+.dropdown-item .nav-link {
+    padding: 0!important;
+    margin: 0!important;
+}
+
 .nav-link:hover {
     color: white!important;
 }

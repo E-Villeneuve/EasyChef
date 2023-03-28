@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import './card.css'
+import './recipecard.css'
 
 /* Most Card CSS from: https://www.youtube.com/watch?v=FLt2TveqHQM */
 
-function Card(item) {
+function RecipeCard(item) {
     // {/* Card template from https://getbootstrap.com/docs/5.3/components/card/ */}
     // <div className="card-body">
     // <h4 className="card-title">Chocolate Spaghetti</h4>
@@ -37,4 +37,4 @@ function Card(item) {
     );
 }
 
-export default Card;
+export default RecipeCard;

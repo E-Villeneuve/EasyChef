@@ -132,6 +132,8 @@ class RecipeSerializer(serializers.ModelSerializer):
             instance.likes = validated_data['likes']
         if 'favourited' in validated_data:
             instance.favourited = validated_data['favourited']
+        if 'star_rating' in validated_data:
+            instance.star_rating = validated_data['star_rating']
         if 'prep_time' in validated_data:
             instance.prep_time = validated_data['prep_time']
         if 'cook_time' in validated_data:

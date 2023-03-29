@@ -1,11 +1,10 @@
-import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
-import Form from 'react-bootstrap/Form';
 import './navbar.css';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import ProfileDropItem from './ProfileDropItem';
+import Search from "./Search"
 
 import { test_profile } from './data';
 import {LinkContainer} from 'react-router-bootstrap'
@@ -69,15 +68,7 @@ function NavBar() {
                     </NavDropdown.Item>
                 </NavDropdown>
           </Nav>
-          <Form className="d-flex" id='globnavsearch'>
-            <Form.Control
-              type="search"
-              placeholder="Search"
-              className="me-2"
-              aria-label="Search"
-            />
-            <Button variant="outline-success">Search</Button>
-          </Form>
+          <Search />
         </Navbar.Collapse>
       </Container>
     </Navbar>

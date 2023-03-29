@@ -4,11 +4,6 @@
     #navbar-items {
         margin-left: 0.3em!important;
     }
-
-    #globnavsearc {
-        margin-right: 1em!important;
-    }
-
 }
 
 .navbar-toggler {
@@ -31,12 +26,6 @@
     padding-left: 0.4em!important;
 }
 
-#globnavsearch {
-    margin-bottom: 0.3em!important;
-    margin-right: 0.5em!important;
-    margin-left: 0.5em!important;
-}
-
 .container-fluid {
     margin: 0!important;
     padding: 0!important;
@@ -44,20 +33,6 @@
 
 .navbar {
     padding: 0!important;
-}
-
-.searchcategory {
-    display: grid!important;
-    grid-template-columns: repeat(2, 1fr)!important;
-}
-
-.rightcol {
-    margin-right: 0.5em!important;
-    margin-left: 0.5em!important;
-}
-
-.leftcol {
-    margin-left: 0.5em!important;
 }
 
 nav {

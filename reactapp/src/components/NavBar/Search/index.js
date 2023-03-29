@@ -43,6 +43,7 @@ const Search = () => {
           />
         )}
         <div
+            onClick={toggle}
           className={
             search === true
               ? "navsearchicon-bg fadeOut"

@@ -51,17 +51,17 @@ https://codesandbox.io/s/9m0l4?file=/src/styles.css */
 }
 
 .navsearchicon-bg {
-display: flex;
-justify-content: center;
-align-items: center;
-height: 30px;
-width: 30px;
-border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 30px;
+    width: 30px;
+    border-radius: 20px;
 }
 
 .navsearchicon-bg:hover {
-opacity: 0.8;
-cursor: pointer;
+    opacity: 0.8;
+    cursor: pointer;
 }
 
 @keyframes fadeInWidth {

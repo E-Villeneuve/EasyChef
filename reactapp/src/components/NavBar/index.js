@@ -67,6 +67,9 @@ function NavBar() {
                         </LinkContainer>
                     </NavDropdown.Item>
                 </NavDropdown>
+            <LinkContainer to='/search'>
+                <Nav.Link>Advanced Search</Nav.Link>
+            </LinkContainer>
           </Nav>
           <Search />
         </Navbar.Collapse>

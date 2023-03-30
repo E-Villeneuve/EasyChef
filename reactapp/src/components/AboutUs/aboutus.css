@@ -54,7 +54,6 @@
     display: flex!important;
     flex-flow: row!important;
     min-width: 610px;
-    margin-bottom: 2em!important;
     box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.3);
     border-radius: 20px!important;
 }
@@ -80,7 +79,7 @@
     justify-content: center;
 }
 
-#text {
+#about_us_text {
     margin-left: 1em;
     margin-right: 1em;
 }
@@ -91,9 +90,3 @@
     object-fit: fill;
     overflow: hidden
 }
-
-#test {
-    
-    background-color: red;
-}
-

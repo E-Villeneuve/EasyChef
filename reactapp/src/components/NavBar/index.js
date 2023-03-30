@@ -12,7 +12,7 @@ import {LinkContainer} from 'react-router-bootstrap'
 // Framework from https://react-bootstrap.github.io/components/navbar/
 function NavBar() {
   return (
-    <Navbar bg='dark' variant='dark' expand="lg" id='globalnavbar'>
+    <Navbar bg='dark' variant='dark' expand="lg" id='globalnavbar' useTransparent>
       <Container fluid>
         <LinkContainer to='/'>
             <Nav.Link id='nav-brand'>

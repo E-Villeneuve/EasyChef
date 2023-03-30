@@ -1,7 +1,8 @@
 import Container from 'react-bootstrap/Container';
+import { forwardRef } from 'react';
 import './aboutus.css'
 
-function AboutUs() {
+const AboutUs = forwardRef((props, ref) => {
     const aboutustext = () => {
         return (
             <div className="about_us_text_sec">
@@ -41,15 +42,15 @@ function AboutUs() {
     }
 
     return (
-    <div className='about_us'>
+    <div ref={ref} className='about_us'>
         {aboutustext()}
         {/* Image from:
         https://www.pxfuel.com/en/desktop-wallpaper-aomvl */}
         <div className='about_us_pic_sec'>
-            <span id='text'>Cooking has never been easier</span>
+            <span id='about_us_text'>Cooking has never been easier</span>
         </div>
     </div>
     );
-}
+});
 
 export default AboutUs;

@@ -17,10 +17,9 @@
 .nav-link.navbar-brand {
     font-family: 'Courgette', cursive!important;
     font-size: 30px!important;
-    color: #a06024!important;
     display: flex!important;
     flex-flow: column nowrap!important;
-    background-color: rgb(236, 192, 133)!important;
+    /* background: linear-gradient(-218deg, rgb(228, 217, 202), rgb(236, 192, 133) 30.71%)!important; */
     margin: 0!important;
     padding-right: 0.5em!important;
     padding-left: 0.4em!important;
@@ -33,10 +32,6 @@
 
 .navbar {
     padding: 0!important;
-}
-
-nav {
-    margin-bottom: 3em!important;
 }
 
 #nav-brand {
@@ -134,9 +129,14 @@ https://stackoverflow.com/questions/12115833/adding-a-slide-effect-to-bootstrap-
 }
 
 #globalnavbar {
-    background-color: #d3cba1!important;
+    background-color: rgba(0, 0, 0, 0)!important;
+    /* background: linear-gradient(217deg, #945921, rgb(236, 192, 133) 70.71%),
+    linear-gradient(127deg, rgb(236, 192, 133), #d3cba1 100.71%),
+    linear-gradient(180deg, rgb(236, 192, 133), rgb(236, 192, 133) 100.71%),
+    linear-gradient(336deg, #945921, #945921 30.71%); */
     padding-top: 0!important;
     padding-bottom: 0!important;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3)!important;
     /* margin-bottom: 0; no navbar separation from actual page - remove? */
 }
 

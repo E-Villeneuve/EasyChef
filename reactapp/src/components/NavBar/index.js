@@ -70,6 +70,9 @@ function NavBar() {
             <LinkContainer to='/search'>
                 <Nav.Link>Advanced Search</Nav.Link>
             </LinkContainer>
+            <LinkContainer to='/search'>
+                <Nav.Link id='popular'>Popular Recipes</Nav.Link>
+            </LinkContainer>
           </Nav>
           <Search />
         </Navbar.Collapse>

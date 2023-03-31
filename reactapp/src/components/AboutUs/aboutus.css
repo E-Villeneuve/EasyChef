@@ -1,38 +1,19 @@
-@import url('https://fonts.googleapis.com/css2?family=Courgette&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Baloo+2&family=Courgette&family=Dancing+Script&family=Lobster+Two&display=swap');
 
 @media screen and (min-width: 992px) { /* CSS here will only apply if
     screen is at least 750px wide*/
-    .about_us_title {
-        margin: auto!important; /*Essential to center sections */
-        text-align: center!important;
-        padding: 0.5em!important;
-        border-radius: 20px!important;
-        background-color: #fafafa!important;
-        border-bottom-right-radius: 0px!important;
-        border-bottom-left-radius: 0px!important;
-        border-top-right-radius: 0px!important;
-    }
 }
 
-.about_us_title {
-    margin: auto!important; /*Essential to center sections */
-    width: 100%!important;
-    text-align: center!important;
-    padding: 0.5em!important;
-    border-radius: 20px!important;
-    background-color: #f8f8f8!important;
-    border-bottom-right-radius: 0px!important;
-    border-bottom-left-radius: 0px!important;
-    border-top-right-radius: 0px!important;
+#about_us_title {
+    padding-top: 1em;
 }
- 
+
 .about_us_text {
     padding: 1.5em!important;
 }
 
 .about_us_text_sec {
     margin: auto!important;
-    /* margin-bottom: 2em!important; */
     padding-top: 0em!important;
     justify-content: center!important;
     display: flex!important;
@@ -41,6 +22,8 @@
     border-bottom-left-radius: 20px!important;
     border-top-left-radius: 20px!important;
     background-color: white!important;
+    font-family: 'Baloo 2', cursive!important;
+    background: linear-gradient(-11deg, #f1b442, #e2b77b 57.71%);
 }
 
 .center {

@@ -1,4 +1,8 @@
-@import url('https://fonts.googleapis.com/css2?family=Courgette&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Baloo+2&family=Courgette&family=Dancing+Script&family=Lobster+Two&display=swap');
+
+#home_page_container{
+    min-height: 100vh;
+}
 
 html {
     background: linear-gradient(217deg, #e4bc84, rgba(255,0,0,0) 70.71%),
@@ -82,15 +86,23 @@ html {
     transition: color .15s ease-in-out,
     background-color .15s ease-in-out,
     border-color .15s ease-in-out;
+    font-family: 'Baloo 2', cursive!important;
 }
 
 #aboutbtn:hover {
     color: rgba(255, 255, 255, 1);
 }
 
+#hometextbox {
+    border-color: white;
+    border: 1px;
+    font-family: 'Courgette', cursive!important;
+}
+
 #text_home_subtitle {
     font-size: 35px!important;
     margin-top: 1em;
+    font-family: 'Lobster Two', italic;
 }
 
 #homepic_container {
@@ -109,6 +121,15 @@ html {
     flex-flow: column nowrap!important;
     text-align: center!important;
     padding-bottom: 2em;
+    font-family: 'Baloo 2', cursive!important;
+    font-size: 20px!important;
+}
+
+#featuredtitle h1 {
+    font-size: 50px!important;
+}
+#featuredtitle h5 {
+    font-size: 25px!important;
 }
 
 #featuredsubtitle {
@@ -118,8 +139,12 @@ html {
 }
 
 #about_us_sec {
-    padding-top: 2em;
-    padding-bottom: 2em;
+    display: flex;
+    justify-content: center;
+    margin: auto;
+    /* position: absolute; */
+    min-height: 100%;
+    padding: 2em 0;
     background: linear-gradient(217deg, rgba(156, 100, 60,.8), rgba(255,0,0,0) 70.71%),
     linear-gradient(127deg, rgba(204, 155, 101,.8), rgba(0,255,0,0) 70.71%),
     linear-gradient(336deg, rgba(244, 175, 109,.8), rgba(0,0,255,0) 70.71%);
@@ -129,6 +154,12 @@ html {
     display: flex;
     justify-content: center;
     text-align: center;
-    padding: 10em 10em;
-    padding-bottom: 5em;
+    padding: 5em 10em;
+    padding-top: 6em;
 }
+
+#home_anecdote h1 {
+    font-family: 'Lobster Two', italic;
+}
+
+#home_anecdote h5 { font-family: 'Baloo 2', cursive!important; }

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Courgette&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Baloo+2&family=Courgette&family=Dancing+Script&family=Lobster+Two&display=swap');
 
 @media screen and (min-width: 991px) {
     #navbar-items {
@@ -48,6 +48,7 @@
 .nav-link {
     color: #945921!important;
     margin-left: 0.5em!important;
+    font-family: 'Baloo 2', cursive!important;
 }
 
 .navbar_drop_item .nav-link {
@@ -55,8 +56,12 @@
     margin: 0!important;
 }
 
-.nav-link:hover {
+.nav-link:hover, .active#popular:hover {
     color: white!important;
+}
+
+.active#popular {
+    color: #945921!important;
 }
 
 .active {

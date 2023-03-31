@@ -1,12 +1,17 @@
 import Container from 'react-bootstrap/Container';
-import { forwardRef } from 'react';
-import './aboutus.css'
+import { useEffect, forwardRef } from 'react';
+import './aboutus.css';
+import AOS from "aos";
 
 const AboutUs = forwardRef((props, ref) => {
+    useEffect(() => {
+        AOS.init({ duration: 1000 });
+    }, []);
+
     const aboutustext = () => {
         return (
             <div className="about_us_text_sec">
-            <div className="about_us_title"><h3>About Us</h3></div>
+            <span id="about_us_title"><h3>About Us</h3></span>
             <Container className='about_us_text'>
                 {/* Text provided by ChatGPT */}
                 <p id='text'>
@@ -42,7 +47,7 @@ const AboutUs = forwardRef((props, ref) => {
     }
 
     return (
-    <div ref={ref} className='about_us'>
+    <div data-aos="fade-up" ref={ref} className='about_us'>
         {aboutustext()}
         {/* Image from:
         https://www.pxfuel.com/en/desktop-wallpaper-aomvl */}

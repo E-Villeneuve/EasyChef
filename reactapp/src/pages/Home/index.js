@@ -3,8 +3,8 @@ import '../../components/globals.css';
 import AboutUs from '../../components/AboutUs';
 import RecipeCarousel from '../../components/RecipeCarousel';
 import Button from 'react-bootstrap/Button';
-
 import homepic from '../../images/homeimage.jpg';
+import AnimatePage from '../../components/AnimatePage';
 
 import React, { useEffect, useRef } from "react";
 import AOS from "aos";
@@ -21,6 +21,7 @@ const Home = () => {
     };
 
   return (
+    <AnimatePage>
     <div id='home_page_container'>
         <title>Home Page</title>
         <div id='home_pic_sec'>
@@ -64,6 +65,7 @@ const Home = () => {
         <AboutUs ref={aboutref}/>
         </div>
     </div>
+    </AnimatePage>
   );
 }
 

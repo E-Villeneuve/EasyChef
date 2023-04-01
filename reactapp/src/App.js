@@ -1,17 +1,15 @@
 import React, { useEffect } from 'react'
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 import './App.css';
-import Home from './pages/Home';
-import MyShoppingList from './pages/MyShoppingList';
-import NotFound from './pages/NotFound';
 import NavBar from './components/NavBar';
 import Container from 'react-bootstrap/Container';
+import AnimatedRoutes from './components/AnimatedRoutes';
 
 import AOS from "aos";
 
 const App = () => {
     useEffect(() => {
-        AOS.init({ duration: 1000 });
+        AOS.init({ duration: 1000 }); // For component fade in/out, not page
     }, []);
 
     return (
@@ -23,13 +21,8 @@ const App = () => {
             crossOrigin="anonymous"
         />
         <Router>
-        <NavBar />
-            <Routes>
-                <Route exact path="" element={<Home/>}/>
-                <Route exact path="/" element={<Home/>}/>
-                <Route exact path="/myshoppinglist" element={<MyShoppingList/>}/>
-                <Route path="*" element={<NotFound/>}/>
-            </Routes>
+            <NavBar />
+            <AnimatedRoutes/>
         </Router>
         <Container id='footer_container'>
         <p id='footer'>  

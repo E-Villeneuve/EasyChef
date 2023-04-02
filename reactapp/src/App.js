@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 import './App.css';
 import Home from './pages/Home';
 import MyShoppingList from './pages/MyShoppingList';
@@ -8,12 +8,14 @@ import Login from './pages/Login';
 import NotFound from './pages/NotFound';
 import NavBar from './components/NavBar';
 import Container from 'react-bootstrap/Container';
+import AnimatedRoutes from './components/AnimatedRoutes';
+import ToTopBtn from './components/ToTopBtn';
 
 import AOS from "aos";
 
 const App = () => {
     useEffect(() => {
-        AOS.init({ duration: 1000 });
+        AOS.init({ duration: 1000 }); // For component fade in/out, not page
     }, []);
 
     return (
@@ -34,8 +36,11 @@ const App = () => {
                 <Route exact path="/login" element={<Login/>}/>
                 <Route path="*" element={<NotFound/>}/>
             </Routes>
+            <NavBar />
+            <AnimatedRoutes/>
         </Router>
         <Container id='footer_container'>
+        <ToTopBtn></ToTopBtn>
         <p id='footer'>  
             Copyright © 2023 Easy Chef Incorporated<br />
             All Rights Reserved

@@ -74,7 +74,7 @@
 }
 
 #profiledropmenu {
-    background-color: #d3cba1!important;
+    background-color: rgba(0, 0, 0, 0)!important;
     border-color: #945921!important;
 }
 
@@ -82,7 +82,9 @@
 https://stackoverflow.com/questions/12115833/adding-a-slide-effect-to-bootstrap-dropdown/32233048#32233048 */
 .dropdown .dropdown-menu {
     margin-top: -0.4em!important;
-    background-color: #d3cba1!important;
+    background: linear-gradient(217deg, #e4bc84, rgba(255,0,0,0) 70.71%),
+    linear-gradient(127deg, rgb(236, 192, 133), rgba(0,255,0,0) 70.71%),
+    linear-gradient(336deg, #f1b442, rgb(236, 192, 133) 30.71%);
     border-color: #945921;
     padding: 0!important;
     margin-bottom: 0.5em!important;

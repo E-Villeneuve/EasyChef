@@ -3,8 +3,10 @@ import '../../components/globals.css';
 import AboutUs from '../../components/AboutUs';
 import RecipeCarousel from '../../components/RecipeCarousel';
 import Button from 'react-bootstrap/Button';
-
 import homepic from '../../images/homeimage.jpg';
+import homesearch from '../../images/homesearch.jpg';
+import AnimatePage from '../../components/AnimatePage';
+import LargeSearch from '../../components/LargeSearch';
 
 import React, { useEffect, useRef } from "react";
 import AOS from "aos";
@@ -21,6 +23,7 @@ const Home = () => {
     };
 
   return (
+    <AnimatePage>
     <div id='home_page_container'>
         <title>Home Page</title>
         <div id='home_pic_sec'>
@@ -60,10 +63,23 @@ const Home = () => {
             <h5>- Renowned Chef and Restaurateur, Pierre Gagnaire</h5>
             </p>
         </div>
-        <div id='about_us_sec'>
-        <AboutUs ref={aboutref}/>
+        <div id='about_us_sec' ref={aboutref}>
+        <AboutUs/>
+        </div>
+        <div id='homesearch_sec'>
+            <div id='homesearch_overlay'>
+                    <img id='homesearch'
+                        src={homesearch}
+                        alt={"homesearch"}
+                    ></img>
+                <div data-aos="fade-up" id='homesearch_box_overlay'>
+                    <p id='homesearch_title'>What are <b>you</b> looking for?</p>
+                    <LargeSearch/>
+                </div>
+            </div>
         </div>
     </div>
+    </AnimatePage>
   );
 }
 

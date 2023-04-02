@@ -3,10 +3,11 @@ import  '../../components/globals.css';
 import ShopListItem from '../../components/ShopListItem';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import AnimatePage from '../../components/AnimatePage';
 
 function MyShoppingList() {
     return (
-        <>
+        <AnimatePage>
             <div class="shop_wrap">
                 <div class="shop_title_bar">
                     <h2 id="shop_title"><b>My Shopping List</b></h2>
@@ -50,7 +51,7 @@ function MyShoppingList() {
                         </button>
                     </div>
                 </div>
-            </>
+            </AnimatePage>
     );
   }
   

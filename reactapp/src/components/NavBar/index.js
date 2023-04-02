@@ -1,5 +1,6 @@
 import Container from 'react-bootstrap/Container';
 import './navbar.css';
+import '../globals.css';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
@@ -30,7 +31,7 @@ function NavBar() {
             <LinkContainer to='/createrecipe'>
                 <Nav.Link>Create Recipes</Nav.Link>
             </LinkContainer>
-                <NavDropdown title="My Profile" id='navbar_profile_dropdown'>
+                <NavDropdown title="My Profile">
                     <NavDropdown.Item id='fstprofileitem' className='navbar_drop_item'>
                         <LinkContainer to='/profile'>
                             <Nav.Link>

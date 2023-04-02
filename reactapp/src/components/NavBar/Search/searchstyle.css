@@ -1,5 +1,6 @@
 /* All CSS code below (w/ some modifications) from:
 https://codesandbox.io/s/9m0l4?file=/src/styles.css */
+@import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Baloo+2&family=Courgette&family=Dancing+Script&family=Lobster+Two&display=swap');
 
 .navsearchbar {
     max-width: 200px;
@@ -12,6 +13,7 @@ https://codesandbox.io/s/9m0l4?file=/src/styles.css */
     margin-left: 0.7em;
     margin-bottom: 0.5em;
     margin-top: 0.7em;
+    font-family: 'Baloo 2', cursive!important;
   }
 
 .navsearchbar.fadeOutWidth {

@@ -4,6 +4,7 @@ import './App.css';
 import NavBar from './components/NavBar';
 import Container from 'react-bootstrap/Container';
 import AnimatedRoutes from './components/AnimatedRoutes';
+import ToTopBtn from './components/ToTopBtn';
 
 import AOS from "aos";
 
@@ -25,6 +26,7 @@ const App = () => {
             <AnimatedRoutes/>
         </Router>
         <Container id='footer_container'>
+        <ToTopBtn></ToTopBtn>
         <p id='footer'>  
             Copyright © 2023 Easy Chef Incorporated<br />
             All Rights Reserved

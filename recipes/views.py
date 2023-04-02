@@ -10,7 +10,8 @@ from recipes.serializers import (RecipeSerializer, RecipeIngredientSerializer,
                                  RecipeCommentImageSerializer,
                                  RecipeImageSerializer, RecipeCommentVideoSerializer,
                                  ShopListRecipeAddSerializer, ShopListEditRecipeSerializer,
-                                 ShopListDeleteRecipeSerializer, RecipeCopySerializer, RecipeIngredientSerializer)
+                                 ShopListDeleteRecipeSerializer, RecipeCopySerializer, RecipeIngredientSerializer,
+                                 LikeRecipeSerializer, FavRecipeSerializer)
 from rest_framework import serializers
 from recipes.permissions import LstOwner
 
@@ -67,6 +68,20 @@ class AddRecipeView(CreateAPIView):
 
 class EditRecipeView(UpdateAPIView, DestroyAPIView):
     serializer_class = RecipeSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_object(self):
+        return get_object_or_404(Recipe, id=self.kwargs['recipe_id'])
+
+class LikeRecipeView(CreateAPIView, UpdateAPIView):
+    serializer_class = LikeRecipeSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_object(self):
+        return get_object_or_404(Recipe, id=self.kwargs['recipe_id'])
+
+class FavRecipeView(CreateAPIView, UpdateAPIView):
+    serializer_class = FavRecipeSerializer
     permission_classes = [IsAuthenticated]
 
     def get_object(self):

@@ -194,6 +194,28 @@ class RecipeSerializer(serializers.ModelSerializer):
         }
         return rep
 
+class LikeRecipeSerializer(serializers.ModelSerializer):
+    likes = serializers.ReadOnlyField()
+    class Meta:
+        model = Recipe
+        fields = ['likes']
+    
+    def update(self, instance, validated_data):
+        instance.likes += 1
+        instance.save()
+        return instance
+
+class FavRecipeSerializer(serializers.ModelSerializer):
+    favourited = serializers.ReadOnlyField()
+    class Meta:
+        model = Recipe
+        fields = ['favourited']
+
+    def update(self, instance, validated_data):
+        instance.favourited += 1
+        instance.save()
+        return instance
+        
 class RecipeImageSerializer(serializers.ModelSerializer):
     recipe = serializers.CharField(source='recipe.id', read_only=True)
     class Meta:

@@ -9,7 +9,7 @@ import Login from '../../pages/Login';
 
 // Idea of separating AnimatedRoutes from App.js from:
 // https://www.youtube.com/watch?v=FdrEjwymzdY
-function AnimatedRoutes() {
+const AnimatedRoutes = ( {auth, setAuth}) => {
     const location = useLocation();
     return (
         <AnimatePresence mode="wait" initial={ false }>

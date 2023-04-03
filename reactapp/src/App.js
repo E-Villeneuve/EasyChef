@@ -1,16 +1,22 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, createContext } from 'react'
 import { BrowserRouter as Router } from 'react-router-dom';
 import './App.css';
 import NavBar from './components/NavBar';
 import Container from 'react-bootstrap/Container';
 import AnimatedRoutes from './components/AnimatedRoutes';
 import ToTopBtn from './components/ToTopBtn';
+import { useState } from 'react';
 
 import AOS from "aos";
 
+export const AuthContext = createContext(null);
+
 const App = () => {
+    const [auth, setAuth] = useState(null);
+
     useEffect(() => {
         AOS.init({ duration: 1000 }); // For component fade in/out, not page
+        if (localStorage.getItem('access')) setAuth(true);
     }, []);
 
     return (
@@ -22,8 +28,10 @@ const App = () => {
             crossOrigin="anonymous"
         />
         <Router>
+            <AuthContext.Provider value={{auth: auth, setAuth: setAuth}}>
             <NavBar />
-            <AnimatedRoutes/>
+            <AnimatedRoutes />
+            </AuthContext.Provider>
         </Router>
         <Container id='footer_container'>
         <ToTopBtn></ToTopBtn>

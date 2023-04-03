@@ -2,50 +2,39 @@ import './Login.css';
 import '../../components/globals.css';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import { useNavigate } from "react-router-dom";
+import { useContext } from 'react';
+import { AuthContext } from '../../App';
 
-function Login() {
+const Login = () => {
+    const navigate = useNavigate();
+    const { setAuth } = useContext(AuthContext);
 
-    let [email, setEmail] = useState('');
-    let [password, setPassword] = useState('');
-
-
-    let handleInput = (i) => {
-        let {id, value} = i.target;
-        if (id === "email") {
-
-            setEmail(value);
+    let submit = () => { 
+        let request = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json'},
+            body: JSON.stringify({ 'email': 'test2@testing.com', 'password': 'test2'}) // temporary
         }
-        if (id === "password") {
-            setPassword(value);
+        /* Response Body obtained from promise via https://stackoverflow.com/a/37555432 */
+        fetch("http://127.0.0.1:8000/accounts/login/", request)
+        .then(response => response.json()
+        .then(data => ({
+            data: data,
+            response: response
+        })
+        ).then(res => {
+        if (res.response.ok) {
+            localStorage.setItem('access', res.data.access);
+            localStorage.setItem('refresh', res.data.refresh);
+            setAuth(true);
+            navigate('/');
+
         }
+        }));
+
     }
 
-    let submit = () => {
-        if (email && password) {
-            setStatus("");
-            let request = {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json'},
-                body: JSON.stringify({ 'email': email, 'password': password})
-            }
-            /* Response Body obtained from promise via https://stackoverflow.com/a/37555432 */
-            fetch("http://127.0.0.1:8000/accounts/login/", request)
-            .then(response => response.json()
-            .then(data => ({
-                data: data,
-                response: response
-            })
-            ).then(res => {
-            if (res.response.ok) {
-                
-            }
-            else {
-                setEmailError(res.data.email[0]);
-            }
-            }));
-
-        }
-    }
 
     return (
         <>
@@ -67,7 +56,7 @@ function Login() {
                     <input className="form-control" id="password" required type="password" value={password} onChange={(i) => handleInput(i)} placeholder="Enter your password" />
                 </div>
 
-                <button className="btn btn-primary" id="login-button" onClick={()=>submit()} type="button">Login</button>
+                <button className="btn btn-primary" id="register-button" type="button" onClick={()=>submit()}>Register</button>
             </form>
             <span>Don't have an account? <a href="/signup">Register here!</a></span>
         </div>

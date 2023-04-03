@@ -7,10 +7,10 @@ import { useState, setState } from 'react';
 function SignUp() {
     /*Value setting obtained primarily from 
     https://www.section.io/engineering-education/registration-form-react.js-firebase/#creating-a-registration-form */
-    let [email_error, setEmailError] = useState(null);
-    let [email, setEmail] = useState(null);
-    let [password, setPassword] = useState(null);
-    let [account_status, setStatus] = useState(null);
+    let [email_error, setEmailError] = useState('');
+    let [email, setEmail] = useState('');
+    let [password, setPassword] = useState('');
+    let [account_status, setStatus] = useState('');
 
     let handleInput = (i) => {
         let {id, value} = i.target;

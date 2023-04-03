@@ -1,11 +1,6 @@
 import React, { useEffect } from 'react'
 import { BrowserRouter as Router } from 'react-router-dom';
 import './App.css';
-import Home from './pages/Home';
-import MyShoppingList from './pages/MyShoppingList';
-import SignUp from './pages/SignUp';
-import Login from './pages/Login';
-import NotFound from './pages/NotFound';
 import NavBar from './components/NavBar';
 import Container from 'react-bootstrap/Container';
 import AnimatedRoutes from './components/AnimatedRoutes';
@@ -27,15 +22,6 @@ const App = () => {
             crossOrigin="anonymous"
         />
         <Router>
-        <NavBar />
-            <Routes>
-                <Route exact path="" element={<Home/>}/>
-                <Route exact path="/" element={<Home/>}/>
-                <Route exact path="/myshoppinglist" element={<MyShoppingList/>}/>
-                <Route exact path="/signup" element={<SignUp/>}/>
-                <Route exact path="/login" element={<Login/>}/>
-                <Route path="*" element={<NotFound/>}/>
-            </Routes>
             <NavBar />
             <AnimatedRoutes/>
         </Router>

@@ -5,10 +5,11 @@ import Home from '../../pages/Home';
 import MyShoppingList from '../../pages/MyShoppingList';
 import NotFound from '../../pages/NotFound';
 import SignUp from '../../pages/SignUp';
+import Login from '../../pages/Login';
 
 // Idea of separating AnimatedRoutes from App.js from:
 // https://www.youtube.com/watch?v=FdrEjwymzdY
-function AnimatedRoutes() {
+const AnimatedRoutes = ( {auth, setAuth}) => {
     const location = useLocation();
     return (
         <AnimatePresence mode="wait" initial={ false }>
@@ -16,6 +17,7 @@ function AnimatedRoutes() {
                 <Route exact path="" element={<Home/>}/>
                 <Route exact path="/" element={<Home/>}/>
                 <Route exact path="/signup" element={<SignUp/>}/>
+                <Route exact path="/login" element={<Login/>}/>
                 <Route exact path="/myshoppinglist" element={<MyShoppingList/>}/>
                 <Route path="*" element={<NotFound/>}/>
             </Routes>

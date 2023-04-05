@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Routes, useLocation } from 'react-router-dom';
+import { Route, Routes, useLocation} from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 import Home from '../../pages/Home';
 import MyShoppingList from '../../pages/MyShoppingList';
@@ -7,12 +7,14 @@ import NotFound from '../../pages/NotFound';
 import SignUp from '../../pages/SignUp';
 import Login from '../../pages/Login';
 import EditProfile from '../../pages/EditProfile';
-
+import Unauthorized from '../../pages/Unauthorized';
+import Logout from '../../pages/Logout';
 
 // Idea of separating AnimatedRoutes from App.js from:
 // https://www.youtube.com/watch?v=FdrEjwymzdY
-const AnimatedRoutes = ( {auth, setAuth}) => {
+function AnimatedRoutes() {
     const location = useLocation();
+
     return (
         <AnimatePresence mode="wait" initial={ false }>
             <Routes location={location} key={location.pathname}>
@@ -21,6 +23,8 @@ const AnimatedRoutes = ( {auth, setAuth}) => {
                 <Route exact path="/signup" element={<SignUp/>}/>
                 <Route exact path="/login" element={<Login/>}/>
                 <Route exact path="/editprofile" element={<EditProfile/>}/>
+                <Route exact path="/logout" element={<Logout/>}/>
+                <Route exact path="/unauthorized" element={<Unauthorized/>}/>
                 <Route exact path="/myshoppinglist" element={<MyShoppingList/>}/>
                 <Route path="*" element={<NotFound/>}/>
             </Routes>

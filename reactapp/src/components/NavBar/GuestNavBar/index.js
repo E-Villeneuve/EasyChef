@@ -9,11 +9,11 @@ import {LinkContainer} from 'react-router-bootstrap';
 // Framework from https://react-bootstrap.github.io/components/navbar/
 function GuestNavBar() {
   return (
-    <Navbar bg='dark' variant='dark' expand="lg" id='globalnavbar' useTransparent>
+    <Navbar bg='dark' variant='dark' expand="lg" id='globalnavbar'>
       <Container fluid>
         <LinkContainer to='/'>
             <Nav.Link id='nav-brand'>
-                <Navbar.Brand href="#home" className='nav-link'>
+                <Navbar.Brand className='nav-link'>
                     easy chef<span id="slogan">cooking has never been easier</span>
                 </Navbar.Brand>
             </Nav.Link>

@@ -17,7 +17,7 @@ const App = () => {
     useEffect(() => {
         AOS.init({ duration: 1000 }); // For component fade in/out, not page
         if (localStorage.getItem('access')) setAuth(true);
-    }, []);
+    }, [auth]);
 
     return (
         <>
@@ -29,8 +29,8 @@ const App = () => {
         />
         <Router>
             <AuthContext.Provider value={{auth: auth, setAuth: setAuth}}>
-            <NavBar />
-            <AnimatedRoutes />
+                <NavBar />
+                <AnimatedRoutes />
             </AuthContext.Provider>
         </Router>
         <Container id='footer_container'>

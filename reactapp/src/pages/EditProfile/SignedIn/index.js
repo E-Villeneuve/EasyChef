@@ -53,7 +53,7 @@ function EditProfileSignedIn() {
             response: response
         })
         ).then(res => {
-            localStorage.setItem('email', res.data.email);
+            localStorage.setItem('email', res.data.email); // Lanz note: add option to avatar pic too pls + password change
                 if (res.data.first_name) {
                     localStorage.setItem('first_name', res.data.first_name);
                 }

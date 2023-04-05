@@ -6,8 +6,6 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import ProfileDropItem from '../ProfileDropItem';
 import Search from "../Search";
-
-import { test_profile } from './data';
 import {LinkContainer} from 'react-router-bootstrap';
 
 // Framework from https://react-bootstrap.github.io/components/navbar/
@@ -36,7 +34,7 @@ function UserNavBar( ) {
                     <NavDropdown.Item id='fstprofileitem' className='navbar_drop_item'>
                         <LinkContainer to='/profile'>
                             <Nav.Link>
-                                {ProfileDropItem(test_profile[0])}
+                                {ProfileDropItem()}
                             </Nav.Link>
                         </LinkContainer>
                     </NavDropdown.Item>

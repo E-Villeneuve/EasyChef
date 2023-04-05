@@ -1,25 +1,35 @@
-import React, { useState } from 'react';
+import React from 'react';
+import defavatar from '../../../images/defaultavatar.png';
 import './profile.css'
 
-function ProfileDropItem(profile) {
-    const [defaultImage] = useState({});
+function ProfileDropItem() {
+    const full_name = () => {
+        let name = localStorage.getItem('first_name') + localStorage.getItem('last_name');
+        if (name === '') return;
+        return <span id='profiledrop_name'>{name}<br /></span>;
+    }
+
+    const get_phone = () => {
+        let phone_num = localStorage.getItem('phone_number');
+        if (phone_num) return <span id='profiledrop_phone'><br />{phone_num}</span>
+    }
+
+    const get_avatar = () => {
+        let avatar = localStorage.getItem('avatar');
+        return avatar ? avatar : defavatar;
+    }
+
     return (
-    <div className="profile" id={profile.email}>
+    <div className="profile" id={localStorage.getItem('email')}>
         <div id='profiledrop_wrap'>
             <img id='profilepic'
-                src={
-                    defaultImage[profile.email] === profile.email
-                    ? defaultImage.linkDefault
-                    : profile.avatar
-                }
-                alt={profile.email}
+                src={ get_avatar()}
+                alt={"Profile Picture"}
             />
         <p>
-        {profile.first_name + ' ' + profile.last_name}
-        <br />
-        <b>{profile.email}</b>
-        <br />
-        {profile.phone_number}
+        {full_name()}
+        <b>{localStorage.getItem('email')}</b>
+        {get_phone()}
         </p>
         </div>
     </div>

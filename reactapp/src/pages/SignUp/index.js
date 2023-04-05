@@ -17,6 +17,7 @@ function SignUp() {
         if (id === "email") {
 
             setEmail(value);
+
             setEmailError("");
         }
         if (id === "password") {
@@ -55,10 +56,10 @@ function SignUp() {
     return (
         <>
         
-        <div className="container">
+        <div className="signup-container">
         <h1>{account_status}</h1>
         
-    <div className="card">
+    <div className={'card signup'}>
         <div className="card-header">Account Details</div>
         <div className="card-body">
             <form id="signup-form">

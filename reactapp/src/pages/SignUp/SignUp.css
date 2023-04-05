@@ -1,13 +1,10 @@
-.card {
+.signup {
    
     width: 36rem;
     margin: auto; /* Added */
     background-color: #cec9aa !important;
     margin-top: 11vh;
     margin-bottom: 34vh;
-
-        
-        
 }
 
 body{
@@ -19,7 +16,7 @@ body{
     justify-content: center !important;
 }
 
-.container {
+.signup-container {
     justify-content: center;
     justify-items: center;
 }

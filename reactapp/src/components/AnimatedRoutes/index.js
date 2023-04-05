@@ -6,6 +6,8 @@ import MyShoppingList from '../../pages/MyShoppingList';
 import NotFound from '../../pages/NotFound';
 import SignUp from '../../pages/SignUp';
 import Login from '../../pages/Login';
+import EditProfile from '../../pages/EditProfile';
+
 
 // Idea of separating AnimatedRoutes from App.js from:
 // https://www.youtube.com/watch?v=FdrEjwymzdY
@@ -18,6 +20,7 @@ const AnimatedRoutes = ( {auth, setAuth}) => {
                 <Route exact path="/" element={<Home/>}/>
                 <Route exact path="/signup" element={<SignUp/>}/>
                 <Route exact path="/login" element={<Login/>}/>
+                <Route exact path="/editprofile" element={<EditProfile/>}/>
                 <Route exact path="/myshoppinglist" element={<MyShoppingList/>}/>
                 <Route path="*" element={<NotFound/>}/>
             </Routes>

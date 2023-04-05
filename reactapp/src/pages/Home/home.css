@@ -100,6 +100,14 @@ html {
 #text_home_subtitle {
     font-size: 35px!important;
     margin-top: 1em;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    line-height: 1.2;
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
     font-family: 'Lobster Two', italic;
 }
 
@@ -152,15 +160,20 @@ html {
     display: flex;
     justify-content: center;
     text-align: center;
-    padding: 5em 10em;
-    padding-top: 6em;
-}
-
-#home_anecdote h1 {
+    padding: 1.5em 1.5em;
     font-family: 'Lobster Two', italic;
+    font-size: calc(1.375rem + 1.5vw);
+    margin-bottom: 1em;
+}
+#home_quote_text {
+    margin-bottom: 1em;
+    padding-bottom: 1em;
 }
 
-#home_anecdote h5 { font-family: 'Baloo 2', cursive!important; }
+#home_quote_person {
+    font-family: 'Baloo 2', cursive!important;
+    font-size: 1.25rem;
+}
 
 #homesearch_sec {
     font-family: 'Baloo 2', cursive!important;

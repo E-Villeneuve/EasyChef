@@ -6,9 +6,6 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import ProfileDropItem from '../ProfileDropItem';
 import Search from "../Search";
-import { useNavigate } from "react-router-dom";
-import { AuthContext } from '../../../App';
-import { useContext } from 'react';
 
 import { test_profile } from './data';
 import {LinkContainer} from 'react-router-bootstrap';
@@ -16,22 +13,12 @@ import {LinkContainer} from 'react-router-bootstrap';
 // Framework from https://react-bootstrap.github.io/components/navbar/
 function UserNavBar( ) {
 
-    const { setAuth } = useContext(AuthContext);
-
-    const navigate = useNavigate();
-
-    const logout = () => {
-        localStorage.clear();
-        setAuth(false);
-        navigate('/');
-    }
-
   return (
-    <Navbar bg='dark' variant='dark' expand="lg" id='globalnavbar' useTransparent>
+    <Navbar bg='dark' variant='dark' expand="lg" id='globalnavbar'>
       <Container fluid>
         <LinkContainer to='/'>
             <Nav.Link id='nav-brand'>
-                <Navbar.Brand href="#home" className='nav-link'>
+                <Navbar.Brand className='nav-link'>
                     easy chef<span id="slogan">cooking has never been easier</span>
                 </Navbar.Brand>
             </Nav.Link>
@@ -75,8 +62,8 @@ function UserNavBar( ) {
                         </LinkContainer>
                     </NavDropdown.Item>
                     <NavDropdown.Item id='lastprofileitem' className='navbar_drop_item'>
-                        <LinkContainer to='/login'>
-                            <Nav.Link onClick={logout}>
+                        <LinkContainer to='/logout'>
+                            <Nav.Link>
                             Logout
                             </Nav.Link>
                         </LinkContainer>

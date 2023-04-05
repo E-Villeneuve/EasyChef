@@ -3,7 +3,7 @@ import  '../../globals.css';
 
 function ShopAllIngredientsList(lst) {
     return (
-        <ul>
+        <ul id='all_ingredients_lst'>
             <li><p>1 tablespoon of ketchup</p></li>
             <li><p>1/2 teaspoons of chipotle</p></li>
             <li><p>2 slices of sourdough bread</p></li>

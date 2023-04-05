@@ -5,4 +5,5 @@
     justify-content: center;
     margin: auto;
     margin: 2em 0em;
+    min-height: 100vh;
 }

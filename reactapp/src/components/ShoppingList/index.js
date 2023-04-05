@@ -14,12 +14,15 @@ function ShoppingList() {
                     <Form.Control
                         type="search"
                         placeholder = "Add recipes..."
-                        className = "me-2"
                         aria-label="Add recipes"
                         id="add_recipes"
                     />
                 </Form>
                 <div id="shop_items">
+                {ShopListItem('test')}
+                {ShopListItem('test')}
+                {ShopListItem('test')}
+                {ShopListItem('test')}
                 {ShopListItem('test')}
                 {ShopListItem('test')}
                 <AddableShopLstItem/>

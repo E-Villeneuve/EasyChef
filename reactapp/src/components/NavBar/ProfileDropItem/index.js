@@ -15,17 +15,7 @@ function ProfileDropItem() {
     }
 
     const get_avatar = () => {
-        // console.log(localStorage);
         let avatar = localStorage.getItem('avatar');
-        // // console.log(avatar);
-        // let ret_val = avatar ? avatar : defavatar;
-        // // console.log(ret_val);
-        // if (avatar === null) {
-        //     console.log('test2' + avatar);
-        //     return defavatar
-        // };
-        // console.log('test1' + avatar);
-        // return avatar;
         return avatar ? avatar : defavatar;
     }
 

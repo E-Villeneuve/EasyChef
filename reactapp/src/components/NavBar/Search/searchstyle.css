@@ -14,7 +14,14 @@ https://codesandbox.io/s/9m0l4?file=/src/styles.css */
     margin-bottom: 0.5em;
     margin-top: 0.7em;
     font-family: 'Baloo 2', cursive!important;
+    display: flex;
+    justify-content: flex-end;
   }
+
+#navbarsearch {
+    display: flex;
+    justify-content: flex-end;
+}
 
 .navsearchbar.fadeOutWidth {
     width: 30px;
@@ -39,6 +46,7 @@ https://codesandbox.io/s/9m0l4?file=/src/styles.css */
     caret-color: white;
     animation-name: fadeIn;
     animation-duration: 0.5s;
+    width: 100%;
 }
 
 .navsearch-input.fadeIn::placeholder { color: white; }

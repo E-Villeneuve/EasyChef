@@ -1,23 +1,19 @@
-.login {
+ .login { 
    
     width: 36rem;
-    margin: auto; /* Added */
+    margin: auto;
     background-color: #cec9aa !important;
     margin-top: 11vh;
     margin-bottom: 42vh;
         
         
-}
+ } 
 
-body{
-    background-color: #e8e4ce !important;
-    
-    }
-
-.btn-primary {
+.btn-login {
     justify-content: center !important;
 }
 
 .login-container {
     justify-content: center;
 }
+

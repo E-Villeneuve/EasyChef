@@ -111,7 +111,7 @@ function Login() {
     <div className={'card login'}>
         <div className="card-header">Account Details</div>
         <div className="card-body">
-            <form id="signup-form">
+            <form id="login-form">
 
             <div className="mb-3">
                     <label className="small mb-1" for="Email">Email</label>
@@ -123,7 +123,7 @@ function Login() {
                     <input className="form-control" id="password" required type="password" value={password} onChange={(i) => handleInput(i)} placeholder="Enter your password" />
                 </div>
 
-                <button className="btn btn-primary" id="button" type="button" onClick={()=>submit()}>Login</button>
+                <button className="btn btn-primary btn-login" id="button" type="button" onClick={()=>submit()}>Login</button>
             </form>
             <span>Don't have an account? <a href="/signup">Register here!</a></span>
         </div>

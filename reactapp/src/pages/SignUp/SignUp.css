@@ -1,22 +1,17 @@
 .signup {
    
     width: 36rem;
-    margin: auto; /* Added */
+    margin: auto; 
     background-color: #cec9aa !important;
     margin-top: 11vh;
-    margin-bottom: 34vh;
+    margin-bottom: 42vh;
 }
 
-body{
-    background-color: #e8e4ce !important;
-    
-    }
-
-.btn-primary {
+.btn-signup {
     justify-content: center !important;
 }
 
 .signup-container {
     justify-content: center;
-    justify-items: center;
+
 }

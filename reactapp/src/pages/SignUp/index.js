@@ -75,7 +75,7 @@ function SignUp() {
                     <input className="form-control" id="password" required type="password" value={password} onChange={(i) => handleInput(i)} placeholder="Enter your password" />
                 </div>
 
-                <button className="btn btn-primary" id="register-button" type="button" onClick={()=>submit()}>Register</button>
+                <button className="btn btn-primary btn-signup" id="register-button" type="button" onClick={()=>submit()}>Register</button>
             </form>
             <span>Already have an account? <a href="/login">Log in here!</a></span>
         </div>

@@ -5,7 +5,7 @@ from django.template.response import TemplateResponse
 from django.views import View
 from rest_framework.generics import RetrieveAPIView, ListAPIView, CreateAPIView, UpdateAPIView
 from rest_framework.permissions import IsAuthenticated, AllowAny
-from accounts.serializers import SignUpSerializer, EditProfileSerializer, LoginSerializer, MyRecipesSerializer, AddFavouriteSerializer
+from accounts.serializers import SignUpSerializer, EditProfileSerializer, LoginSerializer, MyRecipesSerializer, AddFavouriteSerializer, MyProfileSerializer
 from accounts.models import User
 from recipes.models import Recipe
 from recipes.serializers import RecipeSerializer
@@ -40,3 +40,11 @@ class MyRecipesView(RetrieveAPIView):
 class LoginView(TokenObtainPairView):
     permission_classes = [AllowAny]
     serializer_class = LoginSerializer
+
+
+class MyProfileView(RetrieveAPIView):
+    serializer_class = MyProfileSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_object(self):
+        return get_object_or_404(User, id=self.request.user.id)

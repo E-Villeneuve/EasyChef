@@ -126,6 +126,14 @@ class LoginSerializer(TokenObtainPairSerializer):
     def get_token(cls, user):
         return super(LoginSerializer, cls).get_token(user)
 
+class MyProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id', 'email', 'first_name', 'last_name', 'avatar', 'description', 'phone_number']
+
+    def to_representation(self, instance):
+        return super().to_representation(instance)
+
 class MyRecipesSerializer(serializers.ModelSerializer):
 
     class Meta:

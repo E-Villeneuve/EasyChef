@@ -5,7 +5,7 @@ import './profile.css'
 function ProfileDropItem() {
     const full_name = () => {
         let name = localStorage.getItem('first_name') + localStorage.getItem('last_name');
-        if (name === '') return;
+        if (!name) return;
         return <span id='profiledrop_name'>{name}<br /></span>;
     }
 
@@ -15,7 +15,17 @@ function ProfileDropItem() {
     }
 
     const get_avatar = () => {
+        // console.log(localStorage);
         let avatar = localStorage.getItem('avatar');
+        // // console.log(avatar);
+        // let ret_val = avatar ? avatar : defavatar;
+        // // console.log(ret_val);
+        // if (avatar === null) {
+        //     console.log('test2' + avatar);
+        //     return defavatar
+        // };
+        // console.log('test1' + avatar);
+        // return avatar;
         return avatar ? avatar : defavatar;
     }
 
@@ -24,7 +34,7 @@ function ProfileDropItem() {
         <div id='profiledrop_wrap'>
             <img id='profilepic'
                 src={ get_avatar()}
-                alt={"Profile Picture"}
+                alt={"Profile"}
             />
         <p>
         {full_name()}

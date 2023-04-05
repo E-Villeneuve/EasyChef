@@ -87,11 +87,7 @@ function Login() {
                 else {
                     localStorage.setItem('phone_number', '');
                 }
-                
-                localStorage.setItem('avatar', res.data.avatar);
-                
-                
-                
+                if (res.data.avatar) localStorage.setItem('avatar', res.data.avatar);
                 
             }))
             navigate('/');

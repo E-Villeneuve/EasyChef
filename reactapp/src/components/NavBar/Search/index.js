@@ -17,7 +17,7 @@ const Search = () => {
   const ref = useOnclickOutside(() => closeSearch())
 
   return (
-    <Nav className="my-auto" ref={ref}>
+    <Nav className="my-auto" id='navbarsearch' ref={ref}>
       <Form
         className={
           search === false

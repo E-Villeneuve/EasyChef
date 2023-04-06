@@ -13,11 +13,16 @@ export const AuthContext = createContext(null);
 
 const App = () => {
     const [auth, setAuth] = useState(null);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         AOS.init({ duration: 1000 }); // For component fade in/out, not page
-        if (localStorage.getItem('access')) setAuth(true);
-    }, [auth]);
+        const checkAuth = () => {
+            if (localStorage.getItem('access')) setAuth(true);
+            setLoading(false);
+        };
+        checkAuth();
+    }, []);
 
     return (
         <>
@@ -28,13 +33,14 @@ const App = () => {
             crossOrigin="anonymous"
         />
         <Router>
-            <AuthContext.Provider value={{auth: auth, setAuth: setAuth}}>
+            <AuthContext.Provider value={{auth: auth, setAuth: setAuth, 
+                                          loading: loading, setLoading: setLoading}}>
                 <NavBar />
                 <AnimatedRoutes />
             </AuthContext.Provider>
         </Router>
         <Container id='footer_container'>
-        <ToTopBtn></ToTopBtn>
+        <ToTopBtn/>
         <p id='footer'>  
             Copyright © 2023 Easy Chef Incorporated<br />
             All Rights Reserved

@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
+import noimage from '../../images/noimageavailable.png'
 import './recipecard.css'
 
 /* Most Card CSS from: https://www.youtube.com/watch?v=FLt2TveqHQM */
@@ -15,17 +16,15 @@ function RecipeCard(item) {
     //     View
     // </a>
     // </div>
-    const [defaultImage] = useState({});
     return (
     <div className="recipecard" key={item.id}>
         <div className="recipecard-top img_wrap">
             <img
                 src={
-                    defaultImage[item.title] === item.title
-                    ? defaultImage.linkDefault
-                    : item.linkImg
+                    item.linkImg ? item.linkImg : noimage
                 }
                 alt={item.title}
+                id='recipecard_img'
             />
         <h1>{item.title}</h1>
         </div>

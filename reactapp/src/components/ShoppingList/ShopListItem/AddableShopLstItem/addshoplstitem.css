@@ -6,11 +6,12 @@ https://github.com/Ziratsu/React-modal-yt/blob/main/src/Components/Modal/Modal.j
     justify-content: center;
     align-items: center;
     transition: all 0.15s;
+    opacity: 0.8;
 }
 
 .btn-primary#add_card:hover {
     background-color: black;
-    opacity: 0.2;
+    opacity: 0.5;
 }
 
 body.active_addshopitem_popup {
@@ -31,4 +32,9 @@ body.active_addshopitem_popup {
 
 #addshoprecipe_modal_footer {
     justify-content: center;
+}
+
+.addshoprecipe_content {
+    background-color: white!important;
+    background: linear-gradient(24deg, rgba(230, 221, 171, 1), rgb(255, 255, 255) 100.3%)!important;
 }

@@ -204,6 +204,11 @@ class LikeRecipeSerializer(serializers.ModelSerializer):
         instance.likes += 1
         instance.save()
         return instance
+    
+    def delete(self, instance):
+        instance.likes -= 1
+        instance.save()
+        return instance
 
 class FavRecipeSerializer(serializers.ModelSerializer):
     favourited = serializers.ReadOnlyField()
@@ -213,6 +218,11 @@ class FavRecipeSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         instance.favourited += 1
+        instance.save()
+        return instance
+    
+    def delete(self, instance):
+        instance.favourited -= 1
         instance.save()
         return instance
         

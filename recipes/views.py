@@ -73,14 +73,14 @@ class EditRecipeView(UpdateAPIView, DestroyAPIView):
     def get_object(self):
         return get_object_or_404(Recipe, id=self.kwargs['recipe_id'])
 
-class LikeRecipeView(CreateAPIView, UpdateAPIView):
+class LikeRecipeView(CreateAPIView, UpdateAPIView, DestroyAPIView):
     serializer_class = LikeRecipeSerializer
     permission_classes = [IsAuthenticated]
 
     def get_object(self):
         return get_object_or_404(Recipe, id=self.kwargs['recipe_id'])
 
-class FavRecipeView(CreateAPIView, UpdateAPIView):
+class FavRecipeView(CreateAPIView, UpdateAPIView, DestroyAPIView):
     serializer_class = FavRecipeSerializer
     permission_classes = [IsAuthenticated]
 

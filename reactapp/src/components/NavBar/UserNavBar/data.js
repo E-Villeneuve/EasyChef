@@ -1,11 +1,11 @@
 export const test_profile = [
     {
-      id: 1,
-      first_name: 'gusteau',
-      last_name: 'lol',
-      email: 'fat_albert@gmail.com',
-      phone_number: '855-444-8888',
+      id: localStorage.getItem('id'),
+      first_name: localStorage.getItem('first_name'),
+      last_name: localStorage.getItem('last_name'),
+      email: localStorage.getItem('email'),
+      phone_number: localStorage.getItem('phone_number'),
       avatar:
-        'https://media.tenor.com/YvQjG-6UJ5YAAAAC/hour-glass-dog-dog-spin.gif',
+        localStorage.getItem('avatar'),
     },
 ];

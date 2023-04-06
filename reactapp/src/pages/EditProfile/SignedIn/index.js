@@ -7,20 +7,26 @@ import { useState, setState } from 'react';
 
 
 
+
 function EditProfileSignedIn() {
     let [email, setEmail] = useState(localStorage.getItem('email'));
     let [password, setPassword] = useState('');
+    let [newPassword, setNewPassword] = useState('');
+    let [confirmPass, setConfirmPassword] = useState('');
     let [first_name, setFirstName] = useState(localStorage.getItem('first_name'));
     let [last_name, setLastName] = useState(localStorage.getItem('last_name'));
     let [description, setDescription] = useState(localStorage.getItem('description'));
     let [phone_number, setNumber] = useState(localStorage.getItem('phone_number'));
+    let [avatar, setAvatar] = useState(localStorage.getItem('avatar'));
 
     let handleInput = (i) => {
         let {id, value} = i.target;
+        
         if (id === "inputEmailAddress") {
             setEmail(value);
         }
-        if (id === "password") {
+        if (id === "oldPass") {
+            
             setPassword(value);
         }
         if (id === 'inputFirstName') {
@@ -36,6 +42,12 @@ function EditProfileSignedIn() {
         }
         if (id === 'inputPhone') {
             setNumber(value);
+        }
+        if (id === 'newPass') {
+            setNewPassword(value);
+        }
+        if (id === 'confirmPass') {
+            setConfirmPassword(value);
         }
 
     }
@@ -54,57 +66,84 @@ function EditProfileSignedIn() {
         })
         ).then(res => {
             localStorage.setItem('email', res.data.email);
-                if (res.data.first_name) {
-                    localStorage.setItem('first_name', res.data.first_name);
-                }
-                else {
-                    localStorage.setItem('first_name', '');
-                }
-                if (res.data.last_name) {
-                    localStorage.setItem('last_name', res.data.last_name);
-                }
-                else {
-                    localStorage.setItem('last_name', '');
-                }
-                if (res.data.description) {
-                    localStorage.setItem('description', res.data.description);
-                }
-                else {
-                    localStorage.setItem('description', '');
-                }
-                if (res.data.phone_number) {
-                    localStorage.setItem('phone_number', res.data.phone_number);
-                }
-                else {
+            localStorage.setItem('first_name', res.data.first_name);
+            localStorage.setItem('last_name', res.data.last_name);    
+               
+            if (res.data.description) {
+                localStorage.setItem('description', res.data.description);
+            }
+            else {
+                localStorage.setItem('description', '');
+            }
+            if (res.data.phone_number) {
+                localStorage.setItem('phone_number', res.data.phone_number);
+            }
+            else {
                     localStorage.setItem('phone_number', '');
-                }
+            }
         }));
     }
 
-    
-
-        
-    /*
-    let request = {
-        method: 'GET',
-        headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + String(localStorage.getItem('access'))},
+    let uploadPic = () => {
+        document.getElementById('selectedFile').click();
+        console.log(avatar);
     }
-    fetch("http://127.0.0.1:8000/accounts/getinfo/", request)
+
+    let submitPic = () => {
+
+        if (document.getElementById('selectedFile').value) {
+            
+            
+            let formdata = new FormData();
+            formdata.append('avatar', document.getElementById('selectedFile').files[0]);
+
+            
+            let request = {
+                method: 'PATCH',
+                headers: {'Authorization': 'Bearer ' + String(localStorage.getItem('access'))},
+                body: formdata
+            }
+            fetch('http://127.0.0.1:8000/accounts/editprofile/' + String(localStorage.getItem('id')) + '/', request)
+            .then(response => response.json()
+            .then(data => ({
+                data: data,
+                response: response
+            })
+            ).then(res => {
+                console.log(res.data.avatar);
+                setAvatar(res.data.avatar);
+                localStorage.setItem('avatar', res.data.avatar);
+            }));
+            
+                
+            
+            
+        }
+        
+    }
+
+    let submitPass = () => {
+        console.log(password);
+        console.log(localStorage.getItem('password'));
+        if (password === localStorage.getItem('password') && newPassword === confirmPass && newPassword != '') {
+            let request = {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + String(localStorage.getItem('access'))},
+                body: JSON.stringify({'password': newPassword})
+            }
+            fetch('http://127.0.0.1:8000/accounts/editprofile/' + String(localStorage.getItem('id')) + '/', request)
         .then(response => response.json()
         .then(data => ({
             data: data,
+            response: response
         })
         ).then(res => {
-            setID(res.data.id);
-            setEmail(res.data.email);
-            setFirstName(res.data.first_name);
-            setLastName(res.data.last_name);
-            setDescription(res.data.description);
-            setNumber(res.data.phone_number);
+            localStorage.setItem('password', newPassword);
         }));
-    */
+
         
-            
+        }
+    }
             
             return (
                 <>
@@ -119,11 +158,12 @@ function EditProfileSignedIn() {
                             <div className="editprofile card-header">Profile Picture</div>
                             <div className="editprofile card-body text-center">
                                 
-                                <img className="img-account-profile rounded-circle mb-2" src="https://static.tvtropes.org/pmwiki/pub/images/auguste_gusteau.jpg" alt=""/>
+                                <img className="img-account-profile rounded-circle mb-2" src={avatar} alt=""/>
                                
                                 <div className="small font-italic text-muted mb-4">Current Profile Picture</div>
-                                
-                                <button className="btn btn-profile" type="button">Upload new image</button>
+                                {/*Button Based off https://stackoverflow.com/a/14806776 */}
+                                <input type="file" id="selectedFile" onChange={()=>submitPic()} accept='image/*'/>
+                                <button className="btn btn-profile" onClick={()=>uploadPic()}>Upload new image</button>
                             </div>
                         </div>
                     </div>
@@ -187,19 +227,19 @@ function EditProfileSignedIn() {
                         <form id="password-form">
                         <div className="mb-3">
                             <label className="small mb-1" for="oldPass">Old Password</label>
-                            <input className="form-control" id="oldPass" type="password" placeholder="Enter your password"/>
+                            <input className="form-control" id="oldPass" onChange={(i) => handleInput(i)} type="password" value={password} placeholder="Enter your password"/>
                         </div>
         
                         <div className="mb-3">
                           <label className="small mb-1" for="newPass">New Password</label>
-                          <input className="form-control" id="newPass" type="password" placeholder="Enter your new password"/>
+                          <input className="form-control" id="newPass" onChange={(i) => handleInput(i)} type="password" value={newPassword} placeholder="Enter your new password"/>
                         </div>
         
                         <div className="mb-3">
                           <label className="small mb-1" for="confirmPass">Confirm New Password</label>
-                          <input className="form-control" id="confirmPass" type="password" placeholder="Confirm your new password"/>
+                          <input className="form-control" id="confirmPass" onChange={(i) => handleInput(i)} type="password" value={confirmPass} placeholder="Confirm your new password"/>
                         </div>
-                        <button className="btn btn-profile" id="save-password-button" type="button">Change Password</button>
+                        <button className="btn btn-profile" id="save-password-button" onClick={()=>submitPass()} type="button">Change Password</button>
                         </form>
         
                         </div>

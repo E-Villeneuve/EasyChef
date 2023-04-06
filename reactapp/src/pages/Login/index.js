@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useContext } from 'react';
 import { AuthContext } from '../../App';
 import { useState, setState } from 'react';
+import nopic from '../../images/defaultavatar.png';
 
 function Login() {
     const navigate = useNavigate();
@@ -63,18 +64,12 @@ function Login() {
             ).then(res => {
                 localStorage.setItem('id', res.data.id);
                 localStorage.setItem('email', res.data.email);
-                if (res.data.first_name) {
-                    localStorage.setItem('first_name', res.data.first_name);
-                }
-                else {
-                    localStorage.setItem('first_name', '');
-                }
-                if (res.data.last_name) {
-                    localStorage.setItem('last_name', res.data.last_name);
-                }
-                else {
-                    localStorage.setItem('last_name', '');
-                }
+                
+                localStorage.setItem('first_name', res.data.first_name);
+                localStorage.setItem('last_name', res.data.last_name);
+
+                localStorage.setItem('password', password);
+
                 if (res.data.description) {
                     localStorage.setItem('description', res.data.description);
                 }
@@ -87,14 +82,24 @@ function Login() {
                 else {
                     localStorage.setItem('phone_number', '');
                 }
-                
-                localStorage.setItem('avatar', res.data.avatar);
+                if (res.data.avatar) {
+
+                    localStorage.setItem('avatar', res.data.avatar);
+                }
+                else {
+                    localStorage.setItem('avatar', nopic);
+                }
+                    
                 
                 
                 
                 
             }))
+
             navigate('/');
+            /* Reloading page ensures that the navbar is up-to-date */
+            window.location.reload();
+
 
         }
         }));

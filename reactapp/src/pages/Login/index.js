@@ -97,8 +97,9 @@ function Login() {
             }))
 
             navigate('/');
-            /* Reloading page ensures that the navbar is up-to-date */
-            window.location.reload();
+            
+    
+            
 
 
         }

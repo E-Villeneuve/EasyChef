@@ -15,10 +15,15 @@ class SearchIngredientView(ListAPIView): # autocomplete functonality for ingredi
     search_fields = ['name']
     filter_backends = [filters.SearchFilter]
 
-# From: https://betterprogramming.pub/how-to-make-search-fields-dynamic-in-django-rest-framework-72922bfa1543
 class DynamicSearchFilter(filters.SearchFilter):
     def get_search_fields(self, view, request):
-        return request.GET.getlist('search_fields', [])
+        fields = []
+        if request.query_params.get('ingredients') != None: fields.append('ingredients__name')
+        if request.query_params.get('user') != None: fields.extend(['owner__first_name', 'owner__last_name'])
+        if request.query_params.get('recipe') != None: fields.append('name')
+
+        if fields: return fields
+        return super().get_search_fields(view, request)
 
 class SearchView(ListAPIView):
     """
@@ -44,6 +49,7 @@ class SearchView(ListAPIView):
     # Will do partial matches 
     # (matching search must appear somewhere in the name, ingredient, or owner)
     ordering_fields = ['star_rating', 'favourited']
+    search_fields = ['name'] # Default: Search recipe name
 
     def get_queryset(self):
         query_params = self.request.query_params

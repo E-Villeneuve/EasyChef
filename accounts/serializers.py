@@ -22,11 +22,13 @@ class UserSerializer(serializers.ModelSerializer):
 class SignUpSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(required=True, validators=[UniqueValidator(queryset=User.objects.all())])
     password = serializers.CharField(required=True)
-    #password2 = serializers.CharField(required=True)
+    first_name = serializers.CharField(required=True)
+    last_name = serializers.CharField(required=True)
+    
 
     class Meta:
         model = User
-        fields = ['email', 'password']
+        fields = ['email', 'password', 'first_name', 'last_name']
 
     #def validate(self, attrs):
     #    # Maybe add min pass length if necessary
@@ -35,7 +37,7 @@ class SignUpSerializer(serializers.ModelSerializer):
     #    return attrs
 
     def create(self, validated_data):
-        new_user = User.objects.create(email=validated_data['email'])
+        new_user = User.objects.create(email=validated_data['email'], first_name=validated_data['first_name'], last_name=validated_data['last_name'])
         new_user.set_password(validated_data['password'])
         new_user.save()
 
@@ -125,6 +127,14 @@ class LoginSerializer(TokenObtainPairSerializer):
     @classmethod
     def get_token(cls, user):
         return super(LoginSerializer, cls).get_token(user)
+
+class MyProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id', 'email', 'first_name', 'last_name', 'avatar', 'description', 'phone_number', 'password']
+
+    def to_representation(self, instance):
+        return super().to_representation(instance)
 
 class MyRecipesSerializer(serializers.ModelSerializer):
 

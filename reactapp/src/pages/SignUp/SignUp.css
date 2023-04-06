@@ -1,24 +1,17 @@
-/* .card { */
+.signup {
    
-    /* width: 36rem; */
-    /*margin: auto; Added */
-    /* background-color: #cec9aa !important;
+    width: 36rem;
+    margin: auto; 
+    background-color: #cec9aa !important;
     margin-top: 11vh;
-    margin-bottom: 42vh; */
-        
-        
-/* } */
+    margin-bottom: 42vh;
+}
 
-/* body{
-    background-color: #e8e4ce !important;
-    
-    }
-
-.btn-primary {
+.btn-signup {
     justify-content: center !important;
 }
 
-.container {
+.signup-container {
     justify-content: center;
 
-}*/
+}

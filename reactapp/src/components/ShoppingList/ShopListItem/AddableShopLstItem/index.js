@@ -27,11 +27,12 @@ function AddableShopLstItem() {
                 show={popup} 
                 onHide={togglePopup} 
                 id='addshoprecipe_modal'
+                contentClassName = 'addshoprecipe_content'
             >
                 <Modal.Header closeButton>
                     <Modal.Title>Add a recipe to your shopping list</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>
+                <Modal.Body id='addshoprecipe_content'>
                     <Form className="d-flex" role="search" id="shop_search">
                         <Form.Control
                             type="search"

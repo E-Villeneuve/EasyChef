@@ -6,8 +6,6 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import ProfileDropItem from '../ProfileDropItem';
 import Search from "../Search";
-
-import { test_profile } from './data';
 import {LinkContainer} from 'react-router-bootstrap';
 
 // Framework from https://react-bootstrap.github.io/components/navbar/
@@ -15,7 +13,7 @@ function UserNavBar( ) {
 
   return (
     <Navbar bg='dark' variant='dark' expand="lg" id='globalnavbar'>
-      <Container fluid>
+      <Container fluid id='nav_container'>
         <LinkContainer to='/'>
             <Nav.Link id='nav-brand'>
                 <Navbar.Brand className='nav-link'>
@@ -32,11 +30,23 @@ function UserNavBar( ) {
             <LinkContainer to='/createrecipe'>
                 <Nav.Link>Create Recipes</Nav.Link>
             </LinkContainer>
-                <NavDropdown title="My Profile">
+            <LinkContainer to='/search'>
+                <Nav.Link>Advanced Search</Nav.Link>
+            </LinkContainer>
+            <LinkContainer to='/search'>
+                <Nav.Link id='popular'>Popular Recipes</Nav.Link>
+            </LinkContainer>
+          </Nav>
+          <div id='right_end'>
+            <Search />
+            <Nav className='justify-content-end' id='navbar_dropdown'>
+            <NavDropdown 
+                title="My Profile" 
+                align='end'>
                     <NavDropdown.Item id='fstprofileitem' className='navbar_drop_item'>
                         <LinkContainer to='/profile'>
                             <Nav.Link>
-                                {ProfileDropItem(test_profile[0])}
+                                {ProfileDropItem()}
                             </Nav.Link>
                         </LinkContainer>
                     </NavDropdown.Item>
@@ -69,14 +79,8 @@ function UserNavBar( ) {
                         </LinkContainer>
                     </NavDropdown.Item>
                 </NavDropdown>
-            <LinkContainer to='/search'>
-                <Nav.Link>Advanced Search</Nav.Link>
-            </LinkContainer>
-            <LinkContainer to='/search'>
-                <Nav.Link id='popular'>Popular Recipes</Nav.Link>
-            </LinkContainer>
-          </Nav>
-          <Search />
+        </Nav>
+        </div>
         </Navbar.Collapse>
       </Container>
     </Navbar>

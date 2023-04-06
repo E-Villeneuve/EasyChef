@@ -5,16 +5,38 @@ import Button from 'react-bootstrap/Button';
 import { useNavigate } from "react-router-dom";
 import { useContext } from 'react';
 import { AuthContext } from '../../App';
+import { useState, setState } from 'react';
+import nopic from '../../images/defaultavatar.png';
 
-const Login = () => {
+function Login() {
     const navigate = useNavigate();
     const { setAuth } = useContext(AuthContext);
 
-    let submit = () => { 
+    let [email_error, setEmailError] = useState('');
+    let [email, setEmail] = useState('');
+    let [password, setPassword] = useState('');
+
+
+    let handleInput = (i) => {
+        let {id, value} = i.target;
+        if (id === "email") {
+
+            setEmail(value);
+
+        }
+        if (id === "password") {
+            setPassword(value);
+        }
+    }
+
+    let submit = () => {
+        if (email && password) {
+
+        
         let request = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json'},
-            body: JSON.stringify({ 'email': 'test2@testing.com', 'password': 'test2'}) // temporary
+            body: JSON.stringify({ 'email': email, 'password': password})
         }
         /* Response Body obtained from promise via https://stackoverflow.com/a/37555432 */
         fetch("http://127.0.0.1:8000/accounts/login/", request)
@@ -27,35 +49,87 @@ const Login = () => {
         if (res.response.ok) {
             localStorage.setItem('access', res.data.access);
             localStorage.setItem('refresh', res.data.refresh);
-            setAuth(true);
+            
+            let request = {
+                method: 'GET',
+                headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + String(res.data.access)},
+            }
+            
+            setAuth(true); 
+            fetch("http://127.0.0.1:8000/accounts/getinfo/", request)
+            .then(response => response.json()
+            .then(data => ({
+                data: data,
+            })
+            ).then(res => {
+                localStorage.setItem('id', res.data.id);
+                localStorage.setItem('email', res.data.email);
+                
+                localStorage.setItem('first_name', res.data.first_name);
+                localStorage.setItem('last_name', res.data.last_name);
+
+                localStorage.setItem('password', password);
+
+                if (res.data.description) {
+                    localStorage.setItem('description', res.data.description);
+                }
+                else {
+                    localStorage.setItem('description', '');
+                }
+                if (res.data.phone_number) {
+                    localStorage.setItem('phone_number', res.data.phone_number);
+                }
+                else {
+                    localStorage.setItem('phone_number', '');
+                }
+                if (res.data.avatar) {
+
+                    localStorage.setItem('avatar', res.data.avatar);
+                }
+                else {
+                    localStorage.setItem('avatar', nopic);
+                }
+                    
+                
+                
+                
+                
+            }))
+
             navigate('/');
+            
+    
+            
+
 
         }
         }));
 
     }
+}
 
 
     return (
         <>
-        <div className="container">
+        <div className="login-container">
 
     
-    <div className="card">
+    <div className={'card login'}>
         <div className="card-header">Account Details</div>
         <div className="card-body">
-            <form id="signup-form">
+            <form id="login-form">
 
-                <div className="mb-3">
-                    <label className="small mb-1" for="wantedEmail">Email</label>
-                    <input className="form-control" id="wantedEmail" required type="email" placeholder="Enter your email" />
+            <div className="mb-3">
+                    <label className="small mb-1" for="Email">Email</label>
+                    <input className="form-control" id="email" required type="email" value={email} onChange={(i) => handleInput(i)} placeholder="Enter your email" />
+                    <label className="small mb-1" for="Email">{email_error}</label>
                 </div>
                 <div className="mb-3">
-                    <label className="small mb-1" for="wantedPassword">Password</label>
-                    <input className="form-control" id="wantedPassword" required type="password" placeholder="Enter your password" />
+                    <label className="small mb-1" for="Password">Password</label>
+                    <input className="form-control" id="password" required type="password" value={password} onChange={(i) => handleInput(i)} placeholder="Enter your password" />
                 </div>
 
-                <button className="btn btn-primary" id="register-button" type="button" onClick={()=>submit()}>Register</button>
+                <button className="btn btn-primary btn-login" id="button" type="button" onClick={()=>submit()}>Login</button>
             </form>
             <span>Don't have an account? <a href="/signup">Register here!</a></span>
         </div>

@@ -4,20 +4,30 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { useState, setState } from 'react';
 
+
 function SignUp() {
     /*Value setting obtained primarily from 
     https://www.section.io/engineering-education/registration-form-react.js-firebase/#creating-a-registration-form */
-    let [email_error, setEmailError] = useState(null);
-    let [email, setEmail] = useState(null);
-    let [password, setPassword] = useState(null);
-    let [account_status, setStatus] = useState(null);
+    let [email_error, setEmailError] = useState('');
+    let [email, setEmail] = useState('');
+    let [password, setPassword] = useState('');
+    let [firstName, setFirstName] = useState('');
+    let [lastName, setLastName] = useState('');
+    let [account_status, setStatus] = useState('');
 
     let handleInput = (i) => {
         let {id, value} = i.target;
         if (id === "email") {
 
             setEmail(value);
+
             setEmailError("");
+        }
+        if (id === 'first_name') {
+            setFirstName(value);
+        }
+        if (id === 'last_name') {
+            setLastName(value);
         }
         if (id === "password") {
             setPassword(value);
@@ -31,7 +41,7 @@ function SignUp() {
             let request = {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json'},
-                body: JSON.stringify({ 'email': email, 'password': password})
+                body: JSON.stringify({ 'email': email, 'password': password, 'first_name': firstName, 'last_name': lastName})
             }
             /* Response Body obtained from promise via https://stackoverflow.com/a/37555432 */
             fetch("http://127.0.0.1:8000/accounts/signup/", request)
@@ -55,14 +65,13 @@ function SignUp() {
     return (
         <>
         
-        <div className="container">
+        <div className="signup-container">
         <h1>{account_status}</h1>
         
-    <div className="card">
+    <div className={'card signup'}>
         <div className="card-header">Account Details</div>
         <div className="card-body">
             <form id="signup-form">
-                
                
                 <div className="mb-3">
                     <label className="small mb-1" for="Email">Email</label>
@@ -70,11 +79,19 @@ function SignUp() {
                     <label className="small mb-1" for="Email">{email_error}</label>
                 </div>
                 <div className="mb-3">
+                    <label className="small mb-1" for="first_name">First Name</label>
+                    <input className="form-control" id="first_name" required type="text" value={firstName} onChange={(i) => handleInput(i)} placeholder="Enter your first name" />
+                </div>
+                <div className="mb-3">
+                    <label className="small mb-1" for="last_name">Last Name</label>
+                    <input className="form-control" id="last_name" required type="text" value={lastName} onChange={(i) => handleInput(i)} placeholder="Enter your last name" />
+                </div>
+                <div className="mb-3">
                     <label className="small mb-1" for="Password">Password</label>
                     <input className="form-control" id="password" required type="password" value={password} onChange={(i) => handleInput(i)} placeholder="Enter your password" />
                 </div>
 
-                <button className="btn btn-primary" id="register-button" type="button" onClick={()=>submit()}>Register</button>
+                <button className="btn btn-primary btn-signup" id="register-button" type="button" onClick={()=>submit()}>Register</button>
             </form>
             <span>Already have an account? <a href="/login">Log in here!</a></span>
         </div>

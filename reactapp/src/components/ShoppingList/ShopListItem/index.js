@@ -6,7 +6,7 @@ function ShopListItem(item) {
     // const [defaultImage] = useState({});
     return (
         <div className='shop_item_container'>
-            <div className="card shoplistcard shop_item recipe" id="fst_item">
+            <div className="card shoplistcard shop_item recipe">
                 <div className="shop_recipe_item">
                     <div className="shop_item_pic_area"> 
                     {/* <!-- Egg sandwich information from https://www.foodnetwork.com/recipes/fried-egg-sandwich-3529179 --> */}

@@ -22,7 +22,7 @@ const AnimatePage = ({children}) => {
             initial="initial"
             animate="animate"
             exit="exit"
-            transition= { {duration: 0.8} }
+            transition= { {duration: 0.4} }
         >
             {children} {/* "children" the specific page */}
         </motion.div>

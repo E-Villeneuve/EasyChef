@@ -1,8 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Baloo+2&family=Courgette&family=Dancing+Script&family=Lobster+Two&display=swap');
 
-@media screen and (min-width: 991px) {
+@media screen and (max-width: 992px) {
     #navbar-items {
         margin-left: 0.3em!important;
+    }
+    #navbar_dropdown {
+        margin-left: 0.5em!important;
     }
 }
 
@@ -149,4 +152,15 @@ https://stackoverflow.com/questions/12115833/adding-a-slide-effect-to-bootstrap-
 
 #slogan {
     font-size: 15px!important;
+}
+
+/* #navbar_dropdown {
+    margin-right: 6em;
+} */
+
+#right_end {
+    display: flex;
+    flex-flow: column;
+    margin-right: 1em;
+    margin-bottom: 0.4em;
 }

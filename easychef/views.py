@@ -3,11 +3,27 @@ from rest_framework import filters
 from recipes.models import Recipe
 from rest_framework.generics import ListAPIView
 from rest_framework.permissions import AllowAny
-from recipes.serializers import RecipeSerializer
+from recipes.serializers import RecipeSerializer, RecipeIngredientSerializer
 from django.shortcuts import render
 
 def index(request): return render(request, 'index.html')
 def home(request): return render(request, 'home.html')
+
+class SearchIngredientView(ListAPIView): # autocomplete functonality for ingredients
+    serializer_class = RecipeIngredientSerializer
+    permission_classes = [AllowAny]
+    search_fields = ['name']
+    filter_backends = [filters.SearchFilter]
+
+class DynamicSearchFilter(filters.SearchFilter):
+    def get_search_fields(self, view, request):
+        fields = []
+        if request.query_params.get('ingredients') != None: fields.append('ingredients__name')
+        if request.query_params.get('user') != None: fields.extend(['owner__first_name', 'owner__last_name'])
+        if request.query_params.get('recipe') != None: fields.append('name')
+
+        if fields: return fields
+        return super().get_search_fields(view, request)
 
 class SearchView(ListAPIView):
     """
@@ -28,12 +44,12 @@ class SearchView(ListAPIView):
     queryset = Recipe.objects.all().order_by('id')
     serializer_class = RecipeSerializer
     permission_classes = [AllowAny]
-    filter_backends = [filters.OrderingFilter, filters.SearchFilter]
+    filter_backends = [filters.OrderingFilter, DynamicSearchFilter]
     
     # Will do partial matches 
     # (matching search must appear somewhere in the name, ingredient, or owner)
-    search_fields = ['owner__email', 'name', 'ingredients__name']
     ordering_fields = ['star_rating', 'favourited']
+    search_fields = ['name'] # Default: Search recipe name
 
     def get_queryset(self):
         query_params = self.request.query_params

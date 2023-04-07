@@ -16,18 +16,18 @@ Including another URLconf
 from django.conf import settings
 from django.contrib import admin
 from django.urls import include, path
-from easychef.views import SearchView
+from easychef.views import SearchView, SearchIngredientView
 from django.conf import settings
 from django.conf.urls.static import static
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from . import views
 
 urlpatterns = [
-    path('', views.home, name='home'),
     path('admin/', admin.site.urls),
     path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('accounts/', include('accounts.urls')),
     path('recipes/', include('recipes.urls')),
     path('search/', SearchView.as_view(), name='search'),
+    path('searchingredient/', SearchIngredientView.as_view(), name='searchingredient'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

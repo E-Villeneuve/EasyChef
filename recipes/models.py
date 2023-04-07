@@ -2,16 +2,18 @@ from django.db import models
 from django.db.models import CASCADE
 from django.conf import settings
 from django.core.validators import MaxValueValidator, FileExtensionValidator, MinValueValidator
+from multiselectfield import MultiSelectField
 
 # Side note:
 # GenericRelation seems good to look at
 # See https://stackoverflow.com/questions/47707377/django-order-objects-based-on-likes-for-popular-feed
 # from django.contrib.contenttypes.fields import GenericRelation
 
+class Diets(models.TextChoices):
+    VEGAN = 'VE', 'Vegan'
+    HALAL = 'HA', 'Halal'
+
 class RecipeDiet(models.Model):
-    class Diets(models.TextChoices):
-        VEGAN = 'VE', 'Vegan'
-        HALAL = 'HA', 'Halal'
 
     diet = models.CharField(max_length=2, choices=Diets.choices, unique=True)
 
@@ -37,7 +39,7 @@ class Recipe(models.Model):
     likes = models.PositiveIntegerField(default=0)  # could be BigInteger too, but the range of the Integer is very large already
     cookingtimetag = models.CharField(max_length=7, choices=CookingTimeTags.choices, blank=True)
     cuisine = models.CharField(max_length=7, choices=Cuisines.choices, blank=True)
-    diets = models.ManyToManyField(to=RecipeDiet, blank=True)
+    diets = MultiSelectField(choices=Diets.choices, blank=True, max_length=5, max_choices=2)
     favourited = models.PositiveIntegerField(default=0, editable=False)
 
     prep_time = models.TimeField()  # Replace w/ TimeField(?)

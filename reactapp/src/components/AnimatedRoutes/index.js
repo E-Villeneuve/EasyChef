@@ -11,6 +11,7 @@ import Login from '../../pages/Login';
 import EditProfile from '../../pages/EditProfile';
 import Unauthorized from '../../pages/Unauthorized';
 import Logout from '../../pages/Logout';
+import Loading from '../../pages/Loading';
 
 // Idea of separating AnimatedRoutes from App.js from:
 // https://www.youtube.com/watch?v=FdrEjwymzdY
@@ -22,9 +23,10 @@ function AnimatedRoutes() {
             const { auth, loading } = useContext(AuthContext);
 
             if (loading) {
-                return <Spinner animation="border" role="status">
-                            <span className="visually-hidden">Loading...</span>
-                        </Spinner>
+                return <div>
+                    <Loading />
+                    <Spinner animation="border" />
+                    </div>
             }
 
             return auth ? (

@@ -98,8 +98,18 @@
 }
 
 .shop_item_button {
+    color: black!important;
+    margin: auto;
+    transition: all 0.15s;
+    background: linear-gradient(24deg, rgba(245, 246, 220, 0.87), rgba(255, 255, 255, 0.479) 91.23%)!important;
+    border-color: rgba(0, 0, 0, 0.2)!important;
     margin-top: 0.5em;
     width: 100%;
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3)!important;
+}
+
+.shop_item_button:hover {
+    background: rgba(46, 44, 44, 0.1)!important;
 }
 
 .shop_item_pic_area {
@@ -124,6 +134,12 @@
     border: 0!important;
     margin-top: 0.5em!important;
     margin-right: 0.5em!important;
+    transition: all 0.15s;
+    opacity: 0.5;
+}
+
+#close_item:hover {
+    opacity: 0.8;
 }
 
 #brief_info {

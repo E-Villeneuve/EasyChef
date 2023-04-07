@@ -6,9 +6,6 @@ from rest_framework.permissions import AllowAny
 from recipes.serializers import RecipeSerializer, RecipeIngredientSerializer
 from django.shortcuts import render
 
-def index(request): return render(request, 'index.html')
-def home(request): return render(request, 'home.html')
-
 class SearchIngredientView(ListAPIView): # autocomplete functonality for ingredients
     serializer_class = RecipeIngredientSerializer
     permission_classes = [AllowAny]

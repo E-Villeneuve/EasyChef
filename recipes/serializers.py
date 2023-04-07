@@ -118,7 +118,6 @@ class RecipeSerializer(serializers.ModelSerializer):
     
     def update(self, instance, validated_data):
         user = self.context['request'].user
-        #print(user.id)
 
         if user.id != instance.owner.id:
             raise serializers.ValidationError({"authorize": "No Permission"})
@@ -186,7 +185,7 @@ class RecipeSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
         orig_rep = super().to_representation(instance)
         rep = {
-            'Recipe Details': orig_rep,
+            'recipe_details': orig_rep,
             'Ingredients': self.get_ingredients(instance),
             'Instructions': self.get_steps(instance),
             'Images': self.get_images(instance),

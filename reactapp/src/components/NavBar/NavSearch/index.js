@@ -9,7 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import './searchstyle.css';
 
-const Search = () => {
+const NavSearch = () => {
   const [search, setSearch] = useState()
 
   const toggle = () => setSearch(true)
@@ -71,4 +71,4 @@ const Search = () => {
   )
 }
 
-export default Search
+export default NavSearch

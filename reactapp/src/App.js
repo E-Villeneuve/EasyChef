@@ -17,12 +17,21 @@ const App = () => {
 
     useEffect(() => {
         AOS.init({ duration: 1000 }); // For component fade in/out, not page
-        const checkAuth = () => {
+
+        const checkAuth = () => { // Check if user has authorization
             if (localStorage.getItem('access')) setAuth(true);
             setLoading(false);
         };
+
+        // const checkUserInfo = () => { // Check if user has info loaded (if signed in)
+        //     if (auth && (localStorage.getItem('first_name') === null ||
+        //         localStorage.getItem('last_name') === null)) {
+        //         setLoading(true);
+        //     }
+        // }
+
         checkAuth();
-    }, []);
+    }, [auth]);
 
     return (
         <>

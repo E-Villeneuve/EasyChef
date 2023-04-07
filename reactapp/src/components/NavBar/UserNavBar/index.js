@@ -5,7 +5,7 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import ProfileDropItem from '../ProfileDropItem';
-import Search from "../Search";
+import NavSearch from "../NavSearch";
 import {LinkContainer} from 'react-router-bootstrap';
 
 // Framework from https://react-bootstrap.github.io/components/navbar/
@@ -38,7 +38,7 @@ function UserNavBar( ) {
             </LinkContainer>
           </Nav>
           <div id='right_end'>
-            <Search />
+            <NavSearch />
             <Nav className='justify-content-end' id='navbar_dropdown'>
             <NavDropdown 
                 title="My Profile" 

@@ -3,7 +3,7 @@ import '../navbar.css';
 import '../../globals.css';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import Search from "../Search";
+import NavSearch from "../NavSearch";
 import {LinkContainer} from 'react-router-bootstrap';
 
 // Framework from https://react-bootstrap.github.io/components/navbar/
@@ -40,7 +40,7 @@ function GuestNavBar() {
                 <Nav.Link id='popular'>Popular Recipes</Nav.Link>
             </LinkContainer>
           </Nav>
-          <Search />
+          <NavSearch />
         </Navbar.Collapse>
       </Container>
     </Navbar>

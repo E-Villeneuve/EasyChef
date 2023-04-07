@@ -23,15 +23,19 @@ const App = () => {
             setLoading(false);
         };
 
-        // const checkUserInfo = () => { // Check if user has info loaded (if signed in)
-        //     if (auth && (localStorage.getItem('first_name') === null ||
-        //         localStorage.getItem('last_name') === null)) {
-        //         setLoading(true);
-        //     }
-        // }
+        const checkUserInfo = () => { // Check if user has info loaded (if signed in)
+            // console.log(auth);
+            // console.log(localStorage.getItem('first_name'));
+            // console.log(localStorage.getItem('last_name'));
+            if (localStorage.getItem('access') && (localStorage.getItem('first_name') === null ||
+                localStorage.getItem('last_name') === null)) {
+                setLoading(true);
+            }
+        }
 
         checkAuth();
-    }, [auth]);
+        checkUserInfo();
+    }, [auth, loading]);
 
     return (
         <>

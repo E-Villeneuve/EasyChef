@@ -54,3 +54,7 @@ body{/*margin-top:20px;*/
 .editprofile {
     background-color: #cec9aa !important;
 }
+
+#selectedFile {
+    display: none;
+}

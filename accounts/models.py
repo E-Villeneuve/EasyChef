@@ -56,8 +56,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     - date_joined
     """
     email = models.EmailField(unique=True) # "username" = email
-    first_name = models.CharField(max_length=255, null=True, blank=True)
-    last_name = models.CharField(max_length=255, null=True, blank=True)
+    first_name = models.CharField(max_length=255)
+    last_name = models.CharField(max_length=255)
     avatar = models.ImageField("", upload_to="avatarimages/", height_field=None, # Should have a default, if not specified
                                    width_field=None, max_length=None, null=True, blank=True)
     description = models.TextField(null=True, blank=True)

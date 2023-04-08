@@ -6,6 +6,6 @@ class LstOwner(permissions.BasePermission):
         obj is a <ShopLstRecipe>
         """
         user = request.user
-        if request.method in ('DELETE', 'PUT', 'PATCH') and user == obj.lst.owner:
+        if user == obj.lst.owner:
             return True
         return False

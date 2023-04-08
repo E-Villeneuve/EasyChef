@@ -186,10 +186,10 @@ class RecipeSerializer(serializers.ModelSerializer):
         orig_rep = super().to_representation(instance)
         rep = {
             'recipe_details': orig_rep,
-            'Ingredients': self.get_ingredients(instance),
-            'Instructions': self.get_steps(instance),
-            'Images': self.get_images(instance),
-            'Comments': self.get_comments(instance)
+            'ingredients': self.get_ingredients(instance),
+            'instructions': self.get_steps(instance),
+            'images': self.get_images(instance),
+            'comments': self.get_comments(instance)
         }
         return rep
 
@@ -319,8 +319,6 @@ class RecipeIngredientSerializer(serializers.ModelSerializer):
         instance.save()
         return instance
 
-
-
 class ShopListRecipeSerializer(serializers.ModelSerializer):
     class Meta:
         model = ShopLstRecipe
@@ -335,10 +333,10 @@ class ShopListRecipeSerializer(serializers.ModelSerializer):
         servings = orig_rep.get('serving', None)
 
         rep = {
-            'Recipe name': orig_rep.get('name', None),
-            'ShopListRecipe id': orig_rep.get('id', None),
-            'Servings': orig_rep.get('serving', None),
-            'Ingredients': collect_ingredients_x(orig_recipe, servings),
+            'recipe_name': orig_rep.get('name', None),
+            'shoplstrecipe_id': orig_rep.get('id', None),
+            'servings': orig_rep.get('serving', None),
+            'ingredients': collect_ingredients_x(orig_recipe, servings),
         }
 
         return rep
@@ -375,10 +373,10 @@ class ShoppingLstSerializer(serializers.ModelSerializer):
         orig_rep = super().to_representation(instance)
 
         rep = {
-            'Shopping list id': instance.id,
-            'Shopping list owner': orig_rep.get('owner', None),
-            'Recipes Details': orig_rep.get('recipes', None),
-            'Total Ingredients': self.get_total_ingredients(instance),
+            'shop_lst_id': instance.id,
+            'shop_lst_owner': orig_rep.get('owner', None),
+            'recipes_details': orig_rep.get('recipes', None),
+            'total_ingredients': self.get_total_ingredients(instance),
         }
 
         return rep
@@ -386,7 +384,7 @@ class ShoppingLstSerializer(serializers.ModelSerializer):
 class ShopListRecipeAddSerializer(serializers.ModelSerializer):
     class Meta:
         model = ShopLstRecipe
-        fields = ['original_recipe', 'serving']
+        fields = ['id', 'original_recipe', 'serving']
 
     def create(self, validated_data):
         if 'original_recipe' in validated_data:
@@ -407,4 +405,3 @@ class ShopListEditRecipeSerializer(serializers.ModelSerializer):
 class ShopListDeleteRecipeSerializer(serializers.ModelSerializer):
     class Meta:
         model = ShopLstRecipe
-

@@ -5,7 +5,7 @@ from recipes.views import (AddRecipeView, RecipeView, RecipesView,RecipeCommentV
                            RecipeCommentImageView, EditRecipeView, ShopListAddRecipeView,
                            ShopListEditRecipeView, ShopListDeleteRecipeView, ShopListAddRecipeView,
                            ShoppingListView, RecipeCopyView, RecipeIngredientsView, RecipeIngredientView, LikeRecipeView,
-                           FavRecipeView)
+                           FavRecipeView, ShopListViewRecipeView)
 
                            
 app_name = 'recipes'
@@ -34,5 +34,6 @@ urlpatterns = [
     path('myshoppinglist/add/', ShopListAddRecipeView.as_view(), name="addmyshoppinglist"),
     path('myshoppinglist/edit/<int:pk>/', ShopListEditRecipeView.as_view(), name="editmyshoppinglist"),
     path('myshoppinglist/delete/<int:pk>/', ShopListDeleteRecipeView.as_view(), name="deletemyshoppinglist"),
+    path('myshoppinglist/<int:pk>/', ShopListViewRecipeView.as_view(), name="viewshoplstrecipe"),
 
 ]

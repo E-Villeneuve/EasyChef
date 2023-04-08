@@ -9,8 +9,8 @@
     align-items: center;
     margin: auto;
     font-family: 'Baloo 2', cursive!important;
-    position: relative;
     text-align: center;
+    flex-flow: column;
 }
 
 #unauth_title {

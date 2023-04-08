@@ -88,10 +88,7 @@ function Login() {
                 }
                 else {
                     localStorage.setItem('avatar', nopic);
-                }
-                    
-                
-                
+                }            
                 
                 
             }))

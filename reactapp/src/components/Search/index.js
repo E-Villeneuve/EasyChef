@@ -1,31 +1,40 @@
 import './search.css';
 import  '../globals.css';
 import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
+import reactStringReplace from 'react-string-replace';
 import { useEffect, useState, useRef } from 'react';
 
-function Search(onChangeFunc, placehold_text, set_id) {
+function Search(onChangeFunc, placehold_text, set_id,
+                onClickFunc) {
 
     // Some help w/ states and on funcs
     // from https://www.youtube.com/watch?v=EpE6TU58cPw
-    // TODO: make dropdown disappear when clicking outside (involves useRef)
 
     const [value, setValue] = useState('');
     const [ suggestions, setSuggestions] = useState([]);
     const [showSuggestions, setShowSuggestions] = useState(false);
+    const autocompleteRef = useRef();
 
-    const handleSuggestionClick = (suggestion) => {
-        setValue(suggestion);
-        setShowSuggestions(false);
-    }
+    useEffect(() => {
+        const handleClick = (event) => { // Clicks outside of area disable suggestions from showing
+            if (autocompleteRef.current && !autocompleteRef.current.contains(event.target))
+            setShowSuggestions(false);
+        }
+        document.addEventListener('click', handleClick);
+        return () => {
+            document.removeEventListener('click', handleClick);
+        }
+    }, [onChangeFunc, onClickFunc])
 
     return (
-        <div id={set_id}>
+        <div id={set_id} ref={autocompleteRef}>
             <Form className="d-flex" role="search" id="searchbar">
                 <Form.Control
                     type="search"
                     placeholder = {placehold_text}
-                    onChange={(e) => onChangeFunc(e, setSuggestions, setShowSuggestions)}
+                    onChange={(e) => {
+                        onChangeFunc(e, setSuggestions, setShowSuggestions);
+                        setValue(e.target.value)}}
                     onFocus={() => setShowSuggestions(true)}
                 />
             </Form>
@@ -33,9 +42,11 @@ function Search(onChangeFunc, placehold_text, set_id) {
                 {showSuggestions && (
                     <ul className='searchsuggestions'>
                         {suggestions.map(suggestion => (
-                            <li onClick={() => handleSuggestionClick(suggestion.recipe_details.name)} 
+                            <li onClick={() => onClickFunc(suggestion.recipe_details.id,
+                                                            setShowSuggestions)} 
                                 key={suggestion.recipe_details.name}>
-                                {suggestion.recipe_details.name}
+                                {reactStringReplace(suggestion.recipe_details.name, value, (match, i) =>
+                                <b>{match}</b>)}
                             </li>
                         ))}
                     </ul>

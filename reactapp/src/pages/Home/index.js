@@ -14,7 +14,7 @@ import "aos/dist/aos.css";
 
 const Home = () => {
     useEffect(() => {
-        AOS.init({ duration: 1000 });
+        AOS.init({ duration: 500 });
     }, []);
 
     const aboutref = useRef(null);

@@ -1,11 +1,12 @@
 import './shopitem.css';
 import  '../../globals.css';
-import ShopIngredientsList from './ShopIngredientsList';
+import Dropdown from 'react-bootstrap/Dropdown';
+import Button from 'react-bootstrap/Button';
 
-function ShopListItem(item) {
-    // const [defaultImage] = useState({});
+function ShopListItem(item, delFunc, changeServing) {
+
     return (
-        <div className='shop_item_container'>
+        <div className='shop_item_container' data-aos="flip-left" data-aos-offset='0px'>
             <div className="card shoplistcard shop_item recipe">
                 <div className="shop_recipe_item">
                     <div className="shop_item_pic_area"> 
@@ -16,32 +17,49 @@ function ShopListItem(item) {
                             className="shop_item_pic"
                         />
                     </div>
-                    <p className="recipe_name">Egg sandwich</p>
+                    <p className="recipe_name">{item.recipe_name}</p>
                     <div className="shop_item_details">
-                        <ul id="brief_info">
-                            <li>
-                                <div className="servings">
-                                    <div className="col-auto">
-                                    <label for="inputserving" className="col-form-label">Servings:</label>
-                                    </div>
-                                    <div className="col-auto">
-                                    <input type="text" id="inputserving" value="1" className="form-control inputserving" aria-describedby="passwordHelpInline"/>
-                                    </div>
+                        <div id="brief_info">
+                            <div className="servings">
+                                <div className="col-auto">
+                                <label className="col-form-label">Servings:</label>
                                 </div>
-                            </li>
-                            <li>Cooking time: 20 mins</li>
-                        </ul>
-                        <a className="btn btn-secondary shop_item_button" type="button" aria-expanded="false" href="recipe.html">
-                            Details
-                        </a>
-                        <div className="dropdown-center">
-                            <button className="btn btn-secondary dropdown-toggle shop_item_button" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Ingredients
-                            </button>
-                            {ShopIngredientsList(item)}
+                                <div className="col-auto">
+                                <input type="text" 
+                                        id="inputserving" 
+                                        defaultValue={item.servings ? item.servings : ''} 
+                                        className="form-control inputserving"
+                                        onBlur={(e) => changeServing(e, item)}/>
+                                </div>
+                            </div>
+
+                            Cooking time: {item.cook_time} mins
                         </div>
+                        {/* reminder to put in linkcontainer here */}
+                        <Button className="shop_item_button" href="recipe.html">
+                            Details
+                        </Button>
+                        <Dropdown>
+                            <Dropdown.Toggle className="shop_item_button">
+                            Ingredients
+                            </Dropdown.Toggle>
+                            <Dropdown.Menu>
+                                {Object.keys(item.ingredients).map((key, index) => 
+                                <Dropdown.Item 
+                                    as="p" 
+                                    className="dropdown-item" 
+                                    key={key}>
+                                        {item.ingredients[key]} {key}
+                                </Dropdown.Item>)}
+                            </Dropdown.Menu>
+                        </Dropdown>
                     </div>
-                    <button className="btn btn-secondary plus" type="button" id="close_item" aria-expanded="false"></button>
+                    <Button 
+                        id='close_btn'
+                        className='trans_back'
+                        onClick={() => delFunc(item.shoplstrecipe_id)}>
+                        <span id='close_item' className='plus'></span>
+                    </Button>
                 </div>
             </div>
         </div>

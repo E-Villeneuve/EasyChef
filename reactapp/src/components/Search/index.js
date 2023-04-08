@@ -1,11 +1,9 @@
 import './search.css';
 import  '../globals.css';
 import Form from 'react-bootstrap/Form';
-import reactStringReplace from 'react-string-replace';
 import { useEffect, useState, useRef } from 'react';
 
-function Search(onChangeFunc, placehold_text, set_id,
-                onClickFunc) {
+function Search(onChangeFunc, placehold_text, set_id, searchResults) {
 
     // Some help w/ states and on funcs
     // from https://www.youtube.com/watch?v=EpE6TU58cPw
@@ -24,7 +22,7 @@ function Search(onChangeFunc, placehold_text, set_id,
         return () => {
             document.removeEventListener('click', handleClick);
         }
-    }, [onChangeFunc, onClickFunc])
+    }, [onChangeFunc])
 
     return (
         <div id={set_id} ref={autocompleteRef}>
@@ -38,20 +36,7 @@ function Search(onChangeFunc, placehold_text, set_id,
                     onFocus={() => setShowSuggestions(true)}
                 />
             </Form>
-            <div id='searchresults'>
-                {showSuggestions && (
-                    <ul className='searchsuggestions'>
-                        {suggestions.map(suggestion => (
-                            <li onClick={() => onClickFunc(suggestion.recipe_details.id,
-                                                            setShowSuggestions)} 
-                                key={suggestion.recipe_details.name}>
-                                {reactStringReplace(suggestion.recipe_details.name, value, (match, i) =>
-                                <b>{match}</b>)}
-                            </li>
-                        ))}
-                    </ul>
-                )}
-            </div>
+            {searchResults(showSuggestions, suggestions, setShowSuggestions, value)}
         </div>
     );
   }

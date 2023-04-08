@@ -1,9 +1,9 @@
 import { Navigate } from "react-router-dom";
 import { useContext } from 'react';
-import { AuthContext } from '../../App';
+import { UserContext } from '../../App';
 
 function Logout() {
-    const { setAuth } = useContext(AuthContext);
+    const { setAuth } = useContext(UserContext);
 
     const logout = () => {
         localStorage.clear();

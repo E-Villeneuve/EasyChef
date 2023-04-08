@@ -8,65 +8,63 @@ import Loading from './pages/Loading';
 import AnimatedRoutes from './components/AnimatedRoutes';
 import ToTopBtn from './components/ToTopBtn';
 import { useState } from 'react';
+import defavatar from './images/defaultavatar.png';
 
 import AOS from "aos";
 
-export const AuthContext = createContext(null);
+export const UserContext = createContext(null);
 
 const App = () => {
     const [auth, setAuth] = useState(null);
     const [loading, setLoading] = useState(true);
-    // const [userReady, setUserReady] = useState(false);
+    const [firstName, setFirstName] = useState(null);
+    const [lastName, setLastName] = useState(null);
+    const [phoneNum, setPhoneNum] = useState('');
+    const [avatar, setAvatar] = useState(null);
+    const [email, setEmail] = useState(null);
+    const [password, setPassword] = useState(null);
+    const [description, setDescription] = useState('');
+
+
+    const state = {
+        auth: auth, 
+        setAuth: setAuth, 
+        loading: loading,
+        setLoading: setLoading,
+        firstName: firstName,
+        setFirstName: setFirstName,
+        lastName: lastName,
+        setLastName: setLastName,
+        phoneNum: phoneNum,
+        setPhoneNum: setPhoneNum,
+        avatar: avatar,
+        setAvatar: setAvatar,
+        email: email,
+        setEmail: setEmail,
+        password: password,
+        setPassword: setPassword,
+        description: description,
+        setDescription: setDescription
+    }
 
     useEffect(() => {
         AOS.init({ duration: 1000 }); // For component fade in/out, not page
-        // setLoading(true);
-        // setAuth(null);
-        // setUserReady(false);
+        setLoading(true);
 
-        const checkAuth = () => { // Check if user has authorization
-            if (localStorage.getItem('access')) {
-                // console.log('first_name checkAuth: ' + localStorage.getItem('first_name'));
-                setAuth(true);
-            }
-            setLoading(false);
-        };
+        setFirstName(localStorage.getItem('first_name'));
+        let last_name = localStorage.getItem('last_name');
+        setAvatar(localStorage.getItem('avatar') || defavatar);
+        setLastName(last_name);
 
-        const checkUserInfo = () => { // Check if user has info loaded (if signed in)
-            if (auth && (localStorage.getItem('first_name') !== null ||
-                localStorage.getItem('last_name') !== null)) {
-                // console.log('checkUserInfo: ' + localStorage.getItem('first_name') !== null +
-                // localStorage.getItem('last_name') !== null);
-                // setUserReady(true);
-            }
-        }
+        setEmail(localStorage.getItem('email'));
+        setPassword(localStorage.getItem('password'));
+        setPhoneNum(localStorage.getItem('phone_number'));
+        setDescription(localStorage.getItem('description'));
 
-        // const loadedUser = () => {
-        //     if (auth && userReady) setLoading(false);
-        // }
+        if (localStorage.getItem('access')) setAuth(true); // Check if user has authorization
 
-        checkAuth();
-        checkUserInfo();
-        // loadedUser();
-        // console.log('access token: ' + (null !== localStorage.getItem('access')));
-        // console.log('loading: ' + loading);
-        // console.log('auth: ' + auth);
-        // console.log('userReady: ' + userReady);
-        // console.log('first name: ' + localStorage.getItem('first_name') );
-        // console.log('-------------------------')
-    }, [auth, loading]);
-
-    // const RouteContainer = ({children}) => {
-
-    //     if (loading) {
-    //         return <div>
-    //             <Loading />
-    //             <Spinner animation="border" />
-    //             </div>
-    //     }
-
-    //     return <div>{children}</div>
-    // }
+        setLoading(false);
+    }, [auth, loading, firstName, lastName, phoneNum, avatar, email, password, description]);
 
     return (
         <>
@@ -77,13 +75,12 @@ const App = () => {
             crossOrigin="anonymous"
         />
         <Router>
-            <AuthContext.Provider value={{auth: auth, setAuth: setAuth, 
-                                          loading: loading, setLoading: setLoading}}>
+            <UserContext.Provider value={state}>
                 {/* <RouteContainer>                          */}
                     <NavBar />
                     <AnimatedRoutes />
                 {/* </RouteContainer>   */}
-            </AuthContext.Provider>
+            </UserContext.Provider>
         </Router>
         <Container id='footer_container'>
         <ToTopBtn/>

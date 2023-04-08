@@ -48,6 +48,7 @@ function UserNavBar( ) {
                             className='navbar_drop_item'
                             href='/profile'
                             to='/profile'
+                            id='profile_item'
                             as={LinkContainer}>
                             <Nav.Link>
                             <span className='navdropdowntext'>{ProfileDropItem()}</span>
@@ -80,6 +81,7 @@ function UserNavBar( ) {
                             </Nav.Link>
                         </NavDropdown.Item>
                         <NavDropdown.Item
+                        id='logout_item'
                         className='navbar_drop_item'
                         href='/logout'
                         to='/logout'

@@ -1,11 +1,12 @@
 import './shop_lst.css';
 import  '../../components/globals.css';
 import ShopListItem from './ShopListItem';
-import Search from '../Search';
+import SearchDropdown from '../Search/SearchDropdown';
 import Button from 'react-bootstrap/Button';
 import { useState, useRef, useEffect } from 'react';
 import AOS from "aos";
 import "aos/dist/aos.css";
+import reactStringReplace from 'react-string-replace';
 
 function ShoppingList() {
 
@@ -83,11 +84,20 @@ function ShoppingList() {
         displayShopLst();
     }
 
+    const showSuggestion = (suggestion, setShowSuggestions, value, onClickFunc) => {
+        return (<li onClick={() => onClick(suggestion.recipe_details.id,
+                                        setShowSuggestions)} 
+            key={suggestion.recipe_details.name}>
+            {reactStringReplace(suggestion.recipe_details.name, value, (match, i) =>
+            <b>{match}</b>)}
+        </li>)
+    }
+
     return (shopLst && (
         <div className="shop_wrap" ref={autocompleteRef}>
             <div id='searchsec'>
                 <h2 id="shop_title"><b>My Shopping List</b></h2>
-                {Search(onChange, 'What would you like to add?', 'shop_search', onClick)}
+                {SearchDropdown(onChange, 'What would you like to add?', 'shop_search', showSuggestion)}
             </div>
                 <div id="shop_items">
                 {shopLst.map((shopItem) => ShopListItem(shopItem, onClickDel, onChangeServing))}

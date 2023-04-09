@@ -15,6 +15,7 @@ function Login() {
     let [email_error, setEmailError] = useState('');
     let [email, setEmail] = useState('');
     let [password, setPassword] = useState('');
+    let [password_error, setPassError] = useState('');
 
 
     let handleInput = (i) => {
@@ -22,17 +23,17 @@ function Login() {
         if (id === "email") {
 
             setEmail(value);
+            setEmailError('');
 
         }
         if (id === "password") {
             setPassword(value);
+            setPassError('');
         }
     }
 
     let submit = () => {
-        if (email && password) {
 
-        
         let request = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json'},
@@ -47,6 +48,7 @@ function Login() {
         })
         ).then(res => {
         if (res.response.ok) {
+            
             localStorage.setItem('access', res.data.access);
             localStorage.setItem('refresh', res.data.refresh);
             
@@ -62,6 +64,7 @@ function Login() {
                 data: data,
             })
             ).then(res => {
+                
                 localStorage.setItem('id', res.data.id);
                 localStorage.setItem('email', res.data.email);
                 
@@ -97,15 +100,14 @@ function Login() {
             }))
 
             navigate('/');
-            
-    
-            
 
-
+        }
+        else {
+            if (res.data.email) setEmailError(res.data.email[0]);
+            if (res.data.password) setPassError(res.data.password[0]);
         }
         }));
 
-    }
 }
 
 
@@ -115,23 +117,24 @@ function Login() {
 
     
     <div className={'card login'}>
-        <div className="card-header">Account Details</div>
+        <div className="card-header login-header">Account Details</div>
         <div className="card-body">
             <form id="login-form">
 
             <div className="mb-3">
-                    <label className="small mb-1" for="Email">Email</label>
-                    <input className="form-control" id="email" required type="email" value={email} onChange={(i) => handleInput(i)} placeholder="Enter your email" />
-                    <label className="small mb-1" for="Email">{email_error}</label>
+                    <label className="small mb-1" for="email">Email</label>
+                    <input className="form-control login-field" id="email" required type="email" value={email} onChange={(i) => handleInput(i)} placeholder="Enter your email" />
+                    <label className="small mb-1 loginerror" for="email">{email_error}</label>
                 </div>
                 <div className="mb-3">
-                    <label className="small mb-1" for="Password">Password</label>
-                    <input className="form-control" id="password" required type="password" value={password} onChange={(i) => handleInput(i)} placeholder="Enter your password" />
+                    <label className="small mb-1" for="password">Password</label>
+                    <input className="form-control login-field" id="password" required type="password" value={password} onChange={(i) => handleInput(i)} placeholder="Enter your password" />
+                    <label className="small mb-1 loginerror" for="password">{password_error}</label>
                 </div>
 
                 <button className="btn btn-primary btn-login" id="button" type="button" onClick={()=>submit()}>Login</button>
             </form>
-            <span>Don't have an account? <a href="/signup">Register here!</a></span>
+            <span>Don't have an account? <a href="/signup" className='signup-link'>Register here!</a></span>
         </div>
         
 

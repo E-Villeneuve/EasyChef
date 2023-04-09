@@ -4,7 +4,7 @@ import './profile.css'
 
 function ProfileDropItem() {
     const full_name = () => {
-        let name = localStorage.getItem('first_name') + localStorage.getItem('last_name');
+        let name = localStorage.getItem('first_name') + ' ' + localStorage.getItem('last_name');
         if (!name) return;
         return <span id='profiledrop_name'>{name}<br /></span>;
     }

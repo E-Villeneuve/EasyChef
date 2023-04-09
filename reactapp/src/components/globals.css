@@ -27,4 +27,5 @@
 
 .trans_back {
     background-color: rgba(0, 0, 0, 0)!important;
+    border: 0!important;
 }

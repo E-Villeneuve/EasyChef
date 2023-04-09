@@ -6,7 +6,7 @@
     width: 50px;
     font-size: 40px;
     border-radius: 50px;
-    border-color: black;
+    border: 1px solid rgba(0, 0, 0, .2);
     display: flex;
     text-align: center;
     justify-content: center;

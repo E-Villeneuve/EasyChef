@@ -1,35 +1,23 @@
 import React from 'react';
-import defavatar from '../../../images/defaultavatar.png';
 import './profile.css'
+import { UserContext } from '../../../App';
+import { useContext } from 'react';
 
 function ProfileDropItem() {
-    const full_name = () => {
-        let name = localStorage.getItem('first_name') + ' ' + localStorage.getItem('last_name');
-        if (!name) return;
-        return <span id='profiledrop_name'>{name}<br /></span>;
-    }
 
-    const get_phone = () => {
-        let phone_num = localStorage.getItem('phone_number');
-        if (phone_num) return <span id='profiledrop_phone'><br />{phone_num}</span>
-    }
-
-    const get_avatar = () => {
-        let avatar = localStorage.getItem('avatar');
-        return avatar ? avatar : defavatar;
-    }
+    const {email, firstName, lastName, phoneNum, avatar} = useContext(UserContext);
 
     return (
-    <div className="profile" id={localStorage.getItem('email')}>
+    <div className="profile" id={email}>
         <div id='profiledrop_wrap'>
             <img id='profilepic'
-                src={ get_avatar()}
+                src={avatar}
                 alt={"Profile"}
             />
         <p>
-        {full_name()}
-        <b>{localStorage.getItem('email')}</b>
-        {get_phone()}
+        <span id='profiledrop_name'>{firstName + ' ' + lastName}<br /></span>
+        <b>{email}</b>
+        <span id='profiledrop_phone'><br />{phoneNum}</span>
         </p>
         </div>
     </div>

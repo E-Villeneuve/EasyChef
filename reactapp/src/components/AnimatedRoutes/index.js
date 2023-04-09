@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { Navigate, Route, Routes, useLocation} from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
-import { AuthContext } from '../../App';
+import { UserContext } from '../../App';
 import Spinner from 'react-bootstrap/Spinner';
 import Home from '../../pages/Home';
 import MyShoppingList from '../../pages/MyShoppingList';
@@ -21,7 +21,7 @@ function AnimatedRoutes() {
 
         // https://stackoverflow.com/questions/70597239/react-how-to-check-if-user-is-still-authenticated
         const AuthRoute = ({children}) => {
-            const { auth, loading } = useContext(AuthContext);
+            const { auth, loading } = useContext(UserContext);
 
             if (loading) {
                 return <div>

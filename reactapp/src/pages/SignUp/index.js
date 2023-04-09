@@ -3,50 +3,52 @@ import '../../components/globals.css';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { useState, setState } from 'react';
-
+import { UserContext } from '../../App';
+import { useContext } from 'react';
 
 function SignUp() {
     /*Value setting obtained primarily from 
     https://www.section.io/engineering-education/registration-form-react.js-firebase/#creating-a-registration-form */
+    
+    const { setEmail, setPassword, setFirstName, setLastName} = useContext(UserContext);
+    
     let [email_error, setEmailError] = useState('');
+    let [fname_error, setFNameError] = useState('');
+    let [lname_error, setLNameError] = useState('');
     let [password_error, setPassError] = useState('');
-    let [email, setEmail] = useState('');
-    let [password, setPassword] = useState('');
-    let [firstName, setFirstName] = useState('');
-    let [fnameError, setFNameError] = useState('');
-    let [lastName, setLastName] = useState('');
-    let [lnameError, setLNameError] = useState('');
+    let [formEmail, setFormEmail] = useState('');
+    let [formPassword, setFormPassword] = useState('');
+    let [formFirstName, setFormFirstName] = useState('');
+    let [lastFormName, setFormLastName] = useState('');
     let [account_status, setStatus] = useState('');
 
     let handleInput = (i) => {
         let {id, value} = i.target;
         if (id === "email") {
 
-            setEmail(value);
+            setFormEmail(value);
 
             setEmailError("");
         }
         if (id === 'first_name') {
-            setFirstName(value);
-            setFNameError('');
+            setFormFirstName(value);
         }
         if (id === 'last_name') {
-            setLastName(value);
-            setLNameError('');
+            setFormLastName(value);
         }
         if (id === "password") {
-            setPassword(value);
-            setPassError('');
+            setFormPassword(value);
         }
     }
     
 
     let submit = () => {
+        if (formEmail && formPassword) {
             setStatus("");
             let request = {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json'},
-                body: JSON.stringify({ 'email': email, 'password': password, 'first_name': firstName, 'last_name': lastName})
+                body: JSON.stringify({ 'email': formEmail, 'password': formPassword, 'first_name': formFirstName, 'last_name': lastFormName})
             }
             /* Response Body obtained from promise via https://stackoverflow.com/a/37555432 */
             fetch("http://127.0.0.1:8000/accounts/signup/", request)
@@ -57,6 +59,10 @@ function SignUp() {
             })
             ).then(res => {
             if (res.response.ok) {
+                setEmail(formEmail);
+                setFirstName(formFirstName);
+                setLastName(lastFormName);
+                setPassword(formPassword);
                 setStatus("Account Succesfully Created!");
             }
             else {
@@ -71,6 +77,7 @@ function SignUp() {
 
         
     }
+}
 
     return (
         <>
@@ -84,24 +91,24 @@ function SignUp() {
             <form id="signup-form">
                
                 <div className="mb-3">
-                    <label className="small mb-1" for="Email">Email</label>
-                    <input className="form-control signup-field" id="email" required type="email" value={email} onChange={(i) => handleInput(i)} placeholder="Enter your email" />
-                    <label className="small mb-1 signupError" for="Email">{email_error}</label>
+                    <label className="small mb-1" for="email">Email</label>
+                    <input className="form-control" id="email" required type="email" value={formEmail} onChange={(i) => handleInput(i)} placeholder="Enter your email" />
+                    <label className="small mb-1" for="email">{email_error}</label>
                 </div>
                 <div className="mb-3">
                     <label className="small mb-1" for="first_name">First Name</label>
-                    <input className="form-control signup-field" id="first_name" required type="text" value={firstName} onChange={(i) => handleInput(i)} placeholder="Enter your first name" />
-                    <label className="small mb-1 signupError" for="first_name">{fnameError}</label>
+                    <input className="form-control" id="first_name" required type="text" value={formFirstName} onChange={(i) => handleInput(i)} placeholder="Enter your first name" />
+                    <label className="small mb-1" for="first_name">{fname_error}</label>
                 </div>
                 <div className="mb-3">
                     <label className="small mb-1" for="last_name">Last Name</label>
-                    <input className="form-control signup-field" id="last_name" required type="text" value={lastName} onChange={(i) => handleInput(i)} placeholder="Enter your last name" />
-                    <label className="small mb-1 signupError" for="last_name">{lnameError}</label>
+                    <input className="form-control" id="last_name" required type="text" value={lastFormName} onChange={(i) => handleInput(i)} placeholder="Enter your last name" />
+                    <label className="small mb-1" for="last_name">{lname_error}</label>
                 </div>
                 <div className="mb-3">
-                    <label className="small mb-1" for="Password">Password</label>
-                    <input className="form-control signup-field" id="password" required type="password" value={password} onChange={(i) => handleInput(i)} placeholder="Enter your password" />
-                    <label className="small mb-1 signupError" for="password">{password_error}</label>
+                    <label className="small mb-1" for="password">Password</label>
+                    <input className="form-control" id="password" required type="password" value={formPassword} onChange={(i) => handleInput(i)} placeholder="Enter your password" />
+                    <label className="small mb-1" for="password">{password_error}</label>
                 </div>
 
                 <button className="btn btn-primary btn-signup" id="register-button" type="button" onClick={()=>submit()}>Register</button>

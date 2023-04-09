@@ -1,14 +1,22 @@
 import UserNavBar from './UserNavBar';
 import GuestNavBar from './GuestNavBar';
 import { useContext } from 'react';
-import { AuthContext } from '../../App';
+import { UserContext } from '../../App';
+import { useState, useEffect } from 'react';
 
 function NavBar() {
-    const { auth } = useContext(AuthContext);
+    const [navbar, setNavBar] = useState('');
+    const { auth, setLoading, email, firstName, lastName, phoneNum, avatar} = useContext(UserContext);
+
+    useEffect(() => {
+        setLoading(true);
+        setNavBar(auth ? (<UserNavBar/>) : (<GuestNavBar/>))
+        setLoading(false);
+    }, [auth, setLoading, email, firstName, lastName, phoneNum, avatar])
 
     return (
         <>
-        { auth ? (<UserNavBar/>) : (<GuestNavBar/>) }
+        { navbar }
         </>
     );
 }

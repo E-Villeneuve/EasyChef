@@ -1,48 +1,60 @@
 import './EditProfile.css';
 import '../../components/globals.css';
-import { useContext } from 'react';
-import { AuthContext } from "../../App";
+import { useNavigate } from "react-router-dom";
+import { useContext, useEffect } from 'react';
+import { UserContext } from '../../App';
 import { useState, setState } from 'react';
 
+
 function EditProfile() {
-    let [email, setEmail] = useState(localStorage.getItem('email'));
-    let [detailsButton, setDetails] = useState("Save Changes");
-    let [password, setPassword] = useState('');
+
+    const {
+            setFirstName,
+            setLastName,
+            setDescription,
+            setPhoneNum,
+            setEmail,
+            setPassword,
+            } = useContext(UserContext);
+    let [detailsButton, setDetails] = useState("Save changes");
+    let [formEmail, setFormEmail] = useState(localStorage.getItem('email'));
+    let [formPassword, setFormPassword] = useState('');
     let [newPassword, setNewPassword] = useState('');
     let [confirmPass, setConfirmPassword] = useState('');
-    let [first_name, setFirstName] = useState(localStorage.getItem('first_name'));
-    let [last_name, setLastName] = useState(localStorage.getItem('last_name'));
-    let [description, setDescription] = useState(localStorage.getItem('description'));
-    let [phone_number, setNumber] = useState(localStorage.getItem('phone_number'));
+    let [formFirstName, setFormFirstName] = useState(localStorage.getItem('first_name'));
+    let [formLastName, setFormLastName] = useState(localStorage.getItem('last_name'));
+    let [formDescription, setFormDescription] = useState(localStorage.getItem('description'));
+    let [formPhoneNum, setFormPhoneNum] = useState(localStorage.getItem('phone_number'));
     let [avatar, setAvatar] = useState(localStorage.getItem('avatar'));
+
 
     let handleInput = (i) => {
         let {id, value} = i.target;
         
         if (id === "inputEmailAddress") {
-            setEmail(value);
+            setFormEmail(value);
             setDetails("Save Changes");
         }
         if (id === "oldPass") {
             
-            setPassword(value);
+            setFormPassword(value);
         }
         if (id === 'inputFirstName') {
-            setFirstName(value);
+            setFormFirstName(value);
             setDetails("Save Changes");
 
         }
         if (id === 'inputLastName') {
-            setLastName(value);
+            setFormLastName(value);
             setDetails("Save Changes");
         }
         if (id === 'biography') {
-            setDescription(value);
+            setFormDescription(value);
             setDetails("Save Changes");
             
         }
         if (id === 'inputPhone') {
-            setNumber(value);
+            setFormPhoneNum(value);
             setDetails("Save Changes");
         }
         if (id === 'newPass') {
@@ -58,7 +70,7 @@ function EditProfile() {
         let request = {
             method: 'PATCH',
             headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + String(localStorage.getItem('access'))},
-            body: JSON.stringify({ 'email': email, 'first_name': first_name, 'last_name': last_name, 'description': description, 'phone_number': phone_number})
+            body: JSON.stringify({ 'email': formEmail, 'first_name': formFirstName, 'last_name': formLastName, 'description': formDescription, 'phone_number': formPhoneNum})
         }
         fetch('http://127.0.0.1:8000/accounts/editprofile/' + String(localStorage.getItem('id')) + '/', request)
         .then(response => response.json()
@@ -95,7 +107,7 @@ function EditProfile() {
 
     let uploadPic = () => {
         document.getElementById('selectedFile').click();
-        console.log(avatar);
+
     }
 
     let submitPic = () => {
@@ -119,7 +131,7 @@ function EditProfile() {
                 response: response
             })
             ).then(res => {
-                console.log(res.data.avatar);
+
                 setAvatar(res.data.avatar);
                 localStorage.setItem('avatar', res.data.avatar);
             }));
@@ -131,7 +143,7 @@ function EditProfile() {
 
     let submitPass = () => {
         
-        if (password === localStorage.getItem('password') && newPassword === confirmPass && newPassword != '') {
+        if (formPassword === localStorage.getItem('password') && newPassword === confirmPass && newPassword != '') {
             let request = {
                 method: 'PATCH',
                 headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + String(localStorage.getItem('access'))},
@@ -186,12 +198,12 @@ function EditProfile() {
         
                                         <div className="col">
                                             <label className="small mb-1 details-box" for="inputFirstName">First name</label>
-                                            <input className="form-control profile-field" id="inputFirstName" type="text" value={first_name} onChange={(i) => handleInput(i)} placeholder="Enter your first name" />
+                                            <input className="form-control profile-field" id="inputFirstName" type="text" value={formFirstName} onChange={(i) => handleInput(i)} placeholder="Enter your first name" />
                                         </div>
         
                                         <div className="col">
                                             <label className="small mb-1 details-box" for="inputLastName">Last name</label>
-                                            <input className="form-control profile-field" id="inputLastName" type="text" value={last_name} onChange={(i) => handleInput(i)} placeholder="Enter your last name"/>
+                                            <input className="form-control profile-field" id="inputLastName" type="text" value={formLastName} onChange={(i) => handleInput(i)} placeholder="Enter your last name"/>
                                         </div>
                                     </div>
         
@@ -200,19 +212,19 @@ function EditProfile() {
                                         <div className="col">
                                             <label className="small mb-1 details-box" for="inputEmailAddress">Email Address</label>
         
-                                            <input className="form-control profile-field" id="inputEmailAddress" type="email" value={email} onChange={(i) => handleInput(i)} placeholder="Enter your email address"/>
+                                            <input className="form-control profile-field" id="inputEmailAddress" type="email" value={formEmail} onChange={(i) => handleInput(i)} placeholder="Enter your email address"/>
                                         </div>
         
                                         <div className="col">
                                             <label className="small mb-1 details-box" for="inputPhone">Phone number</label>
-                                            <input className="form-control profile-field" id="inputPhone" onChange={(i) => handleInput(i)} value={phone_number} type="tel" placeholder="Enter your phone number"/>
+                                            <input className="form-control profile-field" id="inputPhone" onChange={(i) => handleInput(i)} value={formPhoneNum} type="tel" placeholder="Enter your phone number"/>
                                         </div>
                                     </div>
                                     
                                     
                                     <div className="mb-3">
                                         <label className="small mb-1 details-box" for="feedback">Bio</label>
-                                        <textarea className="form-control profile-field" rows="8" cols="80" name="biography" id="biography" value={description} onChange={(i) => handleInput(i)} placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"></textarea>
+                                        <textarea className="form-control profile-field" rows="8" cols="80" name="biography" id="biography" value={formDescription} onChange={(i) => handleInput(i)} placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"></textarea>
                                         
                                     </div>
                                     
@@ -233,7 +245,7 @@ function EditProfile() {
                         <form id="password-form">
                         <div className="mb-3">
                             <label className="small mb-1" for="oldPass">Old Password</label>
-                            <input className="form-control profile-field" id="oldPass" onChange={(i) => handleInput(i)} type="password" value={password} placeholder="Enter your password"/>
+                            <input className="form-control profile-field" id="oldPass" onChange={(i) => handleInput(i)} type="password" value={formPassword} placeholder="Enter your password"/>
                         </div>
         
                         <div className="mb-3">

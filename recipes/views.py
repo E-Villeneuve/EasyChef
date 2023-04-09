@@ -11,7 +11,7 @@ from recipes.serializers import (RecipeSerializer, RecipeIngredientSerializer,
                                  RecipeImageSerializer, RecipeCommentVideoSerializer,
                                  ShopListRecipeAddSerializer, ShopListEditRecipeSerializer,
                                  ShopListDeleteRecipeSerializer, RecipeCopySerializer, RecipeIngredientSerializer,
-                                 LikeRecipeSerializer, FavRecipeSerializer)
+                                 LikeRecipeSerializer, FavRecipeSerializer, ShopListRecipeSerializer)
 from rest_framework import serializers
 from recipes.permissions import LstOwner
 
@@ -128,6 +128,13 @@ class ShoppingListView(RetrieveAPIView):
 
     def get_object(self):
         return get_object_or_404(ShoppingLst, owner=self.request.user)
+
+class ShopListViewRecipeView(RetrieveAPIView):
+    serializer_class = ShopListRecipeSerializer
+    permission_classes = [IsAuthenticated, LstOwner]
+
+    def get_object(self):
+        return get_object_or_404(ShopLstRecipe, id=self.kwargs['pk'])
 
 class ShopListAddRecipeView(CreateAPIView):
     queryset = ShopLstRecipe.objects.all()

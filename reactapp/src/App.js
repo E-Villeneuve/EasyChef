@@ -3,19 +3,17 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import './App.css';
 import NavBar from './components/NavBar';
 import Container from 'react-bootstrap/Container';
-import Spinner from 'react-bootstrap/Spinner';
-import Loading from './pages/Loading';
 import AnimatedRoutes from './components/AnimatedRoutes';
 import ToTopBtn from './components/ToTopBtn';
 import { useState } from 'react';
 import defavatar from './images/defaultavatar.png';
+import LoadingComp from './components/Loading';
 
 import AOS from "aos";
 
 export const UserContext = createContext(null);
 
 const App = () => {
-    const [auth, setAuth] = useState(null);
     const [loading, setLoading] = useState(true);
     const [firstName, setFirstName] = useState(null);
     const [lastName, setLastName] = useState(null);
@@ -24,13 +22,13 @@ const App = () => {
     const [email, setEmail] = useState(null);
     const [password, setPassword] = useState(null);
     const [description, setDescription] = useState('');
-
+    const [pageLoading, setPageLoading] = useState(false);
 
     const state = {
-        auth: auth, 
-        setAuth: setAuth, 
         loading: loading,
         setLoading: setLoading,
+        pageLoading: pageLoading,
+        setPageLoading: setPageLoading,
         firstName: firstName,
         setFirstName: setFirstName,
         lastName: lastName,
@@ -49,7 +47,7 @@ const App = () => {
 
     useEffect(() => {
         AOS.init({ duration: 1000 }); // For component fade in/out, not page
-        setLoading(true);
+        setPageLoading(true);
 
         setFirstName(localStorage.getItem('first_name'));
         let last_name = localStorage.getItem('last_name');
@@ -61,10 +59,8 @@ const App = () => {
         setPhoneNum(localStorage.getItem('phone_number'));
         setDescription(localStorage.getItem('description'));
 
-        if (localStorage.getItem('access')) setAuth(true); // Check if user has authorization
-
-        setLoading(false);
-    }, [auth, loading, firstName, lastName, phoneNum, avatar, email, password, description]);
+        setPageLoading(false);
+    }, [loading, pageLoading, firstName, lastName, phoneNum, avatar, email, password, description]);
 
     return (
         <>
@@ -74,21 +70,20 @@ const App = () => {
             integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
             crossOrigin="anonymous"
         />
-        <Router>
-            <UserContext.Provider value={state}>
-                {/* <RouteContainer>                          */}
+            <Router>
+                <UserContext.Provider value={state}>
                     <NavBar />
                     <AnimatedRoutes />
-                {/* </RouteContainer>   */}
-            </UserContext.Provider>
-        </Router>
-        <Container id='footer_container'>
-        <ToTopBtn/>
-        <p id='footer'>  
-            Copyright © 2023 Easy Chef Incorporated<br />
-            All Rights Reserved
-        </p>  
-        </Container>
+                </UserContext.Provider>
+            </Router>
+            {loading && <LoadingComp/>}
+            <Container id='footer_container'>
+                <ToTopBtn/>
+                <p id='footer'>  
+                    Copyright © 2023 Easy Chef Incorporated<br />
+                    All Rights Reserved
+                </p>  
+            </Container>
         </>
     );
 }

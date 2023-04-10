@@ -10,8 +10,7 @@ import nopic from '../../images/defaultavatar.png';
 
 function Login() {
     const navigate = useNavigate();
-    const { setAuth, 
-            setLoading,
+    const { setLoading,
             setFirstName,
             setLastName,
             setDescription,
@@ -67,7 +66,6 @@ function Login() {
                 headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + String(res.data.access)},
             }
             
-            setAuth(true); 
             fetch("http://127.0.0.1:8000/accounts/getinfo/", request)
             .then(response => response.json()
             .then(data => ({

@@ -7,21 +7,35 @@ import { useState, useRef, useEffect } from 'react';
 import AOS from "aos";
 import "aos/dist/aos.css";
 import reactStringReplace from 'react-string-replace';
+import { useContext } from 'react';
+import { UserContext } from '../../App';
 
 function ShoppingList() {
-
-    // TODO: Add loading components to btns
 
     // Some help w/ states and on funcs
     // from https://www.youtube.com/watch?v=EpE6TU58cPw
     const [shopLst, setShopLst] = useState([])
     const [allIngredientLst, setAllIngredientLst] = useState([])
+    const { setLoading } = useContext(UserContext);
+
+    const [isActive, setIsActive] = useState(false) 
+    const [popup, setPopup] = useState(false);
+    const handleOpen = (index) => {
+        setIsActive(index);
+        setPopup(true);
+    }
+    const handleClose = () => setPopup(false);
+
+    if (popup) document.body.classList.add('active_addshopitem_popup');
+    else document.body.classList.remove('active_addshopitem_popup');
 
     const autocompleteRef = useRef();
 
     useEffect(() => {
+        setLoading(true);
         AOS.init({ duration: 1000 });
         displayShopLst();
+        
     }, [])
 
     const displayShopLst = async () => {
@@ -34,6 +48,7 @@ function ShoppingList() {
         const json = await response.json();
         setShopLst(json.recipes_details);
         setAllIngredientLst(json.total_ingredients);
+        setLoading(false);
     }
 
     const onChange = (e, setsuggests, setshow) => {
@@ -45,10 +60,11 @@ function ShoppingList() {
         .then(response => response.json()
         ).then(data => {
             setsuggests(data.results);});
-            setshow(true);
+        setshow(true);
     }
 
     const onClick = async (id, setshow) => {
+        setLoading(true);
         setshow(false);
         let request = {
             method: 'POST',
@@ -57,18 +73,21 @@ function ShoppingList() {
         }
         await fetch("http://127.0.0.1:8000/recipes/myshoppinglist/add/", request);
         displayShopLst();
+        setLoading(false);
     }
 
-    const onClickDel = async (id) => {
+    const onClickDel = (id) => {
+        setLoading(true);
         let request = {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + String(localStorage.getItem('access'))},
         }
-        await fetch("http://127.0.0.1:8000/recipes/myshoppinglist/delete/" + id + '/', request);
+        fetch("http://127.0.0.1:8000/recipes/myshoppinglist/delete/" + id + '/', request);
         displayShopLst();
     }
 
     const onChangeServing = async (e, item) => {
+        setLoading(true);
         let num;
         if (e.target.value) {
             num = e.target.value;
@@ -80,7 +99,7 @@ function ShoppingList() {
             body: JSON.stringify({ 'serving': num})
         }
 
-        await fetch('http://127.0.0.1:8000/recipes/myshoppinglist/edit/' + item.shoplstrecipe_id + '/', request)
+        await fetch('http://127.0.0.1:8000/recipes/myshoppinglist/edit/' + item.shoplstrecipe_id + '/', request);
         displayShopLst();
     }
 
@@ -93,24 +112,27 @@ function ShoppingList() {
         </li>)
     }
 
-    return (shopLst && (
-        <div className="shop_wrap" ref={autocompleteRef}>
-            <div id='searchsec'>
-                <h2 id="shop_title"><b>My Shopping List</b></h2>
-                {SearchDropdown(onChange, 'What would you like to add?', 'shop_search', showSuggestion)}
+    return ((<>
+            <div className="shop_wrap" ref={autocompleteRef}>
+                <div id='searchsec'>
+                    <h2 id="shop_title"><b>My Shopping List</b></h2>
+                    {SearchDropdown(onChange, 'What would you like to add?', 'shop_search', showSuggestion)}
+                </div>
+                    <div id="shop_items">
+                    {shopLst.map((shopItem, index) => ShopListItem(shopItem, onClickDel, onChangeServing,
+                                                                   popup, handleOpen, handleClose, isActive,
+                                                                   index))}
+                        <div id="allingredientslst">
+                            <h4 id="allingredientstitle">All Ingredients</h4>
+                            {Object.keys(allIngredientLst).map((key, index) =>
+                            <li data-aos-offset='0px' data-aos="fade-left" key={key}>{allIngredientLst[key]} {key}</li>)}
+                        </div>
+                    <Button id="export_btn" onClick={() => window.print()}>
+                        Export
+                    </Button>
+                </div>
             </div>
-                <div id="shop_items">
-                {shopLst.map((shopItem) => ShopListItem(shopItem, onClickDel, onChangeServing))}
-                    <div id="allingredientslst">
-                        <h4 id="allingredientstitle">All Ingredients</h4>
-                        {Object.keys(allIngredientLst).map((key, index) =>
-                        <li data-aos-offset='0px' data-aos="fade-left" key={key}>{allIngredientLst[key]} {key}</li>)}
-                    </div>
-                <Button id="export_btn" onClick={() => window.print()}>
-                    Export
-                </Button>
-            </div>
-        </div>));
+        </>));
   }
   
   export default ShoppingList;

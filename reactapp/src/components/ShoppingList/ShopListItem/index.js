@@ -1,9 +1,10 @@
 import './shopitem.css';
 import  '../../globals.css';
-import Dropdown from 'react-bootstrap/Dropdown';
 import Button from 'react-bootstrap/Button';
+import { Modal } from 'react-bootstrap';
 
-function ShopListItem(item, delFunc, changeServing) {
+function ShopListItem(item, delFunc, changeServing, popup, 
+                      handleOpen, handleClose, isActive, index) {
 
     return (
         <div className='shop_item_container' data-aos="flip-left" data-aos-offset='0px'>
@@ -32,27 +33,38 @@ function ShopListItem(item, delFunc, changeServing) {
                                         onBlur={(e) => changeServing(e, item)}/>
                                 </div>
                             </div>
-
                             Cooking time: {item.cook_time} mins
                         </div>
-                        {/* reminder to put in linkcontainer here */}
-                        <Button className="shop_item_button" href="recipe.html">
+                        <Button className="shop_item_button">
                             Details
                         </Button>
-                        <Dropdown>
-                            <Dropdown.Toggle className="shop_item_button">
+                        <Button className="btn card shop_item shop_item_button" id="ingredients_card" onClick={() => handleOpen(index)}>
                             Ingredients
-                            </Dropdown.Toggle>
-                            <Dropdown.Menu>
-                                {Object.keys(item.ingredients).map((key, index) => 
-                                <Dropdown.Item 
-                                    as="p" 
-                                    className="dropdown-item" 
+                        </Button>
+                        <Modal 
+                            show={isActive === index && popup} 
+                            onHide={handleClose} 
+                            id='ingredients_modal'
+                            contentClassName = 'ingredients_content'
+                        >
+                            <Modal.Header closeButton>
+                                <Modal.Title>Add a recipe to your shopping list</Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body id='ingredients_content'>
+                            <ul id='ingredients_lst'>
+                            {Object.keys(item.ingredients).map((key, index) => 
+                                <li as="p"
                                     key={key}>
                                         {item.ingredients[key]} {key}
-                                </Dropdown.Item>)}
-                            </Dropdown.Menu>
-                        </Dropdown>
+                                </li>)}
+                            </ul>
+                            </Modal.Body>
+                            <Modal.Footer id='ingredients_modal_footer'>
+                                <Button variant="primary" onClick={handleClose} className='shop_lst_btn'>
+                                    Close
+                                </Button>
+                            </Modal.Footer>
+                        </Modal>
                     </div>
                     <Button 
                         id='close_btn'
@@ -63,24 +75,6 @@ function ShopListItem(item, delFunc, changeServing) {
                 </div>
             </div>
         </div>
-
-    // <div className="card" key={item.id}>
-    //     <div className="card-top img_wrap">
-    //         <img
-    //             src={
-    //                 defaultImage[item.title] === item.title
-    //                 ? defaultImage.linkDefault
-    //                 : item.linkImg
-    //             }
-    //             alt={item.title}
-    //         />
-    //     <h1>{item.title}</h1>
-    //     </div>
-    //     <div className="card-bottom">
-    //           <h3>{item.price}</h3>
-    //           <span className="category">{item.category}</span>
-    //     </div>
-    // </div>
     );
 }
 

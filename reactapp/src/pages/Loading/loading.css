@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Baloo+2&family=Courgette&family=Dancing+Script&family=Lobster+Two&display=swap');
 
-#loading_container {
+#loading_container_page {
     width: 100%;
     max-width: 100%;
     min-height: 100vh;
@@ -15,4 +15,14 @@
 
 #loading_title {
     font-size: 70px;
+}
+
+#loading_subtitle {
+    margin-top: 1.5em;
+}
+
+#load_page_spinner {
+    margin: 3em;
+    width: 7em;
+    height: 7em;
 }

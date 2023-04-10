@@ -1,8 +1,7 @@
 import React, { useContext } from 'react';
-import { Navigate, Route, Routes, useLocation} from 'react-router-dom';
+import { Route, Routes, useLocation} from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 import { UserContext } from '../../App';
-import Spinner from 'react-bootstrap/Spinner';
 import Home from '../../pages/Home';
 import MyShoppingList from '../../pages/MyShoppingList';
 import NotFound from '../../pages/NotFound';
@@ -18,22 +17,11 @@ import AdvancedSearch from '../../pages/AdvancedSearch';
 // https://www.youtube.com/watch?v=FdrEjwymzdY
 function AnimatedRoutes() {
     const location = useLocation();
+    const { pageLoading } = useContext(UserContext);
 
-        // https://stackoverflow.com/questions/70597239/react-how-to-check-if-user-is-still-authenticated
-        const AuthRoute = ({children}) => {
-            const { auth, loading } = useContext(UserContext);
-
-            if (loading) {
-                return <div>
-                    <Loading />
-                    <Spinner animation="border" />
-                    </div>
-            }
-
-            return auth ? (
-                <div>{children}</div>
-            ) : (<Navigate to='/unauthorized' replace state={{path: location.pathname}} />)
-        }
+    if (pageLoading) {
+        return <Loading />
+    }
 
     return (
         <AnimatePresence mode="wait" initial={ false }>
@@ -42,11 +30,11 @@ function AnimatedRoutes() {
                 <Route exact path="/" element={<Home/>}/>
                 <Route exact path="/signup" element={<SignUp/>}/>
                 <Route exact path="/login" element={<Login/>}/>
-                <Route exact path="/editprofile" element={<AuthRoute><EditProfile/></AuthRoute>}/>
+                <Route exact path="/editprofile" element={<EditProfile/>}/> {/*Needs verification} */}
                 <Route exact path="/logout" element={<Logout/>}/>
                 <Route exact path="/unauthorized" element={<Unauthorized/>}/>
                 <Route exact path="/search" element={<AdvancedSearch/>}/>
-                <Route exact path="/myshoppinglist" element={<AuthRoute><MyShoppingList/></AuthRoute>}/>
+                <Route exact path="/myshoppinglist" element={<MyShoppingList/>}/>
                 <Route path="*" element={<NotFound/>}/>
             </Routes>
         </AnimatePresence>

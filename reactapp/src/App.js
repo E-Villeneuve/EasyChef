@@ -72,7 +72,6 @@ const App = () => {
     }
 
     useEffect(() => {
-        AOS.init({ duration: 1000 }); // For component fade in/out, not page
         setPageLoading(true);
 
         setFirstName(localStorage.getItem('first_name'));

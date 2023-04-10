@@ -11,7 +11,7 @@ import "aos/dist/aos.css";
 
 function AdvancedSearch () {
     useEffect(() => {
-        AOS.init({ duration: 500 });
+        AOS.init({ duration: 700 });
     }, []);
 
     return (

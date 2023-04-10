@@ -49,7 +49,7 @@ function AdvSearchResults () {
     }
 
     const searchResult = () => { // For a singular result (ie. 1 Card)
-        return (RecipeCard('recipe_item lol'));
+        return <span data-aos='fade-left' data-aos-offset='0px'>{RecipeCard('recipe_item lol')}</span>;
     }
 
     // All cards
@@ -71,10 +71,31 @@ function AdvSearchResults () {
         <div id='main_search' data-aos='fade-down' data-aos-offset='0px'>
             <h2 id="shop_title"><b>Search</b></h2>
             {Search(onChange, 'What are you looking for?', 'adv_search_results',
-                    showSearchResults)}
+                    showSearchResults, true)}
         </div>
     </div>
     );
 }
+
+
+{/* <div className='result-row'>
+<div className='result-col'>
+<div className="recipecard">
+<div className="recipecard-top img_wrap">
+    <img
+        src={
+            false ? noimage : noimage
+        }
+        alt="title"
+        id='recipecard_img'
+    />
+<h1>title</h1>
+</div>
+<div className="recipecard-bottom">
+    <h3>price</h3>
+    <span className="recipecat">category</span>
+</div>
+</div>
+</div> */}
 
 export default AdvSearchResults;

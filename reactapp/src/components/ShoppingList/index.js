@@ -45,10 +45,9 @@ function ShoppingList() {
         }
 
         const response = await fetch("http://127.0.0.1:8000/recipes/myshoppinglist/", request);
-        const json = await response.json();
+        const json = await response.json().finally(() => setLoading(false));
         setShopLst(json.recipes_details);
         setAllIngredientLst(json.total_ingredients);
-        setLoading(false);
     }
 
     const onChange = (e, setsuggests, setshow) => {
@@ -76,13 +75,13 @@ function ShoppingList() {
         setLoading(false);
     }
 
-    const onClickDel = (id) => {
+    const onClickDel = async (id) => {
         setLoading(true);
         let request = {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + String(localStorage.getItem('access'))},
         }
-        fetch("http://127.0.0.1:8000/recipes/myshoppinglist/delete/" + id + '/', request);
+        await fetch("http://127.0.0.1:8000/recipes/myshoppinglist/delete/" + id + '/', request);
         displayShopLst();
     }
 

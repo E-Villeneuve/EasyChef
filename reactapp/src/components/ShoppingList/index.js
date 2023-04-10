@@ -116,7 +116,8 @@ function ShoppingList() {
             <div className="shop_wrap" ref={autocompleteRef}>
                 <div id='searchsec'>
                     <h2 id="shop_title"><b>My Shopping List</b></h2>
-                    {SearchDropdown(onChange, 'What would you like to add?', 'shop_search', showSuggestion)}
+                    {SearchDropdown(onChange, 'What would you like to add?', 'shop_search', 
+                                    showSuggestion)}
                 </div>
                     <div id="shop_items">
                     {shopLst.map((shopItem, index) => ShopListItem(shopItem, onClickDel, onChangeServing,

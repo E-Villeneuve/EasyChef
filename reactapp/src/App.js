@@ -26,7 +26,7 @@ const App = () => {
     const [pageLoading, setPageLoading] = useState(false);
     const [auth, setAuth] = useState(false);
 
-    const state = {
+    const userStates = {
         auth: auth,
         setAuth: setAuth,
         loading: loading,
@@ -47,6 +47,28 @@ const App = () => {
         setPassword: setPassword,
         description: description,
         setDescription: setDescription
+    }
+
+    const [ searchQ, setSearchQ ] = useState('');
+    const [ diets, setDiets ] = useState([]);
+    const [ cuisines, setCuisines ] = useState([]);
+    const [ timeTags, setTimeTags ] = useState([]);
+    const [ searchCats, setSearchCats ] = useState([]);
+    const [ ordering, setOrdering ] = useState([]);
+    
+    const searchStates = {
+        searchQ: searchQ,
+        setSearchQ: setSearchQ,
+        diets: diets,
+        setDiets: setDiets,
+        cuisines: cuisines,
+        setCuisines: setCuisines,
+        timeTags: timeTags,
+        setTimeTags: setTimeTags,
+        searchCats: searchCats,
+        setSearchCats: setSearchCats,
+        ordering: ordering,
+        setOrdering: setOrdering,
     }
 
     useEffect(() => {
@@ -75,10 +97,12 @@ const App = () => {
             crossOrigin="anonymous"
         />
             <Router>
-                <UserContext.Provider value={state}>
-                    <NavBar />
-                    <AnimatedRoutes />
-                </UserContext.Provider>
+                <SearchContext.Provider value={searchStates}>
+                    <UserContext.Provider value={userStates}>
+                        <NavBar />
+                        <AnimatedRoutes />
+                    </UserContext.Provider>
+                </SearchContext.Provider>
             </Router>
             {loading && <LoadingComp/>}
             <Container id='footer_container'>

@@ -55,13 +55,13 @@ function AdvSearchResults () {
     // All cards
     const showSearchResults = (showSuggestions, suggestions, 
                                setShowSuggestions, value) => { 
-        return (<div id='advsearchresults'>
+        return (<div id='advresult_cards'>
                 {showSuggestions && (
-                    <div className='advsearchcard'>
+                    <>
                     {suggestions.map((suggestion) => {
                         return searchResult(suggestion, setShowSuggestions, value)
                                })}
-                    </div>
+                    </>
                 )}
         </div>)
     }  
@@ -69,8 +69,8 @@ function AdvSearchResults () {
     return (
     <div className="search_wrap">
         <div id='main_search' data-aos='fade-down' data-aos-offset='0px'>
-            <h2 id="shop_title"><b>Search</b></h2>
-            {Search(onChange, 'What are you looking for?', 'adv_search_results',
+            <h2 id="advanced_search_title"><b>Search</b></h2>
+            {Search(onChange, 'What are you looking for?', 'adv_search_sec',
                     showSearchResults, true)}
         </div>
     </div>

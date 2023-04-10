@@ -12,6 +12,7 @@ import LoadingComp from './components/Loading';
 import AOS from "aos";
 
 export const UserContext = createContext(null);
+export const SearchContext = createContext(null);
 
 const App = () => {
     const [loading, setLoading] = useState(true);
@@ -23,8 +24,11 @@ const App = () => {
     const [password, setPassword] = useState(null);
     const [description, setDescription] = useState('');
     const [pageLoading, setPageLoading] = useState(false);
+    const [auth, setAuth] = useState(false);
 
     const state = {
+        auth: auth,
+        setAuth: setAuth,
         loading: loading,
         setLoading: setLoading,
         pageLoading: pageLoading,
@@ -53,7 +57,7 @@ const App = () => {
         let last_name = localStorage.getItem('last_name');
         setAvatar(localStorage.getItem('avatar') || defavatar);
         setLastName(last_name);
-
+        if (localStorage.getItem('access')) setAuth(true);
         setEmail(localStorage.getItem('email'));
         setPassword(localStorage.getItem('password'));
         setPhoneNum(localStorage.getItem('phone_number'));

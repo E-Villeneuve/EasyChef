@@ -6,13 +6,13 @@ import { useState, useEffect } from 'react';
 
 function NavBar() {
     const [navbar, setNavBar] = useState('');
-    const { setLoading, email, firstName, lastName, phoneNum, avatar} = useContext(UserContext);
+    const { setLoading, auth, email, firstName, lastName, phoneNum, avatar} = useContext(UserContext);
 
     useEffect(() => {
         setLoading(true);
-        setNavBar(localStorage.getItem('access') ? (<UserNavBar/>) : (<GuestNavBar/>))
+        setNavBar((localStorage.getItem('access') || auth) ? (<UserNavBar/>) : (<GuestNavBar/>))
         setLoading(false);
-    }, [setLoading, email, firstName, lastName, phoneNum, avatar])
+    }, [auth, setLoading, email, firstName, lastName, phoneNum, avatar])
 
     return (
         <>

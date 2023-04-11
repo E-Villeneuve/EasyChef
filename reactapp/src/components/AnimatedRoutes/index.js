@@ -13,6 +13,7 @@ import Unauthorized from '../../pages/Unauthorized';
 import Logout from '../../pages/Logout';
 import Loading from '../../pages/Loading';
 import AdvancedSearch from '../../pages/AdvancedSearch';
+import MyRecipes from '../../pages/MyRecipes';
 
 // Idea of separating AnimatedRoutes from App.js from:
 // https://www.youtube.com/watch?v=FdrEjwymzdY
@@ -43,6 +44,7 @@ function AnimatedRoutes() {
                 <Route exact path="/signup" element={<SignUp/>}/>
                 <Route exact path="/login" element={<Login/>}/>
                 <Route exact path="/editprofile" element={<AuthRoute><EditProfile/></AuthRoute>}/>
+                <Route exact path="/myrecipes" element={<AuthRoute><MyRecipes/></AuthRoute>}/>
                 <Route exact path="/logout" element={<Logout/>}/>
                 <Route exact path="/unauthorized" element={<Unauthorized/>}/>
                 <Route exact path="/search" element={<AdvancedSearch/>}/>

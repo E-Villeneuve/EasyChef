@@ -1,8 +1,9 @@
 import { Navigate } from "react-router-dom";
-import { useContext } from 'react';
-import { UserContext } from '../../App';
+import { useContext } from "react";
+import { UserContext } from "../../App";
 
 function Logout() {
+
     const { setAuth } = useContext(UserContext);
 
     const logout = () => {

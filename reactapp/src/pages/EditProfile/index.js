@@ -27,7 +27,6 @@ function EditProfile() {
     let [formPhoneNum, setFormPhoneNum] = useState(localStorage.getItem('phone_number'));
     let [avatar, setAvatar] = useState(localStorage.getItem('avatar'));
 
-
     let handleInput = (i) => {
         let {id, value} = i.target;
         
@@ -101,6 +100,12 @@ function EditProfile() {
             else {
                 setDetails("Failure");
             }
+
+            setEmail(res.data.email);
+            setFirstName(res.data.first_name);
+            setLastName(res.data.last_name);
+            setDescription(res.data.description);
+            setPhoneNum(res.data.phone_number);
             
         }));
     }
@@ -143,7 +148,7 @@ function EditProfile() {
 
     let submitPass = () => {
         
-        if (formPassword === localStorage.getItem('password') && newPassword === confirmPass && newPassword != '') {
+        if (formPassword === localStorage.getItem('password') && newPassword === confirmPass && newPassword !== '') {
             let request = {
                 method: 'PATCH',
                 headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + String(localStorage.getItem('access'))},
@@ -157,6 +162,7 @@ function EditProfile() {
         })
         ).then(res => {
             localStorage.setItem('password', newPassword);
+            setPassword(newPassword);
         }));
 
         

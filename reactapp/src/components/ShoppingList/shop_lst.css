@@ -69,6 +69,8 @@
     border-color: rgba(0, 0, 0, 0.2)!important;
 }
 
+.shop_lst_btn:active { border: 1px solid!important; }
+
 .shop_lst_btn:hover { background: rgba(46, 44, 44, 0.1)!important; }
 
 #export_btn {
@@ -81,6 +83,8 @@
     margin-top: 0;
     background: linear-gradient(24deg, rgba(245, 246, 220, 0.87), rgba(255, 255, 255, 0.479) 91.23%)!important;
 }
+
+#export_btn:active { border: 1px solid!important; }
 
 #export_btn:hover {
     background: rgba(46, 44, 44, 0.1)!important;

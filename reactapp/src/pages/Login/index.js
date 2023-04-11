@@ -10,8 +10,7 @@ import nopic from '../../images/defaultavatar.png';
 
 function Login() {
     const navigate = useNavigate();
-    const { setAuth, 
-            setLoading,
+    const { setLoading,
             setFirstName,
             setLastName,
             setDescription,
@@ -19,6 +18,7 @@ function Login() {
             setAvatar,
             setEmail,
             setPassword,
+            setAuth,
             } = useContext(UserContext);
 
     let [email_error, setEmailError] = useState('');
@@ -67,13 +67,12 @@ function Login() {
                 headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + String(res.data.access)},
             }
             
-            setAuth(true); 
             fetch("http://127.0.0.1:8000/accounts/getinfo/", request)
             .then(response => response.json()
             .then(data => ({
                 data: data,
             })
-            ).then(res => {
+            ).then(res => { // !== res.response.ok???
                 
                 localStorage.setItem('id', res.data.id);
                 localStorage.setItem('email', res.data.email);
@@ -103,13 +102,14 @@ function Login() {
                     localStorage.setItem('avatar', nopic);
                 }
                 
+                setAuth(true);
                 setEmail(res.data.email);
                 setFirstName(res.data.first_name);
                 setLastName(res.data.last_name);
                 setPassword(formPassword);
                 setDescription(res.data.description);
                 setPhoneNum(res.data.phone_number);
-                setAvatar(res.data.avatar ? res.data.avatar : nopic);  
+                setAvatar(res.data.avatar ? res.data.avatar : nopic);
                 
                 
             }))

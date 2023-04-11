@@ -105,6 +105,10 @@
     box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3)!important;
 }
 
+.shop_item_button:active {
+    border: 1px solid!important;
+}
+
 .shop_item_button:hover { background: rgba(46, 44, 44, 0.1)!important; }
 
 .shop_item_pic_area {
@@ -151,3 +155,47 @@
     flex-flow: row wrap;
     margin-bottom: 0.5em;
 }
+
+
+/* Some Popup code from:
+https://github.com/Ziratsu/React-modal-yt/blob/main/src/Components/Modal/Modal.js */
+
+#ingredients_card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.15s;
+    opacity: 1;
+    color: black;
+}
+
+.btn-primary#add_card:hover {
+    background-color: black;
+    opacity: 0.5;
+}
+
+body.active_addshopitem_popup {
+    overflow-y: hidden!important;
+}
+
+#ingredients_modal {
+    max-width: none;
+    margin: auto;
+    margin-top: 2em;
+    width: 60%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Baloo 2', cursive!important;
+}
+
+#ingredients_modal_footer {
+    justify-content: center;
+}
+
+.ingredients_content {
+    background-color: white!important;
+    background: linear-gradient(24deg, rgba(230, 221, 171, 1), rgb(255, 255, 255) 100.3%)!important;
+}
+
+#ingredients_lst li { list-style-type: circle; }

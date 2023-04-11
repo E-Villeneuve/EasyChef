@@ -18,7 +18,8 @@ function AdvBox (filter_title, filters_box, filters,
             <div id={filters_box}>
                 {filters.map((filter, index) => (
                     <div>
-                        {Checkbox(filter, tags[index], addTag, removeTag)}
+                        {Checkbox(filter, tags[index], addTag, removeTag, 
+                                  filter_state)}
                     </div>
                 ))}
             </div>

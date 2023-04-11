@@ -80,11 +80,37 @@ const App = () => {
     useEffect(() => {
         setPageLoading(true);
 
+        // Jwt expiration checker from
+        // https://www.bezkoder.com/handle-jwt-token-expiration-react/
+        const parseJwt = (token) => {
+            try {
+              return JSON.parse(atob(token.split(".")[1]));
+            } catch (e) {
+              return null;
+            }
+          };
+
+        const token = localStorage.getItem('access');
+        if (token) {
+            const decodedtoken = parseJwt(token);
+            if (decodedtoken.exp * 1000 < Date.now()) {
+                localStorage.clear();
+                setAuth(false);
+                setPageLoading(false);
+                return;
+            }
+            else setAuth(true);
+        }
+        else {
+            setAuth(false);
+            setPageLoading(false);
+            return;
+        }
+
         setFirstName(localStorage.getItem('first_name'));
         let last_name = localStorage.getItem('last_name');
         setAvatar(localStorage.getItem('avatar') || defavatar);
         setLastName(last_name);
-        if (localStorage.getItem('access')) setAuth(true);
         setEmail(localStorage.getItem('email'));
         setPassword(localStorage.getItem('password'));
         setPhoneNum(localStorage.getItem('phone_number'));

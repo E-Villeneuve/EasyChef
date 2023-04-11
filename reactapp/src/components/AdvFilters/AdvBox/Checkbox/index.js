@@ -1,8 +1,14 @@
 import { useState } from "react";
 import './checkbox.css';
+import { useEffect } from "react";
 
-function Checkbox (filter, tag, addTag, removeTag) {
+function Checkbox (filter, tag, addTag, removeTag, filter_state) {
     const [checked, setChecked] = useState(false);
+
+    useEffect(() => {
+        if (filter_state.indexOf(tag) > -1) setChecked(true);
+        else setChecked(false);
+    }, [])
 
     const onToggle = () => {
         setChecked(!checked) // wont update immediately
@@ -15,6 +21,7 @@ function Checkbox (filter, tag, addTag, removeTag) {
         <input id={filter + "_" + tag}
                 type='checkbox'
                 className='searchcheck'
+                checked={checked}
                 onClick={() => onToggle()}/>
         <span className='filtertext'>
                 {filter}

@@ -24,8 +24,9 @@ const NavSearch = () => {
 
   const onEnter = (e) => {
       if (e.key === 'Enter') {
-          setSearchQ(e.target.value);
-          navigate('/search');
+            e.preventDefault();
+            setSearchQ(e.target.value);
+            navigate('/search');
       }
   }
 

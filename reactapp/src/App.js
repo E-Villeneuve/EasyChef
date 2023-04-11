@@ -8,8 +8,7 @@ import ToTopBtn from './components/ToTopBtn';
 import { useState } from 'react';
 import defavatar from './images/defaultavatar.png';
 import LoadingComp from './components/Loading';
-
-import AOS from "aos";
+import ErrorPopup from './components/ErrorPopup';
 
 export const UserContext = createContext(null);
 export const SearchContext = createContext(null);
@@ -25,6 +24,7 @@ const App = () => {
     const [description, setDescription] = useState('');
     const [pageLoading, setPageLoading] = useState(false);
     const [auth, setAuth] = useState(false);
+    const [error, setError] = useState('');
 
     const userStates = {
         auth: auth,
@@ -33,6 +33,8 @@ const App = () => {
         setLoading: setLoading,
         pageLoading: pageLoading,
         setPageLoading: setPageLoading,
+        error: error,
+        setError: setError,
         firstName: firstName,
         setFirstName: setFirstName,
         lastName: lastName,
@@ -55,6 +57,7 @@ const App = () => {
     const [ timeTags, setTimeTags ] = useState([]);
     const [ searchCats, setSearchCats ] = useState([]);
     const [ ordering, setOrdering ] = useState([]);
+    const [ suggestions, setSuggestions] = useState([]);
     
     const searchStates = {
         searchQ: searchQ,
@@ -69,6 +72,9 @@ const App = () => {
         setSearchCats: setSearchCats,
         ordering: ordering,
         setOrdering: setOrdering,
+        suggestions: suggestions,
+        setSuggestions: setSuggestions,
+
     }
 
     useEffect(() => {
@@ -104,6 +110,7 @@ const App = () => {
                 </SearchContext.Provider>
             </Router>
             {loading && <LoadingComp/>}
+            {error && ErrorPopup(error, setError)}
             <Container id='footer_container'>
                 <ToTopBtn/>
                 <p id='footer'>  

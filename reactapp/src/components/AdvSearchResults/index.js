@@ -3,6 +3,7 @@ import RecipeCard from '../../components/RecipeCard';
 import './advsearchresults.css';
 import Search from '../Search';
 import { SearchContext } from '../../App';
+import { useEffect } from 'react';
 
 function AdvSearchResults () {
 
@@ -11,7 +12,28 @@ function AdvSearchResults () {
             cuisines, setCuisines,
             timeTags, setTimeTags,
             searchCats, setSearchCats, // keep sets, as will need for redirects
-            ordering } = useContext(SearchContext);
+            ordering, setOrdering } = useContext(SearchContext);
+    // New idea: Modify the SearchContext such that it has Search's 
+    // suggestions + setter and showSuggestions and setter
+    // Then, make a new component that is identical to Search, but uses
+    // the SearchContext instead
+        // Logic will be a bit different:
+            // useEffect will tell us when we should recompute our search results
+                // Will have a couple of new dependencies:
+                    // Depends on diets, cuisines, timeTags, searchCats, ordering,
+                    // and searchQ
+                        // That way, we can recompute our search results every time
+                        // one of these values change
+                // Means that our whole fetch procedure in onChange will be moved to useEffect
+            // OnchangeFunc will just be () => setSearchQ(e.target.value);
+            // onFocus is the same
+            // SearchResults is the same
+    // That way, whenever 
+
+
+    useEffect(() => {
+
+    }, [])
 
 
     const addFilter = (delim, filters) => {
@@ -59,8 +81,7 @@ function AdvSearchResults () {
                 {showSuggestions && (
                     <>
                     {suggestions.map((suggestion) => {
-                        return searchResult(suggestion, setShowSuggestions, value)
-                               })}
+                        return searchResult(suggestion, setShowSuggestions, value)})}
                     </>
                 )}
         </div>)
@@ -76,26 +97,5 @@ function AdvSearchResults () {
     </div>
     );
 }
-
-
-{/* <div className='result-row'>
-<div className='result-col'>
-<div className="recipecard">
-<div className="recipecard-top img_wrap">
-    <img
-        src={
-            false ? noimage : noimage
-        }
-        alt="title"
-        id='recipecard_img'
-    />
-<h1>title</h1>
-</div>
-<div className="recipecard-bottom">
-    <h3>price</h3>
-    <span className="recipecat">category</span>
-</div>
-</div>
-</div> */}
 
 export default AdvSearchResults;

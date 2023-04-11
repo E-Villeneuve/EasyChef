@@ -102,7 +102,7 @@ function ShoppingList() {
         displayShopLst();
     }
 
-    const showSuggestion = (suggestion, setShowSuggestions, value, onClickFunc) => {
+    const showSuggestion = (suggestion, setShowSuggestions, value) => {
         return (<li onClick={() => onClick(suggestion.recipe_details.id,
                                         setShowSuggestions)} 
             key={suggestion.recipe_details.name}>
@@ -111,7 +111,7 @@ function ShoppingList() {
         </li>)
     }
 
-    return ((<>
+    return (<>
             <div className="shop_wrap" ref={autocompleteRef}>
                 <div id='searchsec'>
                     <h2 id="shop_title"><b>My Shopping List</b></h2>
@@ -127,12 +127,10 @@ function ShoppingList() {
                             {Object.keys(allIngredientLst).map((key, index) =>
                             <li data-aos-offset='0px' data-aos="fade-left" key={key}>{allIngredientLst[key]} {key}</li>)}
                         </div>
-                    <Button id="export_btn" onClick={() => window.print()}>
-                        Export
-                    </Button>
+                    <Button id="export_btn" onClick={() => window.print()}>Export</Button>
                 </div>
             </div>
-        </>));
+        </>);
   }
   
   export default ShoppingList;

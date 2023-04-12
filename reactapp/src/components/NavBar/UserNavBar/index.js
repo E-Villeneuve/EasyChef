@@ -42,7 +42,8 @@ function UserNavBar( ) {
                 <LinkContainer to='/search'>
                     <Nav.Link as={Link} 
                               active={location.pathname === '/search'}
-                              onClick={() => {
+                              onClick={(e) => {
+                                e.preventDefault();
                                 setPageNum(1);
                                 setSuggestions([]);
                                 navigate({pathname: '/search', search: '?' + createSearchParams({query: ''})});

@@ -8,8 +8,7 @@ import ToTopBtn from './components/ToTopBtn';
 import { useState } from 'react';
 import defavatar from './images/defaultavatar.png';
 import LoadingComp from './components/Loading';
-
-import AOS from "aos";
+import ErrorPopup from './components/ErrorPopup';
 
 export const UserContext = createContext(null);
 export const SearchContext = createContext(null);
@@ -25,6 +24,7 @@ const App = () => {
     const [description, setDescription] = useState('');
     const [pageLoading, setPageLoading] = useState(false);
     const [auth, setAuth] = useState(false);
+    const [error, setError] = useState('');
 
     const userStates = {
         auth: auth,
@@ -33,6 +33,8 @@ const App = () => {
         setLoading: setLoading,
         pageLoading: pageLoading,
         setPageLoading: setPageLoading,
+        error: error,
+        setError: setError,
         firstName: firstName,
         setFirstName: setFirstName,
         lastName: lastName,
@@ -49,36 +51,40 @@ const App = () => {
         setDescription: setDescription
     }
 
-    const [ searchQ, setSearchQ ] = useState('');
-    const [ diets, setDiets ] = useState([]);
-    const [ cuisines, setCuisines ] = useState([]);
-    const [ timeTags, setTimeTags ] = useState([]);
-    const [ searchCats, setSearchCats ] = useState([]);
-    const [ ordering, setOrdering ] = useState([]);
-    
-    const searchStates = {
-        searchQ: searchQ,
-        setSearchQ: setSearchQ,
-        diets: diets,
-        setDiets: setDiets,
-        cuisines: cuisines,
-        setCuisines: setCuisines,
-        timeTags: timeTags,
-        setTimeTags: setTimeTags,
-        searchCats: searchCats,
-        setSearchCats: setSearchCats,
-        ordering: ordering,
-        setOrdering: setOrdering,
-    }
-
     useEffect(() => {
         setPageLoading(true);
+
+        // Jwt expiration checker from
+        // https://www.bezkoder.com/handle-jwt-token-expiration-react/
+        const parseJwt = (token) => {
+            try {
+              return JSON.parse(atob(token.split(".")[1]));
+            } catch (e) {
+              return null;
+            }
+          };
+
+        const token = localStorage.getItem('access');
+        if (token) {
+            const decodedtoken = parseJwt(token);
+            if (decodedtoken.exp * 1000 < Date.now()) {
+                localStorage.clear();
+                setAuth(false);
+                setPageLoading(false);
+                return;
+            }
+            else setAuth(true);
+        }
+        else {
+            setAuth(false);
+            setPageLoading(false);
+            return;
+        }
 
         setFirstName(localStorage.getItem('first_name'));
         let last_name = localStorage.getItem('last_name');
         setAvatar(localStorage.getItem('avatar') || defavatar);
         setLastName(last_name);
-        if (localStorage.getItem('access')) setAuth(true);
         setEmail(localStorage.getItem('email'));
         setPassword(localStorage.getItem('password'));
         setPhoneNum(localStorage.getItem('phone_number'));
@@ -86,6 +92,16 @@ const App = () => {
 
         setPageLoading(false);
     }, [loading, pageLoading, firstName, lastName, phoneNum, avatar, email, password, description]);
+
+    const [pageNum, setPageNum] = useState(1);
+    const [ suggestions, setSuggestions ] = useState([]);
+
+    const searchStates = {
+        pageNum: pageNum,
+        setPageNum: setPageNum,
+        suggestions: suggestions,
+        setSuggestions: setSuggestions,
+    }
 
     return (
         <>
@@ -96,14 +112,15 @@ const App = () => {
             crossOrigin="anonymous"
         />
             <Router>
-                <SearchContext.Provider value={searchStates}>
-                    <UserContext.Provider value={userStates}>
-                        <NavBar />
-                        <AnimatedRoutes />
-                    </UserContext.Provider>
-                </SearchContext.Provider>
+            <SearchContext.Provider value={searchStates}>
+                <UserContext.Provider value={userStates}>
+                    <NavBar />
+                    <AnimatedRoutes />
+                </UserContext.Provider>
+            </SearchContext.Provider>
             </Router>
             {loading && <LoadingComp/>}
+            {error && ErrorPopup(error, setError)}
             <Container id='footer_container'>
                 <ToTopBtn/>
                 <p id='footer'>  

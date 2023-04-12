@@ -37,7 +37,7 @@ function AnimatedRoutes() {
                 <Route exact path="/logout" element={<Logout/>}/>
                 <Route exact path="/profile" element={<ViewProfile/>}/>
                 <Route exact path="/unauthorized" element={<Unauthorized/>}/>
-                <Route exact path="/search" element={<AdvancedSearch/>}/>
+                <Route path="/search" element={<AdvancedSearch/>}/>
                 <Route exact path="/myshoppinglist" element={<MyShoppingList/>}/>
                 <Route path="*" element={<NotFound/>}/>
             </Routes>

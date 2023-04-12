@@ -20,7 +20,7 @@ function SearchDropdown(onChangeFunc, placehold_text, set_id,
 
     return (
         <>
-            {Search(onChangeFunc, placehold_text, set_id, searchResults, false)}
+            {Search(onChangeFunc, placehold_text, set_id, searchResults)}
         </>
     );
   }

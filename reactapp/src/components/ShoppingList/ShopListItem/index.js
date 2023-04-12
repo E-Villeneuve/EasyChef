@@ -26,11 +26,15 @@ function ShopListItem(item, delFunc, changeServing, popup,
                                 <label className="col-form-label">Servings:</label>
                                 </div>
                                 <div className="col-auto">
-                                <input type="text" 
+                                <input type="number" 
                                         id="inputserving" 
                                         defaultValue={item.servings ? item.servings : ''} 
                                         className="form-control inputserving"
-                                        onBlur={(e) => changeServing(e, item)}/>
+                                        min="0"
+                                        step="1"
+                                        maxLength="3"
+                                        onBlur={(e) => changeServing(e, item)}
+                                        pattern="/d+"/>
                                 </div>
                             </div>
                             Cooking time: {item.cook_time} mins

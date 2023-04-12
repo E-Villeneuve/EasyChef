@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/Button';
 import { useNavigate } from "react-router-dom";
 import { useContext } from 'react';
 import { UserContext } from '../../App';
-import { useState, setState } from 'react';
+import { useState } from 'react';
 import nopic from '../../images/defaultavatar.png';
 
 function Login() {

@@ -16,7 +16,7 @@ function ShoppingList() {
     // from https://www.youtube.com/watch?v=EpE6TU58cPw
     const [shopLst, setShopLst] = useState([])
     const [allIngredientLst, setAllIngredientLst] = useState([])
-    const { setLoading } = useContext(UserContext);
+    const { setLoading, setError } = useContext(UserContext);
 
     const [isActive, setIsActive] = useState(false) 
     const [popup, setPopup] = useState(false);
@@ -89,6 +89,16 @@ function ShoppingList() {
         setLoading(true);
         let num;
         if (e.target.value) {
+            if (e.target.value < 0) {
+                setError('A recipe\'s serving size cannot be negative. Try another serving size!');
+                displayShopLst();
+                return;
+            }
+            if (e.target.value > 9999) {
+                setError('This recipe\'s serving size is too large. Try another serving size!');
+                displayShopLst();
+                return;
+            }
             num = e.target.value;
         }
         else num = 0;
@@ -98,11 +108,14 @@ function ShoppingList() {
             body: JSON.stringify({ 'serving': num})
         }
 
-        await fetch('http://127.0.0.1:8000/recipes/myshoppinglist/edit/' + item.shoplstrecipe_id + '/', request);
+        await fetch('http://127.0.0.1:8000/recipes/myshoppinglist/edit/' + item.shoplstrecipe_id + '/', request)
+        .then(res => { // handling via https://stackoverflow.com/questions/54163952/async-await-in-fetch-how-to-handle-errors
+            if (res.status >= 400 && res.status < 600) setError('This is an invalid serving size. Try something else!');
+        })
         displayShopLst();
     }
 
-    const showSuggestion = (suggestion, setShowSuggestions, value, onClickFunc) => {
+    const showSuggestion = (suggestion, setShowSuggestions, value) => {
         return (<li onClick={() => onClick(suggestion.recipe_details.id,
                                         setShowSuggestions)} 
             key={suggestion.recipe_details.name}>
@@ -111,7 +124,7 @@ function ShoppingList() {
         </li>)
     }
 
-    return ((<>
+    return (<>
             <div className="shop_wrap" ref={autocompleteRef}>
                 <div id='searchsec'>
                     <h2 id="shop_title"><b>My Shopping List</b></h2>
@@ -119,20 +132,18 @@ function ShoppingList() {
                                     showSuggestion)}
                 </div>
                     <div id="shop_items">
-                    {shopLst.map((shopItem, index) => ShopListItem(shopItem, onClickDel, onChangeServing,
+                    {shopLst && shopLst.map((shopItem, index) => ShopListItem(shopItem, onClickDel, onChangeServing,
                                                                    popup, handleOpen, handleClose, isActive,
                                                                    index))}
                         <div id="allingredientslst">
                             <h4 id="allingredientstitle">All Ingredients</h4>
-                            {Object.keys(allIngredientLst).map((key, index) =>
+                            {allIngredientLst && Object.keys(allIngredientLst).map((key, index) =>
                             <li data-aos-offset='0px' data-aos="fade-left" key={key}>{allIngredientLst[key]} {key}</li>)}
                         </div>
-                    <Button id="export_btn" onClick={() => window.print()}>
-                        Export
-                    </Button>
+                    <Button id="export_btn" onClick={() => window.print()}>Export</Button>
                 </div>
             </div>
-        </>));
+        </>);
   }
   
   export default ShoppingList;

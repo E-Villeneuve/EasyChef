@@ -4,7 +4,7 @@ import Form from 'react-bootstrap/Form';
 import { useEffect, useState, useRef } from 'react';
 
 function Search(onChangeFunc, placehold_text, set_id, 
-                searchResults, alwaysShow) {
+                searchResults) {
 
     // Some help w/ states and on funcs
     // from https://www.youtube.com/watch?v=EpE6TU58cPw
@@ -19,11 +19,10 @@ function Search(onChangeFunc, placehold_text, set_id,
             if (autocompleteRef.current && !autocompleteRef.current.contains(event.target))
             setShowSuggestions(false);
         }
-        if (!alwaysShow) {
-            document.addEventListener('click', handleClick);
-            return () => {
-                document.removeEventListener('click', handleClick);
-            }
+
+        document.addEventListener('click', handleClick);
+        return () => {
+            document.removeEventListener('click', handleClick);
         }
     },)
 
@@ -37,6 +36,8 @@ function Search(onChangeFunc, placehold_text, set_id,
                         onChangeFunc(e, setSuggestions, setShowSuggestions);
                         setValue(e.target.value)}}
                     onFocus={() => setShowSuggestions(true)}
+                    onKeyDown={(e) => (e.key === 'Enter') && e.preventDefault()}
+                    maxLength={255}
                 />
             </Form>
             {searchResults(showSuggestions, suggestions, setShowSuggestions, value)}

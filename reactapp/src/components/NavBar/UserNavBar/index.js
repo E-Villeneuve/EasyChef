@@ -7,16 +7,24 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import ProfileDropItem from '../ProfileDropItem';
 import NavSearch from "../NavSearch";
 import {LinkContainer} from 'react-router-bootstrap';
+import { Link } from 'react-router-dom';
+import { useLocation, useNavigate, createSearchParams } from 'react-router-dom';
+import { SearchContext } from '../../../App';
+import { useContext } from 'react';
 
 // Framework from https://react-bootstrap.github.io/components/navbar/
 function UserNavBar( ) {
+    const location = useLocation();
+    const navigate = useNavigate();
+    const { setPageNum, setSuggestions } = useContext(SearchContext);
+    const params = [['ordering', '-favourited'], ['ordering', '-star_rating']]
 
   return (
     <>
     {(<Navbar bg='dark' variant='dark' expand="lg" id='globalnavbar'>
         <Container fluid id='nav_container'>
             <LinkContainer to='/'>
-                <Nav.Link id='nav-brand'>
+                <Nav.Link id='nav-brand' as={Link} active={location.pathname === '/'}>
                     <Navbar.Brand className='nav-link'>
                         easy chef<span id="slogan">cooking has never been easier</span>
                     </Navbar.Brand>
@@ -26,16 +34,33 @@ function UserNavBar( ) {
             <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
                 <LinkContainer to='/'>
-                    <Nav.Link>Home</Nav.Link>
+                    <Nav.Link as={Link} active={location.pathname === '/'}>Home</Nav.Link>
                 </LinkContainer>
                 <LinkContainer to='/createrecipe'>
-                    <Nav.Link>Create Recipes</Nav.Link>
+                    <Nav.Link as={Link} active={location.pathname === '/createrecipe'}>Create Recipes</Nav.Link>
                 </LinkContainer>
                 <LinkContainer to='/search'>
-                    <Nav.Link>Advanced Search</Nav.Link>
+                    <Nav.Link as={Link} 
+                              active={location.pathname === '/search'}
+                              onClick={(e) => {
+                                e.preventDefault();
+                                setPageNum(1);
+                                setSuggestions([]);
+                                navigate({pathname: '/search', search: '?' + createSearchParams({query: ''})});
+                              }}>Advanced Search</Nav.Link>
                 </LinkContainer>
                 <LinkContainer to='/search'>
-                    <Nav.Link id='popular'>Popular Recipes</Nav.Link>
+                    <Nav.Link   as={Link}
+                                id='popular'
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    setPageNum(1);
+                                    setSuggestions([]);
+                                    navigate({
+                                        pathname: '/search',
+                                        search: `?${createSearchParams(params)}`,
+                                    });
+                                }}>Popular Recipes</Nav.Link>
                 </LinkContainer>
             </Nav>
             <div id='right_end'>
@@ -50,7 +75,7 @@ function UserNavBar( ) {
                             to='/profile'
                             id='profile_item'
                             as={LinkContainer}>
-                            <Nav.Link>
+                            <Nav.Link as={Link} active={location.pathname === '/profile'}>
                             <span className='navdropdowntext'>{ProfileDropItem()}</span>
                             </Nav.Link>
                         </NavDropdown.Item>
@@ -58,7 +83,7 @@ function UserNavBar( ) {
                         href='/editprofile'
                         to='/editprofile'
                         as={LinkContainer}>
-                            <Nav.Link>
+                            <Nav.Link as={Link} active={location.pathname === '/editprofile'}>
                                 <span className='navdropdowntext'>Edit Profile</span>
                             </Nav.Link>
                         </NavDropdown.Item>
@@ -67,7 +92,7 @@ function UserNavBar( ) {
                         href='/myrecipes'
                         to='/myrecipes'
                         as={LinkContainer}>
-                            <Nav.Link>
+                            <Nav.Link as={Link} active={location.pathname === '/myrecipes'}>
                             <span className='navdropdowntext'>My Recipes</span>
                             </Nav.Link>
                         </NavDropdown.Item>
@@ -76,7 +101,7 @@ function UserNavBar( ) {
                         href='/myshoppinglist'
                         to='/myshoppinglist'
                         as={LinkContainer}>
-                            <Nav.Link>
+                            <Nav.Link as={Link} active={location.pathname === '/myshoppinglist'}>
                             <span className='navdropdowntext'>My Shopping List</span>
                             </Nav.Link>
                         </NavDropdown.Item>
@@ -86,7 +111,7 @@ function UserNavBar( ) {
                         href='/logout'
                         to='/logout'
                         as={LinkContainer}>
-                            <Nav.Link>
+                            <Nav.Link as={Link} active={location.pathname === '/logout'}>
                             <span className='navdropdowntext'>Logout</span>
                             </Nav.Link>
                         </NavDropdown.Item>

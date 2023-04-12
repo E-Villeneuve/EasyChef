@@ -5,10 +5,12 @@ import { useSearchParams } from "react-router-dom";
 import { useContext } from "react";
 import { SearchContext } from "../../../../App";
 
-function Checkbox (filter, tag, query_cat) {
+function Checkbox (filter, tag, query_cat, type, isActive, setIsActive, index) {
     const { setPageNum, setSuggestions} = useContext(SearchContext);
     const [checked, setChecked] = useState(false);
     const [ searchParams, setSearchParams ] = useSearchParams();
+    const checkbox = 'checkbox';
+    const radio = 'radio';
 
     useEffect(() => {
         if (searchParams.getAll(query_cat).some(item => item === tag)) setChecked(true);
@@ -16,9 +18,17 @@ function Checkbox (filter, tag, query_cat) {
     }, [searchParams])
 
     const addTag = (tag) => {
-        let updatedSearchParams = new URLSearchParams(searchParams.toString());
-        updatedSearchParams.append(query_cat, tag);
-        setSearchParams(updatedSearchParams.toString());
+        if (type === checkbox) {
+            let updatedSearchParams = new URLSearchParams(searchParams.toString());
+            updatedSearchParams.append(query_cat, tag);
+            setSearchParams(updatedSearchParams.toString());
+        }
+        else if (type === radio) {
+            let updatedSearchParams = new URLSearchParams(searchParams.toString());
+            updatedSearchParams.delete(query_cat);
+            updatedSearchParams.append(query_cat, tag);
+            setSearchParams(updatedSearchParams.toString());
+        }
     }
 
     const removeTag = (tag) => {
@@ -35,6 +45,7 @@ function Checkbox (filter, tag, query_cat) {
         setChecked(!checked) // wont update immediately
         setPageNum(1);
         setSuggestions([]);
+        setIsActive(index);
         if (!checked) addTag(tag); // If checked
         else removeTag(tag); // If unchecked
     }
@@ -42,9 +53,9 @@ function Checkbox (filter, tag, query_cat) {
     return (
         <label>
         <input id={filter + "_" + tag}
-                type='checkbox'
+                type={type}
                 className='searchcheck'
-                checked={checked}
+                checked={type === checkbox ? checked : (isActive === index && checked)}
                 onClick={() => onToggle()}
                 onChange={(e) => e.target.value}/>
         <span className='filtertext'>

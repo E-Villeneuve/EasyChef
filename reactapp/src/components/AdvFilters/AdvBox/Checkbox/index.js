@@ -21,6 +21,7 @@ function Checkbox (filter, tag, addTag, removeTag, filter_state) {
         <input id={filter + "_" + tag}
                 type='checkbox'
                 className='searchcheck'
+                defaultChecked={checked}
                 checked={checked}
                 onClick={() => onToggle()}/>
         <span className='filtertext'>

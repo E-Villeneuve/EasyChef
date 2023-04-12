@@ -3,52 +3,93 @@ import  '../../globals.css';
 import Form from 'react-bootstrap/Form';
 import { useEffect, useContext } from 'react';
 import { SearchContext } from '../../../App';
+import { useState, useRef, useCallback } from 'react';
+import RecipeCard from '../../RecipeCard';
 
-function AdvSearch(placehold_text, set_id, searchResults) {
+function AdvSearch(placehold_text, set_id) {
 
     // Some help w/ states and on funcs
     // from https://www.youtube.com/watch?v=EpE6TU58cPw
 
-    // Only setter is for searchQ and setSuggestions
-    // Checkboxes handle setters for the other (ie. cuisines, diets, etc.)
-    // Suggestions = paginated json results from server
+    // Infinite paging help from:
+    // https://www.youtube.com/watch?v=NZKUirTtxcg
     const { searchQ, setSearchQ, // searchQ is for when user redirects to advSearch
             diets, cuisines,
             timeTags, searchCats,
             ordering, 
             suggestions, setSuggestions} = useContext(SearchContext);
+    const [ moreResults, setMoreResults ] = useState(true);
+    const [ pageNum, setPageNum ] = useState(1); // storing current page number
+
+    const observer = useRef();
+    const lastelemref = useCallback((node) => {
+        if (observer.current) observer.current.disconnect();
+        observer.current = new IntersectionObserver(entries => {
+            if (entries[0].isIntersecting && moreResults) {
+                setPageNum(pageNum => pageNum + 1);
+            }
+        })
+        if (node) observer.current.observe(node);
+    }, [moreResults])
 
     useEffect(() => {
-        let diet_delim = "&diets=";
-        let cuisine_delim = "&cuisine=";
-        let time_delim = "&cookingtimetag=";
-        let order_delim = "&ordering=";
+        setSuggestions([]);
+    }, [searchQ, setSuggestions])
 
-        var searchReq = "http://127.0.0.1:8000/search/?";
-        console.log(searchQ);
-
-        let request = {
-            method: 'GET',
-            headers: { 'Content-Type': 'application/json'},
+    useEffect(() => {
+        const fetchData = () => {
+            const addFilter = (delim, filters) => {
+                if (filters && filters.length > 0) return delim + filters.join(delim);
+                return '';
+            } 
+    
+            let diet_delim = "&diets=";
+            let cuisine_delim = "&cuisine=";
+            let time_delim = "&cookingtimetag=";
+            let order_delim = "&ordering=";
+    
+            var searchReq = "http://127.0.0.1:8000/search/?page=" + pageNum + "&";
+            console.log(searchQ);
+    
+            let request = {
+                method: 'GET',
+                headers: { 'Content-Type': 'application/json'},
+            }
+    
+            searchReq += "search=" + searchQ
+                      + addFilter(diet_delim, diets)
+                      + addFilter(cuisine_delim, cuisines)
+                      + addFilter(time_delim, timeTags)
+                      + addFilter(order_delim, ordering);
+            searchCats.forEach(cat => searchReq += ("&" + cat + "="));
+            
+            fetch(searchReq, request)
+            .then(response => response.json())
+            .then(data => {
+                setMoreResults(data.results.next !== null);
+                setSuggestions([...suggestions, ...data.results]);
+            });
         }
 
-        const addFilter = (delim, filters) => {
-            if (filters && filters.length > 0) return delim + filters.join(delim);
-            return '';
-        } 
+        if (moreResults) fetchData();
+        else setPageNum(1);
 
-        searchReq += "search=" + searchQ
-                  + addFilter(diet_delim, diets)
-                  + addFilter(cuisine_delim, cuisines)
-                  + addFilter(time_delim, timeTags)
-                  + addFilter(order_delim, ordering);
-        searchCats.forEach(cat => searchReq += ("&" + cat + "="));
+    }, [diets, cuisines, timeTags, searchCats, ordering, searchQ, 
+        setSuggestions, moreResults, pageNum, suggestions])
+
+    const searchResult = (suggestion, index) => { // For a singular result (ie. 1 Card)
+        // Singular Card - suggestion is a recipe
+            if (suggestions.length === index + 1) {
+                return <span ref={lastelemref} data-aos='fade-left' data-aos-offset='0px'>{RecipeCard('recipe_item lol')}</span>;
+            }
+            else return <span data-aos='fade-left' data-aos-offset='0px'>{RecipeCard('recipe_item lol')}</span>;
+        }
         
-        fetch(searchReq, request)
-        .then(response => response.json())
-        .then(data => setSuggestions(data.results));
-
-    }, [diets, cuisines, timeTags, searchCats, ordering, searchQ, setSuggestions])
+    const searchResults = () => { 
+    // All cards - <suggestions> contain multiple cards that may be paginated
+        return (<div id={'advresult_cards'}>{suggestions.map((suggestion, index) => {
+                    return searchResult(suggestion, index)})}</div>);
+    }  
 
     return (
         <div id={set_id}>
@@ -56,11 +97,14 @@ function AdvSearch(placehold_text, set_id, searchResults) {
                 <Form.Control
                     type="search"
                     placeholder = {placehold_text}
-                    onChange={(e) => setSearchQ(e.target.value)}
+                    onChange={(e) => {
+                        setSearchQ(e.target.value);
+                        setPageNum(1);
+                    }}
                     value={searchQ}
                 />
             </Form>
-            {searchResults(suggestions)}
+                {searchResults()}
         </div>
     );
   }

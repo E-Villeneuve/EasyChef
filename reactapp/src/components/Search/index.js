@@ -36,6 +36,7 @@ function Search(onChangeFunc, placehold_text, set_id,
                         onChangeFunc(e, setSuggestions, setShowSuggestions);
                         setValue(e.target.value)}}
                     onFocus={() => setShowSuggestions(true)}
+                    onKeyDown={(e) => (e.key === 'Enter') && e.preventDefault()}
                 />
             </Form>
             {searchResults(showSuggestions, suggestions, setShowSuggestions, value)}

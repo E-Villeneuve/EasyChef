@@ -146,6 +146,7 @@ class MyRecipesSerializer(serializers.ModelSerializer):
         myrecipes = {}
         for recipe in instance.myrecipes.all():
             curr_recipe = {}
+            curr_recipe['id'] = recipe.id
             curr_recipe['name'] = recipe.name
             curr_recipe['description'] = recipe.description
             curr_recipe['rating'] = recipe.star_rating
@@ -163,6 +164,7 @@ class MyRecipesSerializer(serializers.ModelSerializer):
         for fav_id in orig_rep.get('favourites', None):
             cur_fav = {}
             cur_recipe = Recipe.objects.get(id=fav_id)
+            cur_fav['id'] = cur_recipe.id
             cur_fav['name'] = cur_recipe.name
             cur_fav['description'] = cur_recipe.description
             cur_fav['rating'] = cur_recipe.star_rating
@@ -172,6 +174,7 @@ class MyRecipesSerializer(serializers.ModelSerializer):
         for rated_id in orig_rep.get('rated', None):
             cur_rated = {}
             cur_recipe = Recipe.objects.get(id=rated_id)
+            cur_rated['id'] = cur_recipe.id
             cur_rated['name'] = cur_recipe.name
             cur_rated['description'] = cur_recipe.description
             cur_rated['rating'] = cur_recipe.star_rating
@@ -181,6 +184,7 @@ class MyRecipesSerializer(serializers.ModelSerializer):
             if not likes_id in interacted:
                 cur_like = {}
                 cur_recipe = Recipe.objects.get(id=likes_id)
+                cur_like['id'] = cur_recipe.id
                 cur_like['name'] = cur_recipe.name
                 cur_like['description'] = cur_recipe.description
                 cur_like['rating'] = cur_recipe.star_rating
@@ -190,6 +194,7 @@ class MyRecipesSerializer(serializers.ModelSerializer):
             if not commented_id in interacted:
                 cur_commented = {}
                 cur_recipe = Recipe.objects.get(id=commented_id)
+                cur_commented['id'] = cur_recipe.id
                 cur_commented['name'] = cur_recipe.name
                 cur_commented['description'] = cur_recipe.description
                 cur_commented['rating'] = cur_recipe.star_rating

@@ -7,7 +7,7 @@ import homepic from '../../images/homeimage.jpg';
 import homesearch from '../../images/homesearch.jpg';
 import AnimatePage from '../../components/AnimatePage';
 import LargeSearch from '../../components/LargeSearch';
-
+import { dataDigitalBestSeller } from '../../components/RecipeCarousel/data';
 import React, { useEffect, useRef } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -52,7 +52,7 @@ const Home = () => {
                     <h1>Featured</h1>
                     <h5 id="featuredsubtitle">Some of our favourites</h5>
                 </div>
-            <RecipeCarousel />
+            {RecipeCarousel(dataDigitalBestSeller)}
             </div>
             </div>
             <div data-aos="fade-right" id='home_anecdote'>

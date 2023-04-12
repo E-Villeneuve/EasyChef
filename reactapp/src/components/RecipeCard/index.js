@@ -23,13 +23,13 @@ function RecipeCard(item) {
                 src={
                     item.linkImg ? item.linkImg : noimage
                 }
-                alt={item.title}
+                alt={item.name}
                 id='recipecard_img'
             />
-        <h1>{item.title}</h1>
+        <h1>{item.name}</h1>
         </div>
         <div className="recipecard-bottom">
-              <h3>{item.price}</h3>
+              <h3>{item.rating}</h3>
               <span className="recipecat">{item.category}</span>
         </div>
     </div>

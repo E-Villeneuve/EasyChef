@@ -1,17 +1,40 @@
 import { useState } from "react";
 import './checkbox.css';
 import { useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
+import { useContext } from "react";
+import { SearchContext } from "../../../../App";
 
-function Checkbox (filter, tag, addTag, removeTag, filter_state) {
+function Checkbox (filter, tag, query_cat) {
+    const { setPageNum, setSuggestions} = useContext(SearchContext);
     const [checked, setChecked] = useState(false);
+    const [ searchParams, setSearchParams ] = useSearchParams();
 
     useEffect(() => {
-        if (filter_state.indexOf(tag) > -1) setChecked(true);
+        if (searchParams.getAll(query_cat).some(item => item === tag)) setChecked(true);
         else setChecked(false);
     }, [])
 
+    const addTag = (tag) => {
+        let updatedSearchParams = new URLSearchParams(searchParams.toString());
+        updatedSearchParams.append(query_cat, tag);
+        setSearchParams(updatedSearchParams.toString());
+    }
+
+    const removeTag = (tag) => {
+        // Code from:
+        // https://stackoverflow.com/questions/61685743/react-router-update-only-one-query-parameter-instead-of-replacing-all
+        let updatedSearchParams = new URLSearchParams(searchParams.toString());
+        const tags = updatedSearchParams.getAll(query_cat).filter(queryTag => queryTag !== tag);
+        updatedSearchParams.delete(query_cat);
+        for (const tag of tags) updatedSearchParams.append(query_cat, tag);
+        setSearchParams(updatedSearchParams.toString());
+    }
+
     const onToggle = () => {
         setChecked(!checked) // wont update immediately
+        setPageNum(1);
+        setSuggestions([]);
         if (!checked) addTag(tag); // If checked
         else removeTag(tag); // If unchecked
     }
@@ -22,8 +45,8 @@ function Checkbox (filter, tag, addTag, removeTag, filter_state) {
                 type='checkbox'
                 className='searchcheck'
                 defaultChecked={checked}
-                checked={checked}
-                onClick={() => onToggle()}/>
+                onClick={() => onToggle()}
+                onChange={(e) => e.target.value}/>
         <span className='filtertext'>
                 {filter}
         </span></label>

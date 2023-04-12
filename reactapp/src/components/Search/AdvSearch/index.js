@@ -1,10 +1,14 @@
 import '../search.css'; // use same styling for consistency
 import  '../../globals.css';
+import './advsearch.css';
 import Form from 'react-bootstrap/Form';
-import { useEffect, useContext } from 'react';
-import { SearchContext } from '../../../App';
+import { useEffect } from 'react';
 import { useState, useRef, useCallback } from 'react';
 import RecipeCard from '../../RecipeCard';
+import { useSearchParams, } from 'react-router-dom';
+import {UserContext} from '../../../App.js';
+import { SearchContext } from '../../../App.js';
+import { useContext } from 'react';
 
 function AdvSearch(placehold_text, set_id) {
 
@@ -13,16 +17,20 @@ function AdvSearch(placehold_text, set_id) {
 
     // Infinite paging help from:
     // https://www.youtube.com/watch?v=NZKUirTtxcg
-    const { searchQ, setSearchQ, // searchQ is for when user redirects to advSearch
-            diets, cuisines,
-            timeTags, searchCats,
-            ordering, 
-            suggestions, setSuggestions} = useContext(SearchContext);
     const [ moreResults, setMoreResults ] = useState(true);
-    const [ pageNum, setPageNum ] = useState(1); // storing current page number
+    const [ searchParams, setSearchParams ] = useSearchParams();
+    const [ searchQ, setSearchQ ] = useState(searchParams.get('query') || '');
+    const { pageNum, setPageNum, suggestions, setSuggestions } = useContext(SearchContext);
+    const { loading, setError } = useContext(UserContext)
+
+
+    const onEnter = (e) => {
+        if (e.key === 'Enter') e.preventDefault();
+    }
 
     const observer = useRef();
     const lastelemref = useCallback((node) => {
+        if (loading) return;
         if (observer.current) observer.current.disconnect();
         observer.current = new IntersectionObserver(entries => {
             if (entries[0].isIntersecting && moreResults) {
@@ -30,26 +38,31 @@ function AdvSearch(placehold_text, set_id) {
             }
         })
         if (node) observer.current.observe(node);
-    }, [moreResults])
+    }, [loading, moreResults])
 
     useEffect(() => {
         setSuggestions([]);
     }, [searchQ, setSuggestions])
 
     useEffect(() => {
-        const fetchData = () => {
+        const fetchData = async () => {
             const addFilter = (delim, filters) => {
                 if (filters && filters.length > 0) return delim + filters.join(delim);
                 return '';
-            } 
-    
+            }
+            setSearchQ(searchParams.get('query') || '');
+            
             let diet_delim = "&diets=";
             let cuisine_delim = "&cuisine=";
             let time_delim = "&cookingtimetag=";
             let order_delim = "&ordering=";
+            let diets = searchParams.getAll('diets');
+            let cuisines = searchParams.getAll('cuisines');
+            let timeTags = searchParams.getAll('timeTags');
+            let ordering = searchParams.getAll('ordering');
+            let searchCats = searchParams.getAll('searchCats');
     
             var searchReq = "http://127.0.0.1:8000/search/?page=" + pageNum + "&";
-            console.log(searchQ);
     
             let request = {
                 method: 'GET',
@@ -57,32 +70,42 @@ function AdvSearch(placehold_text, set_id) {
             }
     
             searchReq += "search=" + searchQ
-                      + addFilter(diet_delim, diets)
-                      + addFilter(cuisine_delim, cuisines)
-                      + addFilter(time_delim, timeTags)
-                      + addFilter(order_delim, ordering);
+                    + addFilter(diet_delim, diets)
+                    + addFilter(cuisine_delim, cuisines)
+                    + addFilter(time_delim, timeTags)
+                    + addFilter(order_delim, ordering);
             searchCats.forEach(cat => searchReq += ("&" + cat + "="));
             
-            fetch(searchReq, request)
-            .then(response => response.json())
-            .then(data => {
-                setMoreResults(data.results.next !== null);
+            await fetch(searchReq, request)
+            .then(async response => await response.json())
+            .then(async data => {
+                setMoreResults((data.next !== null));
                 setSuggestions([...suggestions, ...data.results]);
-            });
+            })
+            .catch(() => setError('Error in requesting from the backend!'))
         }
 
-        if (moreResults) fetchData();
-        else setPageNum(1);
+        fetchData();
 
-    }, [diets, cuisines, timeTags, searchCats, ordering, searchQ, 
-        setSuggestions, moreResults, pageNum, suggestions])
+    }, [searchParams, pageNum, searchQ])
 
     const searchResult = (suggestion, index) => { // For a singular result (ie. 1 Card)
         // Singular Card - suggestion is a recipe
             if (suggestions.length === index + 1) {
-                return <span ref={lastelemref} data-aos='fade-left' data-aos-offset='0px'>{RecipeCard('recipe_item lol')}</span>;
+                return <div key={suggestion.recipe_name}
+                            ref={lastelemref} 
+                            data-aos='fade-left' 
+                            data-aos-offset='0px'
+                            className='advsearchcard'>
+                                {RecipeCard('recipe_item lol')}
+                            </div>;
             }
-            else return <span data-aos='fade-left' data-aos-offset='0px'>{RecipeCard('recipe_item lol')}</span>;
+            else return <div key={suggestion.recipe_name}
+                            data-aos='fade-left' 
+                            data-aos-offset='0px'
+                            className='advsearchcard'>
+                                {RecipeCard('recipe_item lol')}
+                            </div>;
         }
         
     const searchResults = () => { 
@@ -99,9 +122,15 @@ function AdvSearch(placehold_text, set_id) {
                     placeholder = {placehold_text}
                     onChange={(e) => {
                         setSearchQ(e.target.value);
+                        setSearchParams({
+                            query: e.target.value
+                        });
                         setPageNum(1);
+                        setSuggestions([]);
                     }}
+                    onKeyDown={onEnter}
                     value={searchQ}
+                    maxLength={255}
                 />
             </Form>
                 {searchResults()}

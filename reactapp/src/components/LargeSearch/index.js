@@ -1,16 +1,20 @@
 import './largesearch.css';
-import { useContext } from 'react';
-import { SearchContext } from '../../App';
 import { useNavigate } from 'react-router-dom';
+import { createSearchParams } from 'react-router-dom';
+import { SearchContext } from '../../App';
+import { useContext } from 'react';
 
 function LargeSearch() {
     const navigate = useNavigate();
-    const { setSearchQ } = useContext(SearchContext);
+    const { setSuggestions } = useContext(SearchContext);
 
     const onEnter = (e) => {
         if (e.key === 'Enter') {
-            setSearchQ(e.target.value);
-            navigate('/search');
+            setSuggestions([]);
+            navigate({
+                pathname: '/search',
+                search: '?' + createSearchParams({query: e.target.value}),
+            });
         }
     }
 
@@ -21,6 +25,7 @@ function LargeSearch() {
             id="largesearch_input" 
             placeholder="Search for recipes..."
             onKeyDown={onEnter}
+            maxLength={255}
         />
     </div>
 

@@ -5,15 +5,17 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavSearch from "../NavSearch";
 import {LinkContainer} from 'react-router-bootstrap';
-import { useContext } from 'react';
-import { SearchContext } from '../../../App';
 import { Link } from 'react-router-dom';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate, createSearchParams } from 'react-router-dom';
+import { SearchContext } from '../../../App';
+import { useContext } from 'react';
 
 // Framework from https://react-bootstrap.github.io/components/navbar/
 function GuestNavBar() {
     const location = useLocation();
-    const { setOrdering } = useContext(SearchContext);
+    const navigate = useNavigate();
+    const { setPageNum, setSuggestions } = useContext(SearchContext);
+    const popRecipes = {query: '', ordering: '-favourited&-star_rating' }
 
   return (
     <Navbar bg='dark' variant='dark' expand="lg" id='globalnavbar'>
@@ -41,13 +43,25 @@ function GuestNavBar() {
                 <Nav.Link as={Link}>Log in</Nav.Link>
             </LinkContainer>
             <LinkContainer to='/search' active={location.pathname === '/search'}>
-                <Nav.Link as={Link}>Advanced Search</Nav.Link>
+                <Nav.Link as={Link} 
+                              active={location.pathname === '/search'}
+                              onClick={() => {
+                                setPageNum(1);
+                                setSuggestions([]);
+                                navigate({pathname: '/search', search: '?' + createSearchParams({query: ''})});
+                              }}>Advanced Search</Nav.Link>
             </LinkContainer>
             <LinkContainer to='/search'>
-                <Nav.Link id='popular'
-                          onClick={() => {
-                            setOrdering(['-favourited', '-star_rating'])
-                          }}>Popular Recipes</Nav.Link>
+                <Nav.Link   as={Link}
+                        id='popular'
+                        onClick={(e) => {
+                            setPageNum(1);
+                            setSuggestions([]);
+                            navigate({
+                                pathname: '/search',
+                                search: '?' + createSearchParams(popRecipes),
+                            });
+                        }}>Popular Recipes</Nav.Link>
             </LinkContainer>
           </Nav>
           <NavSearch />

@@ -51,32 +51,6 @@ const App = () => {
         setDescription: setDescription
     }
 
-    const [ searchQ, setSearchQ ] = useState('');
-    const [ diets, setDiets ] = useState([]);
-    const [ cuisines, setCuisines ] = useState([]);
-    const [ timeTags, setTimeTags ] = useState([]);
-    const [ searchCats, setSearchCats ] = useState([]);
-    const [ ordering, setOrdering ] = useState([]);
-    const [ suggestions, setSuggestions] = useState([]);
-    
-    const searchStates = {
-        searchQ: searchQ,
-        setSearchQ: setSearchQ,
-        diets: diets,
-        setDiets: setDiets,
-        cuisines: cuisines,
-        setCuisines: setCuisines,
-        timeTags: timeTags,
-        setTimeTags: setTimeTags,
-        searchCats: searchCats,
-        setSearchCats: setSearchCats,
-        ordering: ordering,
-        setOrdering: setOrdering,
-        suggestions: suggestions,
-        setSuggestions: setSuggestions,
-
-    }
-
     useEffect(() => {
         setPageLoading(true);
 
@@ -119,6 +93,16 @@ const App = () => {
         setPageLoading(false);
     }, [loading, pageLoading, firstName, lastName, phoneNum, avatar, email, password, description]);
 
+    const [pageNum, setPageNum] = useState(1);
+    const [ suggestions, setSuggestions ] = useState([]);
+
+    const searchStates = {
+        pageNum: pageNum,
+        setPageNum: setPageNum,
+        suggestions: suggestions,
+        setSuggestions: setSuggestions,
+    }
+
     return (
         <>
         <link
@@ -128,12 +112,12 @@ const App = () => {
             crossOrigin="anonymous"
         />
             <Router>
-                <SearchContext.Provider value={searchStates}>
-                    <UserContext.Provider value={userStates}>
-                        <NavBar />
-                        <AnimatedRoutes />
-                    </UserContext.Provider>
-                </SearchContext.Provider>
+            <SearchContext.Provider value={searchStates}>
+                <UserContext.Provider value={userStates}>
+                    <NavBar />
+                    <AnimatedRoutes />
+                </UserContext.Provider>
+            </SearchContext.Provider>
             </Router>
             {loading && <LoadingComp/>}
             {error && ErrorPopup(error, setError)}

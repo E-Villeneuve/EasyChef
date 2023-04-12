@@ -13,7 +13,7 @@ function Checkbox (filter, tag, query_cat) {
     useEffect(() => {
         if (searchParams.getAll(query_cat).some(item => item === tag)) setChecked(true);
         else setChecked(false);
-    }, [])
+    }, [searchParams])
 
     const addTag = (tag) => {
         let updatedSearchParams = new URLSearchParams(searchParams.toString());

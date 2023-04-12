@@ -144,8 +144,12 @@ class MyRecipesSerializer(serializers.ModelSerializer):
 
     def get_myrecipes(self, instance):
         myrecipes = {}
+        recipe_serializer = RecipeSerializer()
         for recipe in instance.myrecipes.all():
             curr_recipe = {}
+            for key in recipe_serializer.get_images(recipe).keys():
+                curr_recipe['linkImg'] = 'http://127.0.0.1:8000' + recipe_serializer.get_images(recipe)[key] # This is scuffed, but it works
+                break
             curr_recipe['id'] = recipe.id
             curr_recipe['name'] = recipe.name
             curr_recipe['description'] = recipe.description
@@ -159,11 +163,16 @@ class MyRecipesSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
 
         orig_rep = super().to_representation(instance)
+        recipe_serializer = RecipeSerializer()
         favourites = {}
-        #if orig_rep.get('favourites', None):
+        
         for fav_id in orig_rep.get('favourites', None):
             cur_fav = {}
             cur_recipe = Recipe.objects.get(id=fav_id)
+            for key in recipe_serializer.get_images(cur_recipe).keys():
+                cur_fav['linkImg'] = 'http://127.0.0.1:8000' + recipe_serializer.get_images(cur_recipe)[key] # This is scuffed, but it works
+                break
+            
             cur_fav['id'] = cur_recipe.id
             cur_fav['name'] = cur_recipe.name
             cur_fav['description'] = cur_recipe.description
@@ -174,6 +183,9 @@ class MyRecipesSerializer(serializers.ModelSerializer):
         for rated_id in orig_rep.get('rated', None):
             cur_rated = {}
             cur_recipe = Recipe.objects.get(id=rated_id)
+            for key in recipe_serializer.get_images(cur_recipe).keys():
+                cur_rated['linkImg'] = 'http://127.0.0.1:8000' + recipe_serializer.get_images(cur_recipe)[key] # This is scuffed, but it works
+                break
             cur_rated['id'] = cur_recipe.id
             cur_rated['name'] = cur_recipe.name
             cur_rated['description'] = cur_recipe.description
@@ -184,6 +196,9 @@ class MyRecipesSerializer(serializers.ModelSerializer):
             if not likes_id in interacted:
                 cur_like = {}
                 cur_recipe = Recipe.objects.get(id=likes_id)
+                for key in recipe_serializer.get_images(cur_recipe).keys():
+                    cur_like['linkImg'] = 'http://127.0.0.1:8000' + recipe_serializer.get_images(cur_recipe)[key] # This is scuffed, but it works
+                    break
                 cur_like['id'] = cur_recipe.id
                 cur_like['name'] = cur_recipe.name
                 cur_like['description'] = cur_recipe.description
@@ -194,6 +209,9 @@ class MyRecipesSerializer(serializers.ModelSerializer):
             if not commented_id in interacted:
                 cur_commented = {}
                 cur_recipe = Recipe.objects.get(id=commented_id)
+                for key in recipe_serializer.get_images(cur_recipe).keys():
+                    cur_commented['linkImg'] = 'http://127.0.0.1:8000' + recipe_serializer.get_images(cur_recipe)[key] # This is scuffed, but it works
+                    break
                 cur_commented['id'] = cur_recipe.id
                 cur_commented['name'] = cur_recipe.name
                 cur_commented['description'] = cur_recipe.description

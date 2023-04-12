@@ -17,7 +17,7 @@ function UserNavBar( ) {
     const location = useLocation();
     const navigate = useNavigate();
     const { setPageNum, setSuggestions } = useContext(SearchContext);
-    const popRecipes = {query: '', ordering: '-favourited&-star_rating' }
+    const params = [['ordering', '-favourited'], ['ordering', '-star_rating']]
 
   return (
     <>
@@ -52,11 +52,12 @@ function UserNavBar( ) {
                     <Nav.Link   as={Link}
                                 id='popular'
                                 onClick={(e) => {
+                                    e.preventDefault();
                                     setPageNum(1);
                                     setSuggestions([]);
                                     navigate({
                                         pathname: '/search',
-                                        search: '?' + createSearchParams(popRecipes),
+                                        search: `?${createSearchParams(params)}`,
                                     });
                                 }}>Popular Recipes</Nav.Link>
                 </LinkContainer>

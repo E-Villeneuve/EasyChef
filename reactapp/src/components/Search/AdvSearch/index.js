@@ -69,7 +69,7 @@ function AdvSearch(placehold_text, set_id) {
                 headers: { 'Content-Type': 'application/json'},
             }
     
-            searchReq += "search=" + searchQ
+            searchReq += "search=" + (searchParams.get('query') || '')
                     + addFilter(diet_delim, diets)
                     + addFilter(cuisine_delim, cuisines)
                     + addFilter(time_delim, timeTags)

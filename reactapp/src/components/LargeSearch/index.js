@@ -6,11 +6,12 @@ import { useContext } from 'react';
 
 function LargeSearch() {
     const navigate = useNavigate();
-    const { setSuggestions } = useContext(SearchContext);
+    const { setPageNum, setSuggestions } = useContext(SearchContext);
 
     const onEnter = (e) => {
         if (e.key === 'Enter') {
             setSuggestions([]);
+            setPageNum(1);
             navigate({
                 pathname: '/search',
                 search: '?' + createSearchParams({query: e.target.value}),

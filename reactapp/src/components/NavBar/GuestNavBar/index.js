@@ -15,7 +15,7 @@ function GuestNavBar() {
     const location = useLocation();
     const navigate = useNavigate();
     const { setPageNum, setSuggestions } = useContext(SearchContext);
-    const popRecipes = {query: '', ordering: '-favourited&-star_rating' }
+    const params = [['ordering', '-favourited'], ['ordering', '-star_rating']]
 
   return (
     <Navbar bg='dark' variant='dark' expand="lg" id='globalnavbar'>
@@ -52,14 +52,15 @@ function GuestNavBar() {
                               }}>Advanced Search</Nav.Link>
             </LinkContainer>
             <LinkContainer to='/search'>
-                <Nav.Link   as={Link}
+            <Nav.Link   as={Link}
                         id='popular'
                         onClick={(e) => {
+                            e.preventDefault();
                             setPageNum(1);
                             setSuggestions([]);
                             navigate({
                                 pathname: '/search',
-                                search: '?' + createSearchParams(popRecipes),
+                                search: `?${createSearchParams(params)}`,
                             });
                         }}>Popular Recipes</Nav.Link>
             </LinkContainer>

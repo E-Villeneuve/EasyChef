@@ -44,7 +44,7 @@ function Checkbox (filter, tag, query_cat) {
         <input id={filter + "_" + tag}
                 type='checkbox'
                 className='searchcheck'
-                defaultChecked={checked}
+                checked={checked}
                 onClick={() => onToggle()}
                 onChange={(e) => e.target.value}/>
         <span className='filtertext'>

@@ -18,11 +18,12 @@ const NavSearch = () => {
   const closeSearch = () => (search === true ? setSearch(false) : null);
   const ref = useOnclickOutside(() => closeSearch());
   const navigate = useNavigate();
-  const { setSuggestions } = useContext(SearchContext);
+  const { setSuggestions, setPageNum } = useContext(SearchContext);
 
   const onEnter = (e) => {
       if (e.key === 'Enter') {
             e.preventDefault();
+            setPageNum(1);
             setSuggestions([]);
             navigate({
                 pathname: '/search',

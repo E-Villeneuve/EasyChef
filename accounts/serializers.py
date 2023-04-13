@@ -144,14 +144,21 @@ class MyRecipesSerializer(serializers.ModelSerializer):
         myrecipes = {}
         recipe_serializer = RecipeSerializer()
         for recipe in instance.myrecipes.all():
+            
             curr_recipe = {}
-            for key in recipe_serializer.get_images(recipe).keys():
-                curr_recipe['linkImg'] = 'http://127.0.0.1:8000' + recipe_serializer.get_images(recipe)[key] # This is scuffed, but it works
-                break
-            curr_recipe['id'] = recipe.id
-            curr_recipe['name'] = recipe.name
-            curr_recipe['description'] = recipe.description
-            curr_recipe['rating'] = recipe.star_rating
+            recipe_details = {}
+            
+            curr_recipe['images'] = recipe_serializer.get_images(recipe) # This is scuffed, but it works
+
+            recipe_details['id'] = recipe.id
+            recipe_details['name'] = recipe.name
+            recipe_details['description'] = recipe.description
+            recipe_details['favourited'] = recipe.favourited
+            recipe_details['star_rating'] = recipe.star_rating
+            recipe_details['cook_time'] = recipe.cook_time
+
+            curr_recipe['recipe_details'] = recipe_details
+
             myrecipes[f"{recipe.id}"] = curr_recipe
         return myrecipes
 
@@ -166,55 +173,70 @@ class MyRecipesSerializer(serializers.ModelSerializer):
         
         for fav_id in orig_rep.get('favourites', None):
             cur_fav = {}
+            recipe_details = {}
             cur_recipe = Recipe.objects.get(id=fav_id)
-            for key in recipe_serializer.get_images(cur_recipe).keys():
-                cur_fav['linkImg'] = 'http://127.0.0.1:8000' + recipe_serializer.get_images(cur_recipe)[key] # This is scuffed, but it works
-                break
             
-            cur_fav['id'] = cur_recipe.id
-            cur_fav['name'] = cur_recipe.name
-            cur_fav['description'] = cur_recipe.description
-            cur_fav['rating'] = cur_recipe.star_rating
+            cur_fav['images'] = recipe_serializer.get_images(cur_recipe) # This is scuffed, but it works
+
+            recipe_details['id'] = cur_recipe.id
+            recipe_details['name'] = cur_recipe.name
+            recipe_details['description'] = cur_recipe.description
+            recipe_details['favourited'] = cur_recipe.favourited
+            recipe_details['star_rating'] = cur_recipe.star_rating
+            recipe_details['cook_time'] = cur_recipe.cook_time
+            cur_fav['recipe_details'] = recipe_details
+    
             favourites[f"{cur_recipe.id}"] = cur_fav
 
         interacted = {}
         for rated_id in orig_rep.get('rated', None):
             cur_rated = {}
+            recipe_details = {}
             cur_recipe = Recipe.objects.get(id=rated_id)
-            for key in recipe_serializer.get_images(cur_recipe).keys():
-                cur_rated['linkImg'] = 'http://127.0.0.1:8000' + recipe_serializer.get_images(cur_recipe)[key] # This is scuffed, but it works
-                break
-            cur_rated['id'] = cur_recipe.id
-            cur_rated['name'] = cur_recipe.name
-            cur_rated['description'] = cur_recipe.description
-            cur_rated['rating'] = cur_recipe.star_rating
+            
+            cur_rated['images'] = recipe_serializer.get_images(cur_recipe) # This is scuffed, but it works
+            recipe_details['id'] = cur_recipe.id
+            recipe_details['name'] = cur_recipe.name
+            recipe_details['description'] = cur_recipe.description
+            recipe_details['favourited'] = cur_recipe.favourited
+            recipe_details['star_rating'] = cur_recipe.star_rating
+            recipe_details['cook_time'] = cur_recipe.cook_time
+            cur_rated['recipe_details'] = recipe_details
             interacted[f"{cur_recipe.id}"] = cur_rated
 
         for likes_id in orig_rep.get('likes', None):
             if not likes_id in interacted:
                 cur_like = {}
+                recipe_details = {}
                 cur_recipe = Recipe.objects.get(id=likes_id)
-                for key in recipe_serializer.get_images(cur_recipe).keys():
-                    cur_like['linkImg'] = 'http://127.0.0.1:8000' + recipe_serializer.get_images(cur_recipe)[key] # This is scuffed, but it works
-                    break
-                cur_like['id'] = cur_recipe.id
-                cur_like['name'] = cur_recipe.name
-                cur_like['description'] = cur_recipe.description
-                cur_like['rating'] = cur_recipe.star_rating
+
+                cur_like['images'] = recipe_serializer.get_images(cur_recipe) # This is scuffed, but it works
+
+                recipe_details['id'] = cur_recipe.id
+                recipe_details['name'] = cur_recipe.name
+                recipe_details['description'] = cur_recipe.description
+                recipe_details['favourited'] = cur_recipe.favourited
+                recipe_details['star_rating'] = cur_recipe.star_rating
+                recipe_details['cook_time'] = cur_recipe.cook_time
+                cur_like['recipe_details'] = recipe_details
+
                 interacted[f"{cur_recipe.id}"] = cur_like
 
         for commented_id in orig_rep.get('commented', None):
             if not commented_id in interacted:
                 cur_commented = {}
+                recipe_details = {}
                 cur_recipe = Recipe.objects.get(id=commented_id)
-                for key in recipe_serializer.get_images(cur_recipe).keys():
-                    cur_commented['linkImg'] = 'http://127.0.0.1:8000' + recipe_serializer.get_images(cur_recipe)[key] # This is scuffed, but it works
-                    break
-                cur_commented['id'] = cur_recipe.id
-                cur_commented['name'] = cur_recipe.name
-                cur_commented['description'] = cur_recipe.description
-                cur_commented['rating'] = cur_recipe.star_rating
-                interacted[f"{cur_recipe.id}"] = cur_commented
+                
+                recipe_details['images'] = recipe_serializer.get_images(cur_recipe) # This is scuffed, but it works
+                recipe_details['id'] = cur_recipe.id
+                recipe_details['name'] = cur_recipe.name
+                recipe_details['description'] = cur_recipe.description
+                recipe_details['favourited'] = cur_recipe.favourited
+                recipe_details['star_rating'] = cur_recipe.star_rating
+                recipe_details['cook_time'] = cur_recipe.cook_time
+                cur_commented['recipe_details'] = cur_commented
+                interacted[f"{cur_recipe.id}"] = recipe_details
 
         rep = {
             'myrecipes': self.get_myrecipes(instance),

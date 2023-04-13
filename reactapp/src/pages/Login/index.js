@@ -19,6 +19,7 @@ function Login() {
             setEmail,
             setPassword,
             setAuth,
+            setError,
             } = useContext(UserContext);
 
     let [email_error, setEmailError] = useState('');
@@ -42,8 +43,9 @@ function Login() {
     }
 
     let submit = () => {
-        setLoading(true);
+        
         if (formEmail && formPassword) {
+        setLoading(true);
         let request = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json'},
@@ -119,10 +121,16 @@ function Login() {
         }
         else {
             setLoading(false);
+            
+            setError("Could not find any account with the entered credentials.");
+            setFormPassword('');
             if (res.data.email) setEmailError(res.data.email[0]);
             if (res.data.password) setPassError(res.data.password[0]);
         }
         }));
+        }
+        else {
+            setError("No field can be left blank!");
         }
 
 }
@@ -141,12 +149,12 @@ function Login() {
             <div className="mb-3">
                     <label className="small mb-1" for="email">Email</label>
                     <input className="form-control" id="email" required type="email" value={formEmail} onChange={(i) => handleInput(i)} placeholder="Enter your email" />
-                    <label className="small mb-1" for="email">{email_error}</label>
+                    <label className="small mb-1 loginError" for="email">{email_error}</label>
                 </div>
                 <div className="mb-3">
                     <label className="small mb-1" for="password">Password</label>
                     <input className="form-control" id="password" required type="password" value={formPassword} onChange={(i) => handleInput(i)} placeholder="Enter your password" />
-                    <label className="small mb-1" for="pmail">{password_error}</label>
+                    <label className="small mb-1 loginError" for="password">{password_error}</label>
                 </div>
 
                 <button className="btn btn-primary btn-login" id="button" type="button" onClick={()=>submit()}>Login</button>

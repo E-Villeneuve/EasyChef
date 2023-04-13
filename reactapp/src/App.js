@@ -9,6 +9,7 @@ import { useState } from 'react';
 import defavatar from './images/defaultavatar.png';
 import LoadingComp from './components/Loading';
 import ErrorPopup from './components/ErrorPopup';
+import SuccessPopup from './components/SuccessPopup';
 
 export const UserContext = createContext(null);
 export const SearchContext = createContext(null);
@@ -25,6 +26,7 @@ const App = () => {
     const [pageLoading, setPageLoading] = useState(false);
     const [auth, setAuth] = useState(false);
     const [error, setError] = useState('');
+    const [success, setSuccess] = useState('');
 
     const userStates = {
         auth: auth,
@@ -35,6 +37,8 @@ const App = () => {
         setPageLoading: setPageLoading,
         error: error,
         setError: setError,
+        success: success,
+        setSuccess: setSuccess,
         firstName: firstName,
         setFirstName: setFirstName,
         lastName: lastName,
@@ -122,6 +126,7 @@ const App = () => {
             </Router>
             {loading && <LoadingComp/>}
             {error && ErrorPopup(error, setError)}
+            {success && SuccessPopup(success, setSuccess)}
             <Container id='footer_container'>
                 <ToTopBtn/>
                 <p id='footer'>  

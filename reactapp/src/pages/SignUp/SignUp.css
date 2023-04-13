@@ -40,3 +40,7 @@
 .signupError {
     color: red !important;
 }
+
+.link-to-login {
+    color: white;
+}

@@ -84,3 +84,7 @@ body{/*margin-top:20px;*/
 .profile-field {
     background: linear-gradient(24deg, rgba(245, 246, 220, 0.87), rgba(255, 255, 255, 0.479) 91.23%)!important;
 }
+
+.editprofile-error {
+    color: red;
+}

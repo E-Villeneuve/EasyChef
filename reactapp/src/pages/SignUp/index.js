@@ -5,13 +5,14 @@ import Button from 'react-bootstrap/Button';
 import { useState, setState } from 'react';
 import { UserContext } from '../../App';
 import { useContext } from 'react';
+import { useNavigate } from "react-router-dom";
 
 function SignUp() {
     /*Value setting obtained primarily from 
     https://www.section.io/engineering-education/registration-form-react.js-firebase/#creating-a-registration-form */
     
-    const { setEmail, setPassword, setFirstName, setLastName} = useContext(UserContext);
-    
+    const { setEmail, setPassword, setFirstName, setLastName, setError, setLoading,} = useContext(UserContext);
+    const navigate = useNavigate();
     let [email_error, setEmailError] = useState('');
     let [fname_error, setFNameError] = useState('');
     let [lname_error, setLNameError] = useState('');
@@ -20,14 +21,12 @@ function SignUp() {
     let [formPassword, setFormPassword] = useState('');
     let [formFirstName, setFormFirstName] = useState('');
     let [lastFormName, setFormLastName] = useState('');
-    let [account_status, setStatus] = useState('');
 
     let handleInput = (i) => {
         let {id, value} = i.target;
         if (id === "email") {
 
             setFormEmail(value);
-
             setEmailError("");
         }
         if (id === 'first_name') {
@@ -43,8 +42,8 @@ function SignUp() {
     
 
     let submit = () => {
-        if (formEmail && formPassword) {
-            setStatus("");
+        if (formEmail && formPassword && formFirstName && lastFormName) {
+            setLoading(true);
             let request = {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json'},
@@ -63,10 +62,12 @@ function SignUp() {
                 setFirstName(formFirstName);
                 setLastName(lastFormName);
                 setPassword(formPassword);
-                setStatus("Account Succesfully Created!");
+                setLoading(false);
+                navigate('/login');
             }
             else {
-
+                setLoading(false);
+                setError("There were errors while creating your account. Please correct them before proceeding.");
                 if (res.data.email) setEmailError(res.data.email[0]);
                 if (res.data.first_name) setFNameError(res.data.first_name[0]);
                 if (res.data.last_name) setLNameError(res.data.first_name[0]);
@@ -77,13 +78,16 @@ function SignUp() {
 
         
     }
+    else {
+        setError("No field may be left blank!");
+    }
 }
 
     return (
         <>
         
         <div className="signup-container">
-        <h1>{account_status}</h1>
+        
         
     <div className={'card signup'}>
         <div className="card-header signup-header">Account Details</div>
@@ -93,27 +97,27 @@ function SignUp() {
                 <div className="mb-3">
                     <label className="small mb-1" for="email">Email</label>
                     <input className="form-control" id="email" required type="email" value={formEmail} onChange={(i) => handleInput(i)} placeholder="Enter your email" />
-                    <label className="small mb-1" for="email">{email_error}</label>
+                    <label className="small mb-1 signupError" for="email">{email_error}</label>
                 </div>
                 <div className="mb-3">
                     <label className="small mb-1" for="first_name">First Name</label>
                     <input className="form-control" id="first_name" required type="text" value={formFirstName} onChange={(i) => handleInput(i)} placeholder="Enter your first name" />
-                    <label className="small mb-1" for="first_name">{fname_error}</label>
+                    <label className="small mb-1 signupError" for="first_name">{fname_error}</label>
                 </div>
                 <div className="mb-3">
                     <label className="small mb-1" for="last_name">Last Name</label>
                     <input className="form-control" id="last_name" required type="text" value={lastFormName} onChange={(i) => handleInput(i)} placeholder="Enter your last name" />
-                    <label className="small mb-1" for="last_name">{lname_error}</label>
+                    <label className="small mb-1 signupError" for="last_name">{lname_error}</label>
                 </div>
                 <div className="mb-3">
                     <label className="small mb-1" for="password">Password</label>
                     <input className="form-control" id="password" required type="password" value={formPassword} onChange={(i) => handleInput(i)} placeholder="Enter your password" />
-                    <label className="small mb-1" for="password">{password_error}</label>
+                    <label className="small mb-1 signupError" for="password">{password_error}</label>
                 </div>
 
                 <button className="btn btn-primary btn-signup" id="register-button" type="button" onClick={()=>submit()}>Register</button>
             </form>
-            <span>Already have an account? <a href="/login">Log in here!</a></span>
+            <span>Already have an account? <a href="/login" className='link-to-login'>Log in here!</a></span>
         </div>
         
 

@@ -40,11 +40,18 @@ function UserMyRecipes() {
 
         
         <h1 className='myrecipes-header'>My Recipes</h1>
+        <div className='myrecipes-carousel'>
         {RecipeCarousel(created)}
+        </div>
+        
         <h1 className='myrecipes-header'>Favourited Recipes</h1>
+        <div className='myrecipes-carousel'>
         {RecipeCarousel(favourited)}
+        </div>
         <h1 className='myrecipes-header'>Recipes you've recently interacted with</h1>
+        <div className='myrecipes-carousel'>
         {RecipeCarousel(interacted)}
+        </div>
         </div>
         </div>
         

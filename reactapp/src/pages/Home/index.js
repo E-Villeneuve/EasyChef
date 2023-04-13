@@ -7,7 +7,6 @@ import homepic from '../../images/homeimage.jpg';
 import homesearch from '../../images/homesearch.jpg';
 import AnimatePage from '../../components/AnimatePage';
 import LargeSearch from '../../components/LargeSearch';
-import { dataDigitalBestSeller } from '../../components/RecipeCarousel/data';
 import React, { useEffect, useRef } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";

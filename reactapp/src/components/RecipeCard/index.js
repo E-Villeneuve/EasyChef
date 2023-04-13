@@ -1,7 +1,6 @@
 import React from 'react';
 import noimage from '../../images/noimageavailable.png'
 import './recipecard.css'
-import { useState, setState } from 'react';
 
 /* Most Card CSS from: https://www.youtube.com/watch?v=FLt2TveqHQM */
 
@@ -10,23 +9,12 @@ function RecipeCard(item) {
     const recipe = item.recipe_details;
     const recipe_desc = recipe.description;
     
-    // {/* Card template from https://getbootstrap.com/docs/5.3/components/card/ */}
-    // <div className="card-body">
-    // <h4 className="card-title">Chocolate Spaghetti</h4>
-    // <h6>Cook Time: 1hr 15min</h6>
-    // <p className="card-text">
-    //     Lorem ipsum dolor sit amet, consectetur adipiscing elit...
-    // </p>
-    // <a href="recipe.html" className="btn btn-primary">
-    //     View   
-    // </a>
-    // </div>
     return (
     <div className="recipecard gradient" key={item.id}>
         <div className="recipecard-top img_wrap">
             <img
                 src={
-                    Object.keys(item.images).length > 0 ? Object.keys(item.imageslinkImg)[0] : noimage
+                    Object.keys(item.images).length > 0 ? 'http://127.0.0.1:8000' + Object.values(item.images)[0] : noimage
                 }
                 alt={recipe.name}
                 id='recipecard_img'

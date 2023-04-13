@@ -20,6 +20,7 @@ function ShoppingList() {
 
     const [isActive, setIsActive] = useState(false) 
     const [popup, setPopup] = useState(false);
+
     const handleOpen = (index) => {
         setIsActive(index);
         setPopup(true);
@@ -132,9 +133,11 @@ function ShoppingList() {
                                     showSuggestion)}
                 </div>
                     <div id="shop_items">
-                    {shopLst && shopLst.map((shopItem, index) => ShopListItem(shopItem, onClickDel, onChangeServing,
-                                                                   popup, handleOpen, handleClose, isActive,
-                                                                   index))}
+                    {shopLst && shopLst.map((shopItem, index) => {
+                        // updateitem(shopItem.orig_id);
+                        return ShopListItem(shopItem, onClickDel, onChangeServing,
+                                            popup, handleOpen, handleClose, isActive,
+                                            index)})}
                         <div id="allingredientslst">
                             <h4 id="allingredientstitle">All Ingredients</h4>
                             {allIngredientLst && Object.keys(allIngredientLst).map((key, index) =>

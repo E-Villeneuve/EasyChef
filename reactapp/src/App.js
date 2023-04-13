@@ -91,7 +91,8 @@ const App = () => {
         setDescription(localStorage.getItem('description'));
 
         setPageLoading(false);
-    }, [loading, pageLoading, firstName, lastName, phoneNum, avatar, email, password, description]);
+    }, [loading, pageLoading, firstName, lastName, phoneNum, avatar, email, password, description,
+        avatar]);
 
     const [pageNum, setPageNum] = useState(1);
     const [ suggestions, setSuggestions ] = useState([]);

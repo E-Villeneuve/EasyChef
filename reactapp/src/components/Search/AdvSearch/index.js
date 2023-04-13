@@ -81,8 +81,7 @@ function AdvSearch(placehold_text, set_id) {
             .then(async data => {
                 setMoreResults((data.next !== null));
                 setSuggestions([...suggestions, ...data.results]);
-            })
-            .catch(() => setError('Error in requesting from the backend!'))
+            });
         }
 
         fetchData();

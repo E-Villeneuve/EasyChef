@@ -81,6 +81,9 @@ class RecipeImage(models.Model):
 
     def __str__(self):
         return f"({self.id}) {self.image.file}"
+   
+    def media_url(self):
+        return f"http://127.0.0.1:8000{self.image.url}"
 
 class RecipeStep(models.Model):
     description = models.TextField()

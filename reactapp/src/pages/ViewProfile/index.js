@@ -51,9 +51,10 @@ function ViewProfile() {
                                         <div className="col viewprofile-col viewprofile-bio">
                                         {/*Text truncation method obtained from https://stackoverflow.com/a/68152235 */}
                                         <p>{localStorage.getItem('description').substring(0, 70)}{localStorage.getItem('description').length >= 70 && '...'}</p>
+                                        {localStorage.getItem('description').length >= 70 && 
                                         <Button className="btn card shop_item shop_item_button" id="ingredients_card" onClick={() => handleOpen()}>
                                         View Full Biography
-                                        </Button>
+                                        </Button>}
                                         <Modal 
                             show={popup} 
                             onHide={handleClose} 

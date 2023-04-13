@@ -1,4 +1,4 @@
-from recipes.models import RecipeIngredient
+from recipes.models import RecipeIngredient, RecipeImage
 
 QUANTITY = 0
 DECIMAL_PLACES = 2
@@ -30,3 +30,8 @@ def collect_ingredients_x(recipe, servings):
 
 def collect_ingredients(recipe):
     return collect_ingredients_x(recipe, recipe.servings)
+
+def get_pic_rep(recipe):
+    recipe_imgs = list(RecipeImage.objects.filter(recipe=recipe))
+    if (recipe_imgs != []): return recipe_imgs[0].media_url()
+    else: return None

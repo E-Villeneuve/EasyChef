@@ -17,8 +17,6 @@ class UserSerializer(serializers.ModelSerializer):
                   'phone_number', 'is_superuser', 'is_staff', 'last_login',
                   'date_joined', 'favourites', 'rated', 'likes', 'commented']
 
-
-
 class SignUpSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(required=True, validators=[UniqueValidator(queryset=User.objects.all())])
     password = serializers.CharField(required=True)

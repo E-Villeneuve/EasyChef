@@ -9,6 +9,7 @@ import { useSearchParams, } from 'react-router-dom';
 import {UserContext} from '../../../App.js';
 import { SearchContext } from '../../../App.js';
 import { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function AdvSearch(placehold_text, set_id) {
 
@@ -21,8 +22,11 @@ function AdvSearch(placehold_text, set_id) {
     const [ searchParams, setSearchParams ] = useSearchParams();
     const [ searchQ, setSearchQ ] = useState(searchParams.get('query') || '');
     const { pageNum, setPageNum, suggestions, setSuggestions } = useContext(SearchContext);
-    const { loading } = useContext(UserContext)
+    const { loading } = useContext(UserContext);
+    const navigate = useNavigate();
 
+
+    const cardNav = (id) => navigate('/viewrecipe/' + id);
 
     const onEnter = (e) => {
         if (e.key === 'Enter') e.preventDefault();
@@ -90,19 +94,22 @@ function AdvSearch(placehold_text, set_id) {
 
     const searchResult = (suggestion, index) => { // For a singular result (ie. 1 Card)
         // Singular Card - suggestion is a recipe
+            const recipe_id = suggestion.recipe_details.id;
             if (suggestions.length === index + 1) {
-                return <div key={suggestion.recipe_details.id}
+                return <div key={recipe_id}
                             ref={lastelemref} 
                             data-aos='fade-left' 
                             data-aos-offset='0px'
-                            className='advsearchcard'>
+                            className='advsearchcard'
+                            onClick={() => cardNav(recipe_id)}>
                                 {RecipeCard(suggestion)}
                             </div>;
             }
             else return <div key={suggestion.recipe_name}
                             data-aos='fade-left' 
                             data-aos-offset='0px'
-                            className='advsearchcard'>
+                            className='advsearchcard'
+                            onClick={() => cardNav(recipe_id)}>
                                 {RecipeCard(suggestion)}
                             </div>;
         }

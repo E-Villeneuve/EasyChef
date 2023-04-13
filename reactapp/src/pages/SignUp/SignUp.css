@@ -16,7 +16,7 @@
 
 .signup {
     font-family: 'Baloo 2', cursive!important;
-    color: #945921!important;
+    color: #945921;
     max-width: 36rem;
     margin: auto; 
     background-color: #e2b77b !important;
@@ -38,5 +38,5 @@
 }
 
 .signupError {
-    color: red;
+    color: red !important;
 }

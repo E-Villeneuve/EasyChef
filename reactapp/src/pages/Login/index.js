@@ -118,6 +118,7 @@ function Login() {
 
         }
         else {
+            setLoading(false);
             if (res.data.email) setEmailError(res.data.email[0]);
             if (res.data.password) setPassError(res.data.password[0]);
         }

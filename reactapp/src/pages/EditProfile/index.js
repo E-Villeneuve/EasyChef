@@ -223,14 +223,14 @@ function EditProfile() {
         
                                         <div className="col">
                                             <label className="small mb-1 details-box" for="inputPhone">Phone number</label>
-                                            <input className="form-control profile-field" id="inputPhone" onChange={(i) => handleInput(i)} value={formPhoneNum} type="tel" placeholder="Enter your phone number"/>
+                                            <input className="form-control profile-field" id="inputPhone" onChange={(i) => handleInput(i)} value={formPhoneNum} type="tel" placeholder="Ex: +12345678910"/>
                                         </div>
                                     </div>
                                     
                                     
                                     <div className="mb-3">
                                         <label className="small mb-1 details-box" for="feedback">Bio</label>
-                                        <textarea className="form-control profile-field" rows="8" cols="80" name="biography" id="biography" value={formDescription} onChange={(i) => handleInput(i)} placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"></textarea>
+                                        <textarea className="form-control profile-field" rows="8" cols="80" name="biography" id="biography" value={formDescription} onChange={(i) => handleInput(i)} placeholder="Tell us about yourself!"></textarea>
                                         
                                     </div>
                                     

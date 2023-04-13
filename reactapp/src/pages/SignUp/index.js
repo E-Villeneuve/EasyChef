@@ -1,9 +1,10 @@
 import './SignUp.css';
 import '../../components/globals.css';
-import { useState } from 'react';
-import { UserContext } from '../../App';
+import { useState, useEffect } from 'react';
+import { UserContext, SearchContext } from '../../App';
 import { useContext } from 'react';
 import { useNavigate } from "react-router-dom";
+import AnimatePage from '../../components/AnimatePage';
 
 function SignUp() {
 

@@ -215,7 +215,7 @@ function UserEditProfile() {
                 <>
                 
                 <div className="container" id="page-body">
-                <h2>Edit Profile</h2>
+                <h2 className='edit-profile-title'>Edit Profile</h2>
                 <hr className="mt-0 mb-4"/>
                 <div className="row" id="profilegrid">
                     <div className="col">

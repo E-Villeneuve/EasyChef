@@ -6,7 +6,8 @@ from recipes.models import (Recipe, RecipeIngredient,
                             RecipeCommentImage, ShopLstRecipe, ShoppingLst,
                             RecipeImage, RecipeCommentVideo)
 
-from recipes.helpers import collect_ingredients, assign_ingredient, collect_ingredients_x
+from recipes.helpers import (collect_ingredients, assign_ingredient, collect_ingredients_x,
+                             get_pic_rep)
 from django.shortcuts import get_object_or_404
 from datetime import datetime
 
@@ -229,7 +230,7 @@ class RecipeImageSerializer(serializers.ModelSerializer):
     recipe = serializers.CharField(source='recipe.id', read_only=True)
     class Meta:
         model = RecipeImage
-        fields = ['id', 'image', 'recipe']
+        fields = ['id', 'image', 'recipe', 'image_url']
     
     def create(self, validated_data):
         recipe_id = self.context['request'].parser_context['kwargs']['recipe_id']
@@ -336,7 +337,10 @@ class ShopListRecipeSerializer(serializers.ModelSerializer):
             'recipe_name': orig_rep.get('name', None),
             'shoplstrecipe_id': orig_rep.get('id', None),
             'servings': orig_rep.get('serving', None),
+            'orig_id': orig_rep.get('original_recipe', None),
             'ingredients': collect_ingredients_x(orig_recipe, servings),
+            'pic_rep': get_pic_rep(orig_recipe),
+            'cook_time': orig_recipe.cook_time
         }
 
         return rep

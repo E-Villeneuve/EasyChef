@@ -137,8 +137,8 @@ function EditProfile() {
             })
             ).then(res => {
 
-                setAvatar(res.data.avatar);
                 localStorage.setItem('avatar', res.data.avatar);
+                setAvatar(res.data.avatar);
             }));
 
             

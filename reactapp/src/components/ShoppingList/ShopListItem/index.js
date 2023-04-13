@@ -2,9 +2,12 @@ import './shopitem.css';
 import  '../../globals.css';
 import Button from 'react-bootstrap/Button';
 import { Modal } from 'react-bootstrap';
+import noimage from '../../../images/noimageavailable.png'
 
 function ShopListItem(item, delFunc, changeServing, popup, 
                       handleOpen, handleClose, isActive, index) {
+
+    const shopitemid = item.shoplstrecipe_id
 
     return (
         <div className='shop_item_container' data-aos="flip-left" data-aos-offset='0px'>
@@ -13,8 +16,8 @@ function ShopListItem(item, delFunc, changeServing, popup,
                     <div className="shop_item_pic_area"> 
                     {/* <!-- Egg sandwich information from https://www.foodnetwork.com/recipes/fried-egg-sandwich-3529179 --> */}
                         <img 
-                            src="https://food.fnr.sndimg.com/content/dam/images/food/fullset/2016/11/3/2/NLV-Crave-Worthy_breakfast-sandwich_s4x3.jpg.rend.hgtvcom.1280.720.suffix/1478289713133.jpeg"
-                            alt="egg sandwich" 
+                            src={item.pic_rep ? item.pic_rep : noimage}
+                            alt={item.orig_id}
                             className="shop_item_pic"
                         />
                     </div>
@@ -37,7 +40,7 @@ function ShopListItem(item, delFunc, changeServing, popup,
                                         pattern="/d+"/>
                                 </div>
                             </div>
-                            Cooking time: {item.cook_time} mins
+                            Cooking time: {'' + item.cook_time} mins
                         </div>
                         <Button className="shop_item_button">
                             Details
@@ -73,7 +76,7 @@ function ShopListItem(item, delFunc, changeServing, popup,
                     <Button 
                         id='close_btn'
                         className='trans_back'
-                        onClick={() => delFunc(item.shoplstrecipe_id)}>
+                        onClick={() => delFunc(shopitemid)}>
                         <span id='close_item' className='plus'></span>
                     </Button>
                 </div>

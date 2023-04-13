@@ -81,8 +81,7 @@ function AdvSearch(placehold_text, set_id) {
             .then(async data => {
                 setMoreResults((data.next !== null));
                 setSuggestions([...suggestions, ...data.results]);
-            })
-            .catch(() => setError('Error in requesting from the backend!'))
+            });
         }
 
         fetchData();
@@ -97,14 +96,14 @@ function AdvSearch(placehold_text, set_id) {
                             data-aos='fade-left' 
                             data-aos-offset='0px'
                             className='advsearchcard'>
-                                {RecipeCard('recipe_item lol')}
+                                {RecipeCard(suggestion)}
                             </div>;
             }
             else return <div key={suggestion.recipe_name}
                             data-aos='fade-left' 
                             data-aos-offset='0px'
                             className='advsearchcard'>
-                                {RecipeCard('recipe_item lol')}
+                                {RecipeCard(suggestion)}
                             </div>;
         }
         

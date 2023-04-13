@@ -10,7 +10,7 @@ import LargeSearch from '../../components/LargeSearch';
 import React, { useEffect, useRef } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import { UserContext } from '../../App';
+import { SearchContext, UserContext } from '../../App';
 import { useContext } from 'react';
 import { useState } from 'react';
 
@@ -18,9 +18,12 @@ const Home = () => {
 
     const [ popRecipes, setPopRecipes ] = useState([]);
     const { setLoading } = useContext(UserContext);
+    const { setSuggestions, setPageNum } = useContext(SearchContext);
 
     useEffect(() => {
         setLoading(true);
+        setSuggestions([]);
+        setPageNum(1);
         AOS.init({ duration: 1000 });
         let request = {
             method: 'GET',

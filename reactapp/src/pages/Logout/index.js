@@ -1,10 +1,13 @@
-import { Navigate } from "react-router-dom";
 import { useContext } from "react";
 import { UserContext } from "../../App";
+import { useNavigate } from "react-router-dom";
+import Loading from "../Loading";
+import AnimatePage from '../../components/AnimatePage';
 
 function Logout() {
 
     const { setAuth } = useContext(UserContext);
+    const navigate = useNavigate();
 
     const logout = () => {
         localStorage.clear();
@@ -12,9 +15,10 @@ function Logout() {
     }
 
     return (
-        <div id='logout_container'>
-            {logout() || (<Navigate to='/login'/>)}
-        </div>
+        <AnimatePage>
+            <Loading/>
+            {logout() || navigate('/login')}
+        </AnimatePage>
     );
   }
   

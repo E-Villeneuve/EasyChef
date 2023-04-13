@@ -1,18 +1,25 @@
 import './MyRecipes.css';
 import '../../components/globals.css';
-import { useNavigate } from "react-router-dom";
 import { useContext, useEffect } from 'react';
-import { UserContext } from '../../App';
-import { useState, setState } from 'react';
-import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
+import { useState } from 'react';
+import AnimatePage from '../../components/AnimatePage';
+import { useLocation } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 
 import RecipeCarousel from '../../components/RecipeCarousel';
+import { SearchContext } from '../../App';
 
 
 
 function MyRecipes() {
+
+    const { setSuggestions, setPageNum } = useContext(SearchContext);
+    const location = useLocation();
+
+    useEffect(() => {
+        setSuggestions([]);
+        setPageNum(1);
+    }, [setSuggestions, setPageNum]);
 
     let [created, setCreated] = useState(null);
     let [favourited, setFavourited] = useState(null);
@@ -38,8 +45,8 @@ function MyRecipes() {
        
     }));
     }, []);
-    return (
-        <>
+    return ( localStorage.getItem('access') ?
+        (<AnimatePage>
         <div className='myrecipes-page'>
 
         <div className='myrecipes-body'>
@@ -54,7 +61,7 @@ function MyRecipes() {
         </div>
         </div>
         
-        </>
+        </AnimatePage>) : (<Navigate to='/unauthorized' state={{path: location.pathname}} />)
         
     );
 }

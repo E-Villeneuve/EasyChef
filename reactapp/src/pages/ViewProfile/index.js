@@ -1,13 +1,24 @@
 import './ViewProfile.css';
 import '../../components/globals.css';
-import nopic from '../../images/defaultavatar.png';
 import { Button } from 'react-bootstrap';
-import { useState, setState } from 'react';
+import { useState } from 'react';
 import { Modal } from 'react-bootstrap';
 import { useContext, useEffect } from 'react';
 import RecipeCarousel from '../../components/RecipeCarousel';
+import { SearchContext } from '../../App';
+import AnimatePage from '../../components/AnimatePage';
+import { useLocation } from 'react-router';
+import { Navigate } from 'react-router';
 
 function ViewProfile() {
+
+    const { setSuggestions, setPageNum } = useContext(SearchContext);
+    const location = useLocation();
+
+    useEffect(() => {
+        setSuggestions([]);
+        setPageNum(1);
+    }, [setSuggestions, setPageNum]);
 
     const [popup, setPopup] = useState(false);
     let [created, setCreated] = useState(null);
@@ -33,8 +44,8 @@ function ViewProfile() {
         }));
         }, []);
 
-    return (
-        <>
+    return ( localStorage.getItem('access') ? 
+        (<AnimatePage>
         <div className="container" id="viewprofile-page-body">
         <div className="row mb-3">
                                         
@@ -83,7 +94,7 @@ function ViewProfile() {
             <h1>{localStorage.getItem('first_name')}'s Recipes</h1>
         {RecipeCarousel(created)}
         </div>
-        </>
+        </AnimatePage>) : (<Navigate to='/unauthorized' state={{path: location.pathname}} />)
 
     );
 

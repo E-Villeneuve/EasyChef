@@ -3,12 +3,21 @@ import '../../components/globals.css';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { useNavigate } from "react-router-dom";
-import { useContext } from 'react';
-import { UserContext } from '../../App';
+import { useContext, useEffect } from 'react';
+import { SearchContext, UserContext } from '../../App';
 import { useState } from 'react';
 import nopic from '../../images/defaultavatar.png';
+import AnimatePage from '../../components/AnimatePage';
 
 function Login() {
+
+    const { setSuggestions, setPageNum } = useContext(SearchContext);
+
+    useEffect(() => {
+        setSuggestions([]);
+        setPageNum(1);
+    }, [setSuggestions, setPageNum]);
+    
     const navigate = useNavigate();
     const { setLoading,
             setFirstName,
@@ -128,7 +137,7 @@ function Login() {
 
 
     return (
-        <>
+        <AnimatePage>
         <div className="login-container">
 
     
@@ -158,7 +167,7 @@ function Login() {
 
     </div>
 
-    </>
+    </AnimatePage>
     
     );
 }

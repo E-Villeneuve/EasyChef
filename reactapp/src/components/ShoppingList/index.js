@@ -16,7 +16,7 @@ function ShoppingList() {
     // from https://www.youtube.com/watch?v=EpE6TU58cPw
     const [shopLst, setShopLst] = useState([])
     const [allIngredientLst, setAllIngredientLst] = useState([])
-    const { setLoading, setError } = useContext(UserContext);
+    const { setLoading, setError, setPageLoading } = useContext(UserContext);
 
     const [isActive, setIsActive] = useState(false) 
     const [popup, setPopup] = useState(false);
@@ -34,8 +34,10 @@ function ShoppingList() {
 
     useEffect(() => {
         setLoading(true);
+        setPageLoading(true);
         AOS.init({ duration: 1000 });
         displayShopLst();
+        setPageLoading(false);
         
     }, [])
 

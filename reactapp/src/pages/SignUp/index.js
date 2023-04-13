@@ -1,12 +1,21 @@
 import './SignUp.css';
 import '../../components/globals.css';
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
-import { useState, setState } from 'react';
+import { useState } from 'react';
 import { UserContext } from '../../App';
 import { useContext } from 'react';
+import { useEffect } from 'react';
+import { SearchContext } from '../../App';
+import AnimatePage from '../../components/AnimatePage';
 
 function SignUp() {
+
+    const { setSuggestions, setPageNum } = useContext(SearchContext);
+
+    useEffect(() => {
+        setSuggestions([]);
+        setPageNum(1);
+    }, [setSuggestions, setPageNum]);
+
     /*Value setting obtained primarily from 
     https://www.section.io/engineering-education/registration-form-react.js-firebase/#creating-a-registration-form */
     
@@ -80,7 +89,7 @@ function SignUp() {
 }
 
     return (
-        <>
+        <AnimatePage>
         
         <div className="signup-container">
         <h1>{account_status}</h1>
@@ -122,7 +131,7 @@ function SignUp() {
 
     </div>
 
-    </>
+    </AnimatePage>
     
     );
     }

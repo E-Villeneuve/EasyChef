@@ -6,7 +6,7 @@ function AdvFilters() {
     return (
         <div id='adv_filters' data-aos='fade-down' data-aos-offset='0px'>
             <h3><b>Filters</b></h3>
-            <span id='gen_filter_desc'>Choose what a recipe should only have here</span>
+            <span id='gen_filter_desc'><p>Find a recipe that satisfies all categories</p></span>
             {AdvBox('Diets', 'search_for,_diets', ['Halal', 'Vegan'], 
                     ['HA', 'VE'], 'diets', '', 'checkbox')}
             {AdvBox('Cuisines', 'search_for_cuisines', ['Dutch', 'Welsh', 'Arabic', 'Thai'],

@@ -1,12 +1,20 @@
 import './EditProfile.css';
 import '../../components/globals.css';
-import { useNavigate } from "react-router-dom";
 import { useContext, useEffect } from 'react';
-import { UserContext } from '../../App';
-import { useState, setState } from 'react';
-
+import { SearchContext, UserContext } from '../../App';
+import { useState } from 'react';
+import AnimatePage from '../../components/AnimatePage';
+import { useLocation } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 
 function EditProfile() {
+
+    const { setSuggestions, setPageNum } = useContext(SearchContext);
+    const location = useLocation();
+    useEffect(() => {
+        setSuggestions([]);
+        setPageNum(1);
+    }, [setSuggestions, setPageNum])
 
     const {
             setFirstName,
@@ -169,8 +177,8 @@ function EditProfile() {
         }
     }
             
-            return (
-                <>
+            return ( localStorage.getItem('access') ?
+                (<AnimatePage>
                 
                 <div className="container" id="page-body">
                 <h2>Edit Profile</h2>
@@ -276,7 +284,7 @@ function EditProfile() {
               </div>
         
               
-                </>
+                </AnimatePage>) : (<Navigate to='/unauthorized' state={{path: location.pathname}} />)
             )
     
 }

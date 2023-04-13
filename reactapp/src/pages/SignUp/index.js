@@ -52,7 +52,13 @@ function SignUp() {
     
 
     let submit = () => {
-        if (formEmail && formPassword) {
+
+        const errEmpty = (vals, msgs, setters) => {
+            setters.forEach(setter => setter('')); // Clear error msgs if not
+            vals.forEach((val, index) => !val && setters[index](msgs[index]));
+        }
+
+        if (formEmail && formPassword && formFirstName && lastFormName) {
             setStatus("");
             let request = {
                 method: 'POST',
@@ -82,10 +88,12 @@ function SignUp() {
                 if (res.data.password) setPassError(res.data.password[0]);
 
             }
-            }));
-
-        
-    }
+            }))}
+        else {
+            errEmpty([formEmail, formPassword, formFirstName, lastFormName], 
+                     ['Email cannot be empty', 'Password cannot be empty', 'First name cannot be empty', 'Last name cannot be empty'],
+                     [setEmailError, setPassError, setFNameError, setLNameError]);
+        }
 }
 
     return (
@@ -102,22 +110,22 @@ function SignUp() {
                 <div className="mb-3">
                     <label className="small mb-1" for="email">Email</label>
                     <input className="form-control" id="email" required type="email" value={formEmail} onChange={(i) => handleInput(i)} placeholder="Enter your email" />
-                    <label className="small mb-1" for="email">{email_error}</label>
+                    <label className="small mb-1 signup_error" for="email">{email_error}</label>
                 </div>
                 <div className="mb-3">
                     <label className="small mb-1" for="first_name">First Name</label>
                     <input className="form-control" id="first_name" required type="text" value={formFirstName} onChange={(i) => handleInput(i)} placeholder="Enter your first name" />
-                    <label className="small mb-1" for="first_name">{fname_error}</label>
+                    <label className="small mb-1 signup_error" for="first_name">{fname_error}</label>
                 </div>
                 <div className="mb-3">
                     <label className="small mb-1" for="last_name">Last Name</label>
                     <input className="form-control" id="last_name" required type="text" value={lastFormName} onChange={(i) => handleInput(i)} placeholder="Enter your last name" />
-                    <label className="small mb-1" for="last_name">{lname_error}</label>
+                    <label className="small mb-1 signup_error" for="last_name">{lname_error}</label>
                 </div>
                 <div className="mb-3">
                     <label className="small mb-1" for="password">Password</label>
                     <input className="form-control" id="password" required type="password" value={formPassword} onChange={(i) => handleInput(i)} placeholder="Enter your password" />
-                    <label className="small mb-1" for="password">{password_error}</label>
+                    <label className="small mb-1 signup_error" for="password">{password_error}</label>
                 </div>
 
                 <button className="btn btn-primary btn-signup" id="register-button" type="button" onClick={()=>submit()}>Register</button>

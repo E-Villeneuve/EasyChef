@@ -9,6 +9,17 @@ import { Navigate } from 'react-router-dom';
 
 function EditProfile() {
 
+    const email_ph = "Enter your email address";
+    const first_ph = "Enter your first name";
+    const last_ph = "Enter your last name";
+    const pn_ph = "Eg. +5555555555";
+    const desc_ph = "Tell us about yourself!"
+    const old_pass_ph = "Enter your password";
+    const new_pass_ph = "Enter your new password";
+    const conf_pass_ph = "Confirm your new password";
+
+
+
     const { setSuggestions, setPageNum } = useContext(SearchContext);
     const location = useLocation();
     useEffect(() => {
@@ -212,12 +223,12 @@ function EditProfile() {
         
                                         <div className="col">
                                             <label className="small mb-1 details-box" for="inputFirstName">First name</label>
-                                            <input className="form-control profile-field" id="inputFirstName" type="text" value={formFirstName} onChange={(i) => handleInput(i)} placeholder="Enter your first name" />
+                                            <input className="form-control profile-field" id="inputFirstName" type="text" value={formFirstName} onChange={(i) => handleInput(i)} placeholder={first_ph} />
                                         </div>
         
                                         <div className="col">
                                             <label className="small mb-1 details-box" for="inputLastName">Last name</label>
-                                            <input className="form-control profile-field" id="inputLastName" type="text" value={formLastName} onChange={(i) => handleInput(i)} placeholder="Enter your last name"/>
+                                            <input className="form-control profile-field" id="inputLastName" type="text" value={formLastName} onChange={(i) => handleInput(i)} placeholder={last_ph}/>
                                         </div>
                                     </div>
         
@@ -226,19 +237,19 @@ function EditProfile() {
                                         <div className="col">
                                             <label className="small mb-1 details-box" for="inputEmailAddress">Email Address</label>
         
-                                            <input className="form-control profile-field" id="inputEmailAddress" type="email" value={formEmail} onChange={(i) => handleInput(i)} placeholder="Enter your email address"/>
+                                            <input className="form-control profile-field" id="inputEmailAddress" type="email" value={formEmail} onChange={(i) => handleInput(i)} placeholder={email_ph}/>
                                         </div>
         
                                         <div className="col">
                                             <label className="small mb-1 details-box" for="inputPhone">Phone number</label>
-                                            <input className="form-control profile-field" id="inputPhone" onChange={(i) => handleInput(i)} value={formPhoneNum} type="tel" placeholder="Enter your phone number"/>
+                                            <input className="form-control profile-field" id="inputPhone" onChange={(i) => handleInput(i)} value={formPhoneNum} type="tel" placeholder={pn_ph}/>
                                         </div>
                                     </div>
                                     
                                     
                                     <div className="mb-3">
                                         <label className="small mb-1 details-box" for="feedback">Bio</label>
-                                        <textarea className="form-control profile-field" rows="8" cols="80" name="biography" id="biography" value={formDescription} onChange={(i) => handleInput(i)} placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"></textarea>
+                                        <textarea className="form-control profile-field" rows="8" cols="80" name="biography" id="biography" value={formDescription} onChange={(i) => handleInput(i)} placeholder={desc_ph}></textarea>
                                         
                                     </div>
                                     
@@ -259,17 +270,17 @@ function EditProfile() {
                         <form id="password-form">
                         <div className="mb-3">
                             <label className="small mb-1" for="oldPass">Old Password</label>
-                            <input className="form-control profile-field" id="oldPass" onChange={(i) => handleInput(i)} type="password" value={formPassword} placeholder="Enter your password"/>
+                            <input className="form-control profile-field" id="oldPass" onChange={(i) => handleInput(i)} type="password" value={formPassword} placeholder={old_pass_ph}/>
                         </div>
         
                         <div className="mb-3">
                           <label className="small mb-1" for="newPass">New Password</label>
-                          <input className="form-control profile-field" id="newPass" onChange={(i) => handleInput(i)} type="password" value={newPassword} placeholder="Enter your new password"/>
+                          <input className="form-control profile-field" id="newPass" onChange={(i) => handleInput(i)} type="password" value={newPassword} placeholder={new_pass_ph}/>
                         </div>
         
                         <div className="mb-3">
                           <label className="small mb-1" for="confirmPass">Confirm New Password</label>
-                          <input className="form-control profile-field" id="confirmPass" onChange={(i) => handleInput(i)} type="password" value={confirmPass} placeholder="Confirm your new password"/>
+                          <input className="form-control profile-field" id="confirmPass" onChange={(i) => handleInput(i)} type="password" value={confirmPass} placeholder={conf_pass_ph}/>
                         </div>
                         <button className="btn btn-profile" id="save-password-button" onClick={()=>submitPass()} type="button">Change Password</button>
                         </form>

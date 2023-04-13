@@ -14,6 +14,10 @@
     border-color: #945921!important;
 }  
 
+.signup_error {
+    color: red;
+}
+
 .signup {
     font-family: 'Baloo 2', cursive!important;
     color: #945921!important;

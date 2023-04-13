@@ -1,7 +1,5 @@
 import './Login.css';
 import '../../components/globals.css';
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
 import { useNavigate } from "react-router-dom";
 import { useContext, useEffect } from 'react';
 import { SearchContext, UserContext } from '../../App';
@@ -140,8 +138,8 @@ function Login() {
         }
         else {
             setError("No field can be left blank!");
-            if (formEmail.length == 0) setEmailError("Email cannot be blank.");
-            if (formPassword.length == 0) setPassError("Password cannot be blank.");
+            if (formEmail.length === 0) setEmailError("Email cannot be blank.");
+            if (formPassword.length === 0) setPassError("Password cannot be blank.");
         }
 
 }

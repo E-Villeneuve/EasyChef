@@ -91,10 +91,10 @@ function SignUp() {
     }
     else {
         setError("No field may be left blank!");
-        if (formEmail.length == 0) setEmailError("Email cannot be blank.");
-        if (formFirstName.length == 0) setFNameError("First name cannot be blank.");
-        if (lastFormName.length == 0) setLNameError("Last name cannot be blank.");
-        if (formPassword.length == 0) setPassError("Password cannot be blank.");
+        if (formEmail.length === 0) setEmailError("Email cannot be blank.");
+        if (formFirstName.length === 0) setFNameError("First name cannot be blank.");
+        if (lastFormName.length === 0) setLNameError("Last name cannot be blank.");
+        if (formPassword.length === 0) setPassError("Password cannot be blank.");
         setFormPassword('');
     }
 }

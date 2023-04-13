@@ -49,17 +49,15 @@ function MyRecipes() {
         (<AnimatePage>
         <div className='myrecipes-page'>
 
-        <div className='myrecipes-body'>
-
-        
-        <h1 className='myrecipes-header'>My Recipes</h1>
-        {RecipeCarousel(created)}
-        <h1 className='myrecipes-header'>Favourited Recipes</h1>
-        {RecipeCarousel(favourited)}
-        <h1 className='myrecipes-header'>Recipes you've recently interacted with</h1>
-        {RecipeCarousel(interacted)}
-        </div>
-        </div>
+            <div className='myrecipes-body'>
+                <h1 className='myrecipes-header'>My Recipes</h1>
+                {RecipeCarousel(created)}
+                <h1 className='myrecipes-header'>Favourited Recipes</h1>
+                {RecipeCarousel(favourited)}
+                <h1 className='myrecipes-header'>Recipes you've recently interacted with</h1>
+                {RecipeCarousel(interacted)}
+                </div>
+            </div>
         
         </AnimatePage>) : (<Navigate to='/unauthorized' state={{path: location.pathname}} />)
         

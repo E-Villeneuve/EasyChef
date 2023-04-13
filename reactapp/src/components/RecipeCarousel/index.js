@@ -29,13 +29,15 @@ function RecipeCarousel(recipe_dict) {
       };
 
   return (
-    <div className="recipecarousel">
-      <Slider {...settings}>
-        {recipes.map((item) => (
-            RecipeCard(item)
-        ))}
-      </Slider>
-    </div>
+    <>
+        {(recipes && recipes.length > 0) ? <div className="recipecarousel">
+        <Slider {...settings}>
+            {recipes.map((item) => (
+                RecipeCard(item)
+            ))}
+        </Slider>
+        </div> : <div id='none_recipecarousel'>Hmmm... There are no recipes here!</div>}
+    </>
   );
 }
 

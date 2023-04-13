@@ -21,7 +21,7 @@ function AdvSearch(placehold_text, set_id) {
     const [ searchParams, setSearchParams ] = useSearchParams();
     const [ searchQ, setSearchQ ] = useState(searchParams.get('query') || '');
     const { pageNum, setPageNum, suggestions, setSuggestions } = useContext(SearchContext);
-    const { loading, setError } = useContext(UserContext)
+    const { loading } = useContext(UserContext)
 
 
     const onEnter = (e) => {
@@ -80,7 +80,7 @@ function AdvSearch(placehold_text, set_id) {
             .then(async response => await response.json())
             .then(async data => {
                 setMoreResults((data.next !== null));
-                setSuggestions([...suggestions, ...data.results]);
+                setSuggestions([...new Set([...suggestions, ...data.results])]);
             });
         }
 
@@ -91,7 +91,7 @@ function AdvSearch(placehold_text, set_id) {
     const searchResult = (suggestion, index) => { // For a singular result (ie. 1 Card)
         // Singular Card - suggestion is a recipe
             if (suggestions.length === index + 1) {
-                return <div key={suggestion.recipe_name}
+                return <div key={suggestion.recipe_details.id}
                             ref={lastelemref} 
                             data-aos='fade-left' 
                             data-aos-offset='0px'

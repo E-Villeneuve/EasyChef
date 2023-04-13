@@ -94,7 +94,7 @@
 
 .recipecat::before {
     content: ''!important;
-    background: rgb(255, 61, 61)!important;
+    background: rgb(235, 201, 107)!important;
     position: absolute!important;
     top: calc(100% + 10px)!important;
     left: 0!important;

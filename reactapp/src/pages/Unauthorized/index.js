@@ -1,8 +1,19 @@
 import './unauthorized.css';
 import Container from 'react-bootstrap/Container';
 import AnimatePage from '../../components/AnimatePage';
+import { SearchContext } from '../../App';
+import { useEffect } from 'react';
+import { useContext } from 'react';
 
 function Unauthorized() {
+
+    const { setSuggestions, setPageNum } = useContext(SearchContext);
+
+    useEffect(() => {
+        setSuggestions([]);
+        setPageNum(1);
+    }, [setSuggestions, setPageNum]);
+
     return (
         <AnimatePage>
             <Container id='unauth_container'>

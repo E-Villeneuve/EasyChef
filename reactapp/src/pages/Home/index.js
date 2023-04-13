@@ -11,11 +11,28 @@ import { dataDigitalBestSeller } from '../../components/RecipeCarousel/data';
 import React, { useEffect, useRef } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import { UserContext } from '../../App';
+import { useContext } from 'react';
+import { useState } from 'react';
 
 const Home = () => {
+
+    const [ popRecipes, setPopRecipes ] = useState([]);
+    const { setLoading } = useContext(UserContext);
+
     useEffect(() => {
+        setLoading(true);
         AOS.init({ duration: 1000 });
-    }, []);
+        let request = {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json'},
+        }
+
+        fetch("http://127.0.0.1:8000/search/?ordering=-star_rating&ordering=-favourited", request)
+        .then(response => response.json()
+        .then(data => setPopRecipes(data.results)));
+        setLoading(false);
+    }, [setLoading]);
 
     const aboutref = useRef(null);
     const handleClick = () => {
@@ -52,7 +69,7 @@ const Home = () => {
                     <h1>Featured</h1>
                     <h5 id="featuredsubtitle">Some of our favourites</h5>
                 </div>
-            {RecipeCarousel(dataDigitalBestSeller)}
+            {RecipeCarousel(popRecipes)}
             </div>
             </div>
             <div data-aos="fade-right" id='home_anecdote'>

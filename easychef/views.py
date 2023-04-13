@@ -1,12 +1,13 @@
 from rest_framework import filters
 
-from recipes.models import Recipe
+from recipes.models import Recipe, RecipeIngredient
 from rest_framework.generics import ListAPIView
 from rest_framework.permissions import AllowAny
 from recipes.serializers import RecipeSerializer, RecipeIngredientSerializer
 from django.shortcuts import render
 
 class SearchIngredientView(ListAPIView): # autocomplete functonality for ingredients
+    queryset = RecipeIngredient.objects.all().order_by('id')
     serializer_class = RecipeIngredientSerializer
     permission_classes = [AllowAny]
     search_fields = ['name']

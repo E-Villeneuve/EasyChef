@@ -140,6 +140,8 @@ function Login() {
         }
         else {
             setError("No field can be left blank!");
+            if (formEmail.length == 0) setEmailError("Email cannot be blank.");
+            if (formPassword.length == 0) setPassError("Password cannot be blank.");
         }
 
 }

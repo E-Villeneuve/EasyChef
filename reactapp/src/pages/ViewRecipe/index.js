@@ -28,13 +28,13 @@ function ViewRecipe() {
     useEffect(() => {
         AOS.init({ duration: 1000 });
         displayRecipe();
-    })
+    }, [])
 
     const displayRecipe = async () => {
         let request = {
             method: 'GET'
         }
-        fetch("http://127.0.0.1:8000/recipes/" + JSON.stringify(recipeID) + "/", request)
+        fetch("http://127.0.0.1:8000/recipes/" + recipeID + "/", request)
         .then(response => response.json()
         .then(data => ({
             data: data,

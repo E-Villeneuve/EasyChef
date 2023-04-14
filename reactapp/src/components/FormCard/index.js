@@ -5,10 +5,8 @@ import LongTextInput from '../LongTextInput';
 import ImageCarousel from '../ImageCarousel';
 import RadioBall from '../../components/RadioBall';
 import { useState, useEffect } from 'react';
-import RecipeFormIngredientSearch from '../RecipeFormIngredientSearch';
 import AutoCompleteIngredients from '../AutoCompleteIngredients';
 import ServingsSlider from '../ServingsSlider';
-import IList from '../IList';
 
 function FormCard(props) {
     

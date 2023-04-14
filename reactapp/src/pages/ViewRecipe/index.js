@@ -9,6 +9,7 @@ import FavButton from '../../components/FavButton';
 import Paper from '@mui/material/Paper';
 import ImageCarousel from '../../components/ImageCarousel';
 import { useParams } from 'react-router-dom';
+import DisplayImageCarousel from '../../components/DisplayImageCarousel'
 
 function ViewRecipe() {
     const { recipeID } = useParams();
@@ -41,9 +42,6 @@ function ViewRecipe() {
         })
         ).then(res => {
           if (res.response.ok) {
-            sendIngredients(res.data.recipe_details);
-            sendFiles(res.data.recipe_details.id);
-            sendInstructions(res.data.recipe_details.id);
             setRecipe(res.data.recipe_details);
             setInstructions(res.data.instructions);
             setIngredients(res.data.ingredients);

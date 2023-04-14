@@ -8,7 +8,7 @@ function RecipeCard(item) {
 
     const recipe = item.recipe_details;
     const recipe_desc = recipe.description;
-    
+
     return (
     <div className="recipecard gradient" key={item.id}>
         <div className="recipecard-top img_wrap">

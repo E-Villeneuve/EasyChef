@@ -1,10 +1,9 @@
 import './viewprofile.css';
 import '../../components/globals.css';
-import nopic from '../../images/defaultavatar.png';
 import { Button } from 'react-bootstrap';
-import { useState, setState } from 'react';
+import { useState } from 'react';
 import { Modal } from 'react-bootstrap';
-import { useContext, useEffect } from 'react';
+import { useEffect } from 'react';
 import RecipeCarousel from '../../components/RecipeCarousel';
 
 function UserViewProfile() {

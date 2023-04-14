@@ -4,6 +4,7 @@ import 'slick-carousel/slick/slick-theme.css';
 
 import './recipecarousel.css';
 import RecipeCard from '../RecipeCard';
+import { useNavigate } from 'react-router-dom';
 
 
 // Most carousel code from: https://www.youtube.com/watch?v=FLt2TveqHQM
@@ -11,7 +12,8 @@ import RecipeCard from '../RecipeCard';
 
 function RecipeCarousel(recipe_dict) {
 
-  let recipes = [];
+    let recipes = [];
+    const navigate = useNavigate();
 
       for (let key in recipe_dict) {
         recipes.push(recipe_dict[key]);
@@ -33,7 +35,9 @@ function RecipeCarousel(recipe_dict) {
         {(recipes && recipes.length > 0) ? <div className="recipecarousel">
         <Slider {...settings}>
             {recipes.map((item) => (
-                RecipeCard(item)
+                <div onClick={() => navigate('/viewrecipe/' + item.recipe_details.id)} >
+                    {RecipeCard(item)}
+                </div>
             ))}
         </Slider>
         </div> : <div id='none_recipecarousel'>Hmmm... There are no recipes here!</div>}

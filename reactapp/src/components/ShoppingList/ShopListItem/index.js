@@ -5,9 +5,10 @@ import { Modal } from 'react-bootstrap';
 import noimage from '../../../images/noimageavailable.png'
 
 function ShopListItem(item, delFunc, changeServing, popup, 
-                      handleOpen, handleClose, isActive, index) {
+                      handleOpen, handleClose, isActive, index,
+                      buttonNav) {
 
-    const shopitemid = item.shoplstrecipe_id
+    const shopitemid = item.shoplstrecipe_id;
 
     return (
         <div className='shop_item_container' data-aos="flip-left" data-aos-offset='0px'>
@@ -42,7 +43,7 @@ function ShopListItem(item, delFunc, changeServing, popup,
                             </div>
                             Cooking time: {'' + item.cook_time} mins
                         </div>
-                        <Button className="shop_item_button">
+                        <Button className="shop_item_button" onClick={() => buttonNav(item.orig_id)}>
                             Details
                         </Button>
                         <Button className="btn card shop_item shop_item_button" id="ingredients_card" onClick={() => handleOpen(index)}>

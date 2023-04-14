@@ -1,16 +1,11 @@
 import './MyRecipes.css';
 import '../../components/globals.css';
-import { useNavigate } from "react-router-dom";
-import { useContext, useEffect } from 'react';
-import { UserContext } from '../../App';
-import { useState, setState } from 'react';
-import Slider from 'react-slick';
+import { useEffect } from 'react';
+import { useState } from 'react';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
 import RecipeCarousel from '../../components/RecipeCarousel';
-
-
 
 function UserMyRecipes() {
 
@@ -45,11 +40,18 @@ function UserMyRecipes() {
 
         
         <h1 className='myrecipes-header'>My Recipes</h1>
+        <div className='myrecipes-carousel'>
         {RecipeCarousel(created)}
+        </div>
+        
         <h1 className='myrecipes-header'>Favourited Recipes</h1>
+        <div className='myrecipes-carousel'>
         {RecipeCarousel(favourited)}
+        </div>
         <h1 className='myrecipes-header'>Recipes you've recently interacted with</h1>
+        <div className='myrecipes-carousel'>
         {RecipeCarousel(interacted)}
+        </div>
         </div>
         </div>
         

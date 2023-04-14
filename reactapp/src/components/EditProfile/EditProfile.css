@@ -19,6 +19,9 @@ body{/*margin-top:20px;*/
     font-family: 'Baloo 2', cursive!important;
 }
 
+.edit-profile-title {
+    padding-top: 8px;
+}
 .details-box {
     color: #945921!important;
     margin-left: 0.5em!important;

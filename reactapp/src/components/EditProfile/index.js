@@ -1,9 +1,8 @@
 import './EditProfile.css';
 import '../../components/globals.css';
-import { useNavigate } from "react-router-dom";
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import { UserContext } from '../../App';
-import { useState, setState } from 'react';
+import { useState } from 'react';
 
 
 function UserEditProfile() {
@@ -197,14 +196,14 @@ function UserEditProfile() {
         
         }
         else {
-            if (formPassword != localStorage.getItem('password')) {
+            if (formPassword !== localStorage.getItem('password')) {
                 setPassError("Your password was incorrect.");
             }
             if (newPassword.length === 0) {
                 setNewPassError("Your new password cannot be blank.");
 
             }
-            if (newPassword != confirmPass) {
+            if (newPassword !== confirmPass) {
                 setNewPassError("The two passwords you entered did not match.");
             }
             setError("Failed to change password.");
@@ -215,7 +214,7 @@ function UserEditProfile() {
                 <>
                 
                 <div className="container" id="page-body">
-                <h2>Edit Profile</h2>
+                <h2 className='edit-profile-title'>Edit Profile</h2>
                 <hr className="mt-0 mb-4"/>
                 <div className="row" id="profilegrid">
                     <div className="col">

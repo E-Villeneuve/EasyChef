@@ -9,6 +9,7 @@ import "aos/dist/aos.css";
 import reactStringReplace from 'react-string-replace';
 import { useContext } from 'react';
 import { UserContext } from '../../App';
+import { useNavigate } from 'react-router-dom';
 
 function ShoppingList() {
 
@@ -20,6 +21,9 @@ function ShoppingList() {
 
     const [isActive, setIsActive] = useState(false) 
     const [popup, setPopup] = useState(false);
+    const navigate = useNavigate();
+
+    const buttonNav = (id) => navigate('/viewrecipe/' + id);
 
     const handleOpen = (index) => {
         setIsActive(index);
@@ -136,10 +140,9 @@ function ShoppingList() {
                 </div>
                     <div id="shop_items">
                     {shopLst && shopLst.map((shopItem, index) => {
-                        // updateitem(shopItem.orig_id);
                         return ShopListItem(shopItem, onClickDel, onChangeServing,
                                             popup, handleOpen, handleClose, isActive,
-                                            index)})}
+                                            index, buttonNav)})}
                         <div id="allingredientslst">
                             <h4 id="allingredientstitle">All Ingredients</h4>
                             {allIngredientLst && Object.keys(allIngredientLst).map((key, index) =>

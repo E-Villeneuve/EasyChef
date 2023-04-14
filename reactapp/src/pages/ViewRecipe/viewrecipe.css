@@ -5,7 +5,7 @@
     text-align: center;
     padding: auto;
     margin: auto;
-    width: fit-content;
+    width: 80%;
     background: linear-gradient(0deg, #f1b442, #e2b77b 87.71%),
     linear-gradient(0deg, rgb(236, 192, 133), rgba(0,255,0,0) 1000.71%),
     linear-gradient(336deg, white, rgb(236, 192, 133) 70.71%);
@@ -20,12 +20,12 @@
 
 .viewreciperow {
     padding: 1%;
-    margin: auto;
     border-radius: 0.35rem 0.35rem 0.35rem 0.35rem;
 }
 
 .viewrecipecol {
     padding: 1%;
+    margin: auto;
     border-radius: 0.35rem 0.35rem 0.35rem 0.35rem;
 }
 
@@ -33,7 +33,7 @@
     padding: 1%;
     margin: auto;
     text-align: center;
-    width: fit-content;
+    width: 80%;
 }
 
 .recipepapername {

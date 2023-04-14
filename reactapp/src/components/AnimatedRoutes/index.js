@@ -15,6 +15,8 @@ import AdvancedSearch from '../../pages/AdvancedSearch';
 import MyRecipes from '../../pages/MyRecipes';
 import ViewProfile from '../../pages/ViewProfile';
 import { SearchContext } from '../../App';
+import CreateRecipe from '../../pages/CreateRecipe';
+import ViewRecipe from '../../pages/ViewRecipe';
 
 // Idea of separating AnimatedRoutes from App.js from:
 // https://www.youtube.com/watch?v=FdrEjwymzdY
@@ -40,6 +42,8 @@ function AnimatedRoutes() {
                 <Route exact path="/unauthorized" element={<Unauthorized/>}/>
                 <Route path="/search" element={<AdvancedSearch/>}/>
                 <Route exact path="/myshoppinglist" element={<MyShoppingList/>}/>
+                <Route exact path="/createrecipe" element={<CreateRecipe/>}/>
+                <Route path='/viewrecipe/:recipeID' element={<ViewRecipe/>}/>
                 <Route path="*" element={<NotFound/>}/>
             </Routes>
         </AnimatePresence>

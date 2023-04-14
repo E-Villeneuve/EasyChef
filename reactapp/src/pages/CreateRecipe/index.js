@@ -11,6 +11,7 @@ import { useNavigate, Navigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import { UserContext } from '../../App';
 import { useContext } from 'react';
+import { SearchContext } from '../../App';
 
 function CreateRecipe() {
 
@@ -18,6 +19,13 @@ function CreateRecipe() {
 
     const {setError} = useContext(UserContext);
     const navigate = useNavigate();
+
+    const { setSuggestions, setPageNum } = useContext(SearchContext);
+
+    useEffect(() => {
+        setSuggestions([]);
+        setPageNum(1);
+    }, [setSuggestions, setPageNum]);
 
     let [recipename, setRecipeName] = useState('');
     let [description, setDescription] = useState('');

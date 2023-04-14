@@ -33,9 +33,6 @@ function GuestNavBar() {
             <LinkContainer to='/'>
                 <Nav.Link as={Link} active={location.pathname === '/'}>Home</Nav.Link>
             </LinkContainer>
-            <LinkContainer to='/createrecipe'>
-                <Nav.Link as={Link} active={location.pathname === '/createrecipe'}>Create Recipes</Nav.Link>
-            </LinkContainer>
             <LinkContainer to='/signup' active={location.pathname === '/signup'}>
                 <Nav.Link as={Link}>Sign Up</Nav.Link>
             </LinkContainer>

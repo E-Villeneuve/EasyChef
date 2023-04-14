@@ -10,6 +10,7 @@ import Paper from '@mui/material/Paper';
 import ImageCarousel from '../../components/ImageCarousel';
 import { useParams } from 'react-router-dom';
 import DisplayImageCarousel from '../../components/DisplayImageCarousel'
+import { SearchContext } from '../../App';
 
 function ViewRecipe() {
     const { recipeID } = useParams();
@@ -24,6 +25,14 @@ function ViewRecipe() {
     let [fav, setFav] = useState(false);
     let access = String(localStorage.getItem('access'));
     let o = String(localStorage.getItem('email'));
+
+
+    const { setSuggestions, setPageNum } = useContext(SearchContext);
+
+    useEffect(() => {
+        setSuggestions([]);
+        setPageNum(1);
+    }, [setSuggestions, setPageNum]);
 
     useEffect(() => {
         AOS.init({ duration: 1000 });

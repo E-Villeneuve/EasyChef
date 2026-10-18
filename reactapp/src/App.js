@@ -130,7 +130,7 @@ const App = () => {
             <Container id='footer_container'>
                 <ToTopBtn/>
                 <p id='footer'>  
-                    Copyright © 2023 Easy Chef Incorporated<br />
+                    Copyright © 2026 Easy Chef Incorporated<br />
                     All Rights Reserved
                 </p>  
             </Container>

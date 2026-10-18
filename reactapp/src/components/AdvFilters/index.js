@@ -9,8 +9,8 @@ function AdvFilters() {
             <span id='gen_filter_desc'><p>Find a recipe that satisfies all categories</p></span>
             {AdvBox('Diets', 'search_for,_diets', ['Halal', 'Vegan'], 
                     ['HA', 'VE'], 'diets', '', 'checkbox')}
-            {AdvBox('Cuisines', 'search_for_cuisines', ['Dutch', 'Welsh', 'Arabic', 'Thai'],
-                    ['DU', 'WE', 'AR', 'TH'], 'cuisines', '', 'radio')}
+            {AdvBox('Cuisines', 'search_for_cuisines', ['American', 'Arabic', 'Caribbean', 'Chinese', 'Dutch', 'French', 'Greek', 'Indian', 'Italian', 'Japanese', 'Korean', 'Mexican', 'Spanish', 'Thai', 'Vietnamese', 'Welsh'],
+                    ['AM', 'AR', 'CA', 'CH', 'DU', 'FR', 'GR', 'IN', 'IT', 'JA', 'KO', 'ME', 'SP', 'TH', 'VI', 'WE'], 'cuisines', '', 'radio')}
             {AdvBox('Cooking Time', 'search_for_time', ['About one hour or less', 'About two hours or less', 
                     'More than 3 hours'], ['1HR', '2HRS', '3HRS'], 'timeTags', '', 'radio')}
             {AdvBox('Search by', 'search_for_boxes', ['Recipe name', 'Users', 'Ingredients'],

@@ -1,32 +1,45 @@
 from recipes.models import RecipeIngredient, RecipeImage
 
-QUANTITY = 0
+from collections import defaultdict
+from decimal import Decimal
+
 DECIMAL_PLACES = 2
 
-def assign_ingredient(name, quantity, ingredients, servings):
-    # See if <name> exists in our collected ingredients so far
-    existing_ingredient = ingredients.get(name, 0)
+# Units whose name takes an "s" (or "es") when the amount isn't 1
+PLURALS = {'cup': 'cups', 'piece': 'pieces', 'pinch': 'pinches'}
 
-    # If <name> exists, add on to its current total
-    # Curr_ingredient would be, for instance "850.0 g"
-    if existing_ingredient:
-        existing_ingredient = existing_ingredient.split()
-        ingredients[name] = (str(round(float(existing_ingredient[QUANTITY]) + float(quantity) * servings, DECIMAL_PLACES))) + " g"
-    # Otherwise, make a new entry for the ingredient w/
-    # name <name> and quantity <quantity>
-    else:
-        ingredients[name] = str(round(float(quantity) * servings, DECIMAL_PLACES)) + " g"
-    return ingredients
+def ingredient_totals(recipe, servings, totals=None):
+    """
+    Add <recipe>'s ingredients, scaled by <servings>, into <totals>:
+    {(name, unit): Decimal quantity}. Pass the same <totals> to combine recipes.
+    """
+    if totals is None:
+        totals = defaultdict(Decimal)
+    for ingredient in RecipeIngredient.objects.filter(recipe=recipe).order_by('id'):
+        totals[(ingredient.name, ingredient.unit)] += ingredient.quantity * servings
+    return totals
 
-def add_ingredient(ingredients, ingredient, servings):
-    return assign_ingredient(ingredient.name, ingredient.quantity, ingredients, servings)
+def format_amount(quantity, unit):
+    """Decimal('1.50'), 'cup' -> '1.5 cups'"""
+    quantity = round(Decimal(quantity), DECIMAL_PLACES).normalize()
+    number = f"{quantity:f}"
+    label = dict(RecipeIngredient.Units.choices).get(unit, unit)
+    if quantity != 1:
+        label = PLURALS.get(unit, label)
+    return f"{number} {label}"
+
+def format_ingredients(totals):
+    """
+    {(name, unit): quantity} -> {name: "amount"}; a name used with several
+    units lists each, e.g. {"Flour": "1 kg + 200 g"}.
+    """
+    by_name = {}
+    for (name, unit), quantity in totals.items():
+        by_name.setdefault(name, []).append(format_amount(quantity, unit))
+    return {name: " + ".join(amounts) for name, amounts in by_name.items()}
 
 def collect_ingredients_x(recipe, servings):
-    ingredients = {}
-    # Iterate through every ingredient belonging to <recipe>
-    for ingredient in RecipeIngredient.objects.filter(recipe=recipe):
-        ingredients = add_ingredient(ingredients, ingredient, servings)
-    return ingredients
+    return format_ingredients(ingredient_totals(recipe, servings))
 
 def collect_ingredients(recipe):
     return collect_ingredients_x(recipe, recipe.servings)

@@ -1,0 +1,398 @@
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700&family=Courgette&display=swap');
+
+/* Same palette and card style as the View Recipe and Create Recipe pages */
+#shop-page,
+.sl-dialog {
+    --sl-brown: #945921;
+    --sl-brown-dark: #6e3f12;
+    --sl-tan: #e2b77b;
+    --sl-gold: #f1b442;
+    --sl-yellow: #FEBF00;
+    --sl-cream: #fdf6e6;
+    --sl-field: #fffaf0;
+}
+
+#shop-page {
+    max-width: 1180px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 32px;
+    border-radius: 8px;
+    color: var(--sl-brown);
+    font-family: 'Baloo 2', cursive;
+    background: linear-gradient(24deg, rgba(245, 246, 220, 0.87), rgba(255, 255, 255, 0.479) 91.23%);
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
+}
+
+/* Header */
+#shop-page .sl-header {
+    margin-bottom: 28px;
+}
+
+#shop-page .sl-title {
+    margin: 0 0 4px;
+    font-family: 'Courgette', cursive;
+    font-size: 44px;
+    line-height: 1.15;
+}
+
+#shop-page .sl-subtitle {
+    margin: 0;
+    font-size: 18px;
+}
+
+/* Cards */
+#shop-page .sl-card {
+    margin: 0;
+    min-width: 0;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background: var(--sl-tan);
+    border-top: 6px solid var(--sl-gold);
+    border-radius: 12px;
+    box-shadow: 0 0.15rem 1rem rgba(148, 89, 33, 0.18);
+}
+
+#shop-page .sl-card-title {
+    margin: 0;
+    font-family: 'Baloo 2', cursive;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 1.3;
+    color: var(--sl-brown-dark);
+}
+
+#shop-page .sl-empty {
+    margin: 0;
+    font-size: 16px;
+    font-style: italic;
+}
+
+/* Search */
+#shop-page .sl-search-card {
+    position: relative;
+    z-index: 5; /* keeps the suggestions above the recipe cards */
+    margin-bottom: 28px;
+}
+
+#shop-page #shop_search {
+    position: relative;
+    width: 100%;
+}
+
+#shop-page #searchbar .form-control {
+    padding: 10px 14px;
+    font-family: inherit;
+    font-size: 18px;
+    color: #3b2508;
+    background: var(--sl-field);
+    border: 2px solid var(--sl-yellow);
+    border-radius: 10px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+#shop-page #searchbar .form-control::placeholder {
+    color: #b08a5f;
+}
+
+#shop-page #searchbar .form-control:focus {
+    background: #fff;
+    border-color: var(--sl-brown);
+    box-shadow: 0 0 0 3px rgba(254, 191, 0, 0.45);
+}
+
+#shop-page #searchresults {
+    margin-bottom: 0;
+}
+
+#shop-page #searchsuggestions {
+    margin-top: 6px;
+    overflow: hidden;
+    color: #3b2508;
+    background: var(--sl-field);
+    border: 0;
+    border-radius: 10px;
+    box-shadow: 0 0.25rem 1rem rgba(148, 89, 33, 0.25);
+}
+
+#shop-page #searchsuggestions li {
+    border-bottom: 1px solid rgba(148, 89, 33, 0.15);
+}
+
+#shop-page #searchsuggestions li:last-child {
+    border-bottom: 0;
+}
+
+#shop-page #searchsuggestions li:hover {
+    background: var(--sl-cream);
+    color: var(--sl-brown-dark);
+}
+
+/* Two columns that stack on narrow screens */
+#shop-page .sl-layout {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 28px;
+    align-items: flex-start;
+}
+
+#shop-page .sl-main {
+    flex: 1 1 560px;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+#shop-page .sl-side {
+    flex: 1 1 280px;
+    min-width: 0;
+}
+
+@media (min-width: 900px) {
+    #shop-page .sl-side {
+        position: sticky;
+        top: 20px;
+    }
+}
+
+/* Recipe items */
+#shop-page .sl-item {
+    flex-direction: row;
+    gap: 20px;
+    padding: 18px;
+}
+
+#shop-page .sl-item-img {
+    flex: 0 0 140px;
+    width: 140px;
+    height: 140px;
+    object-fit: cover;
+    border-radius: 10px;
+    background: var(--sl-cream);
+}
+
+#shop-page .sl-item-body {
+    flex: 1 1 auto;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+#shop-page .sl-item-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+#shop-page .sl-item-name {
+    margin: 0;
+    font-family: 'Baloo 2', cursive;
+    font-weight: 700;
+    font-size: 22px;
+    line-height: 1.3;
+    color: var(--sl-brown-dark);
+    overflow-wrap: anywhere;
+}
+
+#shop-page .sl-item-meta {
+    margin: 0;
+    font-size: 16px;
+}
+
+#shop-page .sl-item-controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: auto;
+}
+
+#shop-page .sl-servings {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#shop-page .sl-field-label {
+    margin: 0;
+    font-weight: 600;
+}
+
+#shop-page .sl-input {
+    width: 80px;
+    box-sizing: border-box;
+    padding: 6px 10px;
+    font-family: inherit;
+    font-size: 17px;
+    color: #3b2508;
+    background: var(--sl-field);
+    border: 2px solid var(--sl-yellow);
+    border-radius: 10px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+#shop-page .sl-input:focus {
+    outline: none;
+    background: #fff;
+    border-color: var(--sl-brown);
+    box-shadow: 0 0 0 3px rgba(254, 191, 0, 0.45);
+}
+
+#shop-page .sl-item-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+#shop-page .sl-remove {
+    flex: 0 0 36px;
+    width: 36px;
+    height: 36px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    font-size: 24px;
+    line-height: 1;
+    color: var(--sl-brown);
+    background: var(--sl-field);
+    border: 2px solid var(--sl-brown);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+}
+
+#shop-page .sl-remove:hover {
+    color: #fff;
+    background: var(--sl-brown);
+}
+
+/* Ingredient lists (sidebar and modal) */
+.sl-ingredients {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    background: var(--sl-field);
+    border-radius: 10px;
+}
+
+.sl-ingredients li {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 10px 16px;
+    font-size: 17px;
+    color: #3b2508;
+    border-bottom: 1px solid rgba(148, 89, 33, 0.2);
+}
+
+.sl-ingredients li:last-child {
+    border-bottom: 0;
+}
+
+.sl-ingredient-name {
+    overflow-wrap: anywhere;
+}
+
+.sl-ingredient-qty {
+    flex: 0 0 auto;
+    font-weight: 700;
+    color: var(--sl-brown);
+}
+
+/* Buttons */
+.sl-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 0 20px;
+    font-family: 'Baloo 2', cursive;
+    font-weight: 600;
+    font-size: 17px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+}
+
+.sl-btn-primary {
+    color: #fff;
+    background: linear-gradient(-11deg, var(--sl-brown), #b8762f 57.71%);
+    border: 0;
+}
+
+.sl-btn-primary:hover:not(:disabled) {
+    background: var(--sl-brown-dark);
+}
+
+.sl-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.sl-btn-outline {
+    color: var(--sl-brown);
+    background: var(--sl-field);
+    border: 2px solid var(--sl-brown);
+}
+
+.sl-btn-outline:hover {
+    color: #fff;
+    background: var(--sl-brown);
+}
+
+#shop-page .sl-export {
+    width: 100%;
+    margin-top: 6px;
+}
+
+.sl-btn:focus-visible,
+#shop-page .sl-remove:focus-visible {
+    outline: 3px solid var(--sl-yellow);
+    outline-offset: 2px;
+}
+
+/* Ingredients modal, in the site theme */
+.sl-dialog .modal-content {
+    color: var(--sl-brown-dark);
+    font-family: 'Baloo 2', cursive;
+    background: var(--sl-tan);
+    border: 0;
+    border-top: 6px solid var(--sl-gold);
+    border-radius: 12px;
+}
+
+.sl-dialog .modal-header,
+.sl-dialog .modal-footer {
+    border-color: rgba(148, 89, 33, 0.25);
+}
+
+.sl-dialog .modal-title {
+    font-weight: 700;
+}
+
+@media (max-width: 576px) {
+    #shop-page {
+        padding: 20px 16px;
+    }
+    #shop-page .sl-title {
+        font-size: 34px;
+    }
+    #shop-page .sl-card {
+        padding: 18px;
+    }
+    #shop-page .sl-item {
+        flex-direction: column;
+    }
+    #shop-page .sl-item-img {
+        flex-basis: auto;
+        width: 100%;
+        height: 180px;
+    }
+}

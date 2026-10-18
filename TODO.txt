@@ -1,0 +1,14 @@
+Like/favorite actions are wired to the wrong backend behavior. The frontend sends POST and DELETE from ViewRecipe. Those routes use generic create/update/destroy views in recipes/views.py, while the serializers define custom update/delete methods in recipes/serializers.py. In the installed Django REST Framework, DELETE uses the default destroy behavior, which deletes the recipe itself—not just its like or favorite. Make these actions safe and track each user’s state.
+
+Recipe creation doesn’t reliably save the recipe’s details. In CreateRecipe, ingredient submission loops over instructions, not ingredients. Instructions are initialized to placeholder steps (line 36), and image submission calls .map() on files even when no files were selected (line 100). It also appends an object URL instead of the file itself (line 104). Fix the submission flow and add error/success handling.
+
+The recipe edit button leads to a missing page. It navigates to /edit-recipe/:id in ViewRecipe, but AnimatedRoutes has no matching route.
+
+Rating is only a display control. Its change handler just logs the selected value in ViewRecipe; there’s no completed rating submission flow.
+
+Complete and verify
+Seed content is incomplete: the current database has 13 recipes, but all 13 have no steps; one has no ingredients and two have no images. Add complete recipe data before relying on the seed database.
+Make the setup path reliable and documented: startup.sh invokes python3 -m virtualenv, although the project setup notes expect virtualenv through Python 3.10. The run script also assumes the right environment is active. Add clear clean-clone instructions and ensure setup errors stop the script.
+Fix the test baseline: Django’s checks pass and migrations are current, but Django reports 0 tests. The React test run fails before reaching assertions because matchMedia is missing, and App.test.js still tests the Create React App starter text. Add real backend and frontend tests, with an appropriate matchMedia mock or component mock.
+Check small-screen layout: both recipe pages use a two-column grid with a 493px minimum per column—for example, createrecipe.css—so the layout is likely to overflow on narrow screens.
+Triage the frontend build warnings: npm run build completes, but reports unused imports/variables, missing hook dependencies, and accessibility warnings.

@@ -5,7 +5,7 @@ from recipes.views import (AddRecipeView, RecipeView, RecipesView,RecipeCommentV
                            RecipeCommentImageView, EditRecipeView, ShopListAddRecipeView,
                            ShopListEditRecipeView, ShopListDeleteRecipeView, ShopListAddRecipeView,
                            ShoppingListView, RecipeCopyView, RecipeIngredientsView, RecipeIngredientView, LikeRecipeView,
-                           FavRecipeView, ShopListViewRecipeView)
+                           FavRecipeView, ShopListViewRecipeView, RateRecipeView, RecipeCommunityView)
 
                            
 app_name = 'recipes'
@@ -16,6 +16,8 @@ urlpatterns = [
     path('<int:recipe_id>/edit/', EditRecipeView.as_view(), name="editdeleterecipe"),
     path('<int:recipe_id>/like/', LikeRecipeView.as_view(), name='likerecipe'),
     path('<int:recipe_id>/fav/', FavRecipeView.as_view(), name='favrecipe'),
+    path('<int:recipe_id>/rate/', RateRecipeView.as_view(), name='raterecipe'),
+    path('<int:recipe_id>/community/', RecipeCommunityView.as_view(), name='recipecommunity'),
     path('<int:recipe_id>/addstep/', RecipeStepView.as_view(), name="addrecipestep"),
     path('<int:recipe_id>/addingredient/', RecipeIngredientView.as_view(), name="addrecipeingredient"),
     path('<int:recipe_id>/<int:ingredient_id>/edit/', RecipeIngredientView.as_view(), name="editdeleterecipeingredient"),

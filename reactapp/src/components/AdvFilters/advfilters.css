@@ -16,3 +16,10 @@
 #gen_filter_desc{
     margin-bottom: 0.8em;
 }
+
+/* Many cuisine options: show them in two columns */
+#search_for_cuisines {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    column-gap: 0.5em;
+}

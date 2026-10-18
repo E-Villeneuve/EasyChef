@@ -19,3 +19,65 @@
     color: #945921!important;
     margin-left: 12vh;
 }
+/* Delete confirmation dialog, in the site theme */
+.myrecipes-delete-dialog .modal-content {
+    color: #6e3f12;
+    font-family: 'Baloo 2', cursive;
+    background: #e2b77b;
+    border: 0;
+    border-top: 6px solid #f1b442;
+    border-radius: 12px;
+}
+
+.myrecipes-delete-dialog .modal-header,
+.myrecipes-delete-dialog .modal-footer {
+    border-color: rgba(148, 89, 33, 0.25);
+}
+
+.myrecipes-delete-dialog .modal-title {
+    font-weight: 700;
+}
+
+.myrecipes-delete-dialog .modal-body p {
+    margin: 0;
+    font-size: 18px;
+}
+
+.myrecipes-btn {
+    min-height: 44px;
+    padding: 0 18px;
+    font-family: 'Baloo 2', cursive;
+    font-weight: 600;
+    font-size: 17px;
+    color: #945921;
+    background: transparent;
+    border: 2px solid #945921;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.myrecipes-btn:hover:not(:disabled) {
+    color: #fff;
+    background: #945921;
+}
+
+.myrecipes-btn-danger {
+    color: #fff;
+    background: #a3261b;
+    border-color: #a3261b;
+}
+
+.myrecipes-btn-danger:hover:not(:disabled) {
+    background: #7d1c14;
+    border-color: #7d1c14;
+}
+
+.myrecipes-btn:disabled {
+    opacity: 0.6;
+    cursor: wait;
+}
+
+.myrecipes-btn:focus-visible {
+    outline: 3px solid #FEBF00;
+    outline-offset: 2px;
+}

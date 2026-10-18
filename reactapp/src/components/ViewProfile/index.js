@@ -1,4 +1,7 @@
 import './viewprofile.css';
+// The ingredients button and modal reuse the original shopping list styles
+import '../ShoppingList/shop_lst.css';
+import '../ShoppingList/ShopListItem/shopitem.css';
 import '../../components/globals.css';
 import { Button } from 'react-bootstrap';
 import { useState } from 'react';

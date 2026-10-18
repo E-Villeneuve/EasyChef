@@ -26,10 +26,22 @@ class Recipe(models.Model):
         TWOHRS = '2HRS', 'About two hours or less'
         THREEHRS = '3HRS', 'More than three hours'
     class Cuisines(models.TextChoices):
-        DUTCH = 'DU', 'Dutch'
-        THAI = 'TH', 'Thai'
-        WELSH = 'WE', 'Welsh'
+        AMERICAN = 'AM', 'American'
         ARAB = 'AR', 'Arabic'
+        CARIBBEAN = 'CA', 'Caribbean'
+        CHINESE = 'CH', 'Chinese'
+        DUTCH = 'DU', 'Dutch'
+        FRENCH = 'FR', 'French'
+        GREEK = 'GR', 'Greek'
+        INDIAN = 'IN', 'Indian'
+        ITALIAN = 'IT', 'Italian'
+        JAPANESE = 'JA', 'Japanese'
+        KOREAN = 'KO', 'Korean'
+        MEXICAN = 'ME', 'Mexican'
+        SPANISH = 'SP', 'Spanish'
+        THAI = 'TH', 'Thai'
+        VIETNAMESE = 'VI', 'Vietnamese'
+        WELSH = 'WE', 'Welsh'
 
     owner = models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=CASCADE, related_name='myrecipes')
     name = models.CharField(max_length=255)
@@ -67,13 +79,28 @@ class ShopLstRecipe(models.Model):
         return f"({self.id}) {self.name}"
 
 class RecipeIngredient(models.Model):
+    class Units(models.TextChoices):
+        GRAM = 'g', 'g'
+        KILOGRAM = 'kg', 'kg'
+        MILLILITRE = 'ml', 'ml'
+        LITRE = 'l', 'l'
+        TEASPOON = 'tsp', 'tsp'
+        TABLESPOON = 'tbsp', 'tbsp'
+        CUP = 'cup', 'cup'
+        FLUID_OUNCE = 'floz', 'fl oz'
+        OUNCE = 'oz', 'oz'
+        POUND = 'lb', 'lb'
+        PIECE = 'piece', 'piece'
+        PINCH = 'pinch', 'pinch'
+
     recipe = models.ForeignKey(to=Recipe, on_delete=CASCADE, related_name='ingredients')
     name = models.CharField(max_length=255)
-    quantity = models.DecimalField(decimal_places=2, max_digits=4,validators=[MinValueValidator(0)], 
+    quantity = models.DecimalField(decimal_places=2, max_digits=7, validators=[MinValueValidator(0)],
                                       default=1)
+    unit = models.CharField(max_length=8, choices=Units.choices, default=Units.GRAM)
 
     def __str__(self):
-        return f"({self.id}) {self.quantity} {self.name} g"
+        return f"({self.id}) {self.quantity} {self.get_unit_display()} {self.name}"
 
 class RecipeImage(models.Model):
     recipe = models.ForeignKey(to=Recipe, on_delete=CASCADE, related_name='images')
@@ -117,3 +144,15 @@ class RecipeCommentVideo(models.Model):
 
     def __str__(self):
         return f"({self.id}) {self.video.file}"
+
+class RecipeRating(models.Model):
+    """One user's star rating (0-5) of a recipe. Recipe.star_rating caches the mean."""
+    user = models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=CASCADE, related_name='recipe_ratings')
+    recipe = models.ForeignKey(to=Recipe, on_delete=CASCADE, related_name='ratings')
+    score = models.PositiveSmallIntegerField(validators=[MaxValueValidator(5)])
+
+    class Meta:
+        constraints = [models.UniqueConstraint(fields=['user', 'recipe'], name='one_rating_per_user_per_recipe')]
+
+    def __str__(self):
+        return f"{self.user} rated {self.recipe.name}: {self.score}"

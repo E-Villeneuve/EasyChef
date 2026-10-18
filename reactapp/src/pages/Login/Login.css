@@ -10,10 +10,8 @@
     box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3)!important;
     border-radius: 8px;
     margin-top: 11vh;
-    margin-bottom: 42vh;
-        
-        
- } 
+    margin-bottom: 11vh;
+ }
 
 .btn-login {
     background-color: #945921!important;
@@ -29,8 +27,10 @@
     border-color: #945921!important;
 }
 
+/* Fill the screen so the footer starts below the fold, clear of the error popup */
 .login-container {
-    justify-content: center;
+    min-height: 100vh;
+    padding: 1px 16px; /* keeps the card's margins inside the container */
 }
 
 .loginError {

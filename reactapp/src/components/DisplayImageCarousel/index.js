@@ -3,22 +3,28 @@ import './viewimagecarousel.css';
 import noimage from '../../images/noimageavailable.png'
 
 function DisplayImageCarousel(props) {
-  let files = props.images;
+  let files = props.items;
+  const imageUrls = files ? Object.values(files) : [];
   return (
     <Carousel className='mediacarousel' fade>
-      {files && files.map((item) => (
+      {imageUrls.length > 0 && imageUrls.map((url, index) => (
+        <Carousel.Item key={index}>
+          <img
+            src={`http://127.0.0.1:8000${url}`}
+            alt={`Recipe image ${index + 1}`}
+            className='mediaincarousel'
+          />
+        </Carousel.Item>
+      ))}
+      {imageUrls.length === 0 &&
         <Carousel.Item>
-        
-      </Carousel.Item>
-        ))}
-      {!files && 
-        <Carousel.Item>
-        <img
-                src={noimage}
-                alt="No Image Found"
-                id='recipecard_img'
-            />
-      </Carousel.Item>}
+          <img
+            src={noimage}
+            alt="No Image Found"
+            className='mediaincarousel'
+          />
+        </Carousel.Item>
+      }
     </Carousel>
   );
 }

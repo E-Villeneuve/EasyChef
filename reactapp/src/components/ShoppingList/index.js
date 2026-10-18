@@ -1,8 +1,7 @@
-import './shop_lst.css';
+import './shoppinglist.css';
 import  '../../components/globals.css';
 import ShopListItem from './ShopListItem';
 import SearchDropdown from '../Search/SearchDropdown';
-import Button from 'react-bootstrap/Button';
 import { useState, useRef, useEffect } from 'react';
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -122,6 +121,28 @@ function ShoppingList() {
         displayShopLst();
     }
 
+    // Downloads the combined ingredient totals as shopping_list.csv
+    const exportCsv = () => {
+        const escapeCsv = (value) => {
+            const text = String(value ?? '');
+            return /[",\r\n]/.test(text) ? '"' + text.replace(/"/g, '""') + '"' : text;
+        }
+        const rows = [['Ingredient', 'Amount'],
+                      ...Object.keys(allIngredientLst).map(key => [key, allIngredientLst[key]])];
+        const csv = rows.map(row => row.map(escapeCsv).join(',')).join('\r\n');
+
+        // The BOM lets Excel read the file as UTF-8
+        const blob = new Blob(['﻿' + csv], { type: 'text/csv;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'shopping_list.csv';
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        URL.revokeObjectURL(url);
+    }
+
     const showSuggestion = (suggestion, setShowSuggestions, value) => {
         return (<li onClick={() => onClick(suggestion.recipe_details.id,
                                         setShowSuggestions)} 
@@ -132,23 +153,53 @@ function ShoppingList() {
     }
 
     return (<>
-            <div className="shop_wrap" ref={autocompleteRef}>
-                <div id='searchsec'>
-                    <h2 id="shop_title"><b>My Shopping List</b></h2>
-                    {SearchDropdown(onChange, 'What would you like to add?', 'shop_search', 
+            <div className="container" id="shop-page" ref={autocompleteRef}>
+                <header className="sl-header">
+                    <h1 className="sl-title">My Shopping List</h1>
+                    <p className="sl-subtitle">
+                        Add recipes, set how many servings you need, and we'll total up the ingredients.
+                    </p>
+                </header>
+
+                <section className="sl-card sl-search-card">
+                    <h2 className="sl-card-title">Add a recipe</h2>
+                    {SearchDropdown(onChange, 'Search for a recipe to add…', 'shop_search',
                                     showSuggestion)}
-                </div>
-                    <div id="shop_items">
-                    {shopLst && shopLst.map((shopItem, index) => {
-                        return ShopListItem(shopItem, onClickDel, onChangeServing,
-                                            popup, handleOpen, handleClose, isActive,
-                                            index, buttonNav)})}
-                        <div id="allingredientslst">
-                            <h4 id="allingredientstitle">All Ingredients</h4>
-                            {allIngredientLst && Object.keys(allIngredientLst).map((key, index) =>
-                            <li data-aos-offset='0px' data-aos="fade-left" key={key}>{allIngredientLst[key]} {key}</li>)}
-                        </div>
-                    <Button id="export_btn" onClick={() => window.print()}>Export</Button>
+                </section>
+
+                <div className="sl-layout">
+                    <section className="sl-main" aria-label="Recipes on your list">
+                        {shopLst && shopLst.length > 0 ? shopLst.map((shopItem, index) =>
+                            ShopListItem(shopItem, onClickDel, onChangeServing,
+                                         popup, handleOpen, handleClose, isActive,
+                                         index, buttonNav)) : (
+                            <div className="sl-card">
+                                <p className="sl-empty">
+                                    Your list is empty. Search for a recipe above to add it.
+                                </p>
+                            </div>
+                        )}
+                    </section>
+
+                    <aside className="sl-side">
+                        <section className="sl-card">
+                            <h2 className="sl-card-title">All Ingredients</h2>
+                            {allIngredientLst && Object.keys(allIngredientLst).length > 0 ? (
+                                <ul className="sl-ingredients">
+                                    {Object.keys(allIngredientLst).map(key =>
+                                        <li data-aos-offset='0px' data-aos="fade-left" key={key}>
+                                            <span className="sl-ingredient-name">{key}</span>
+                                            <span className="sl-ingredient-qty">{allIngredientLst[key]}</span>
+                                        </li>)}
+                                </ul>
+                            ) : <p className="sl-empty">Ingredients from your recipes will appear here.</p>}
+                            <button type="button" className="sl-btn sl-btn-primary sl-export"
+                                    onClick={exportCsv}
+                                    disabled={!allIngredientLst || Object.keys(allIngredientLst).length === 0}>
+                                Export
+                            </button>
+                        </section>
+                    </aside>
                 </div>
             </div>
         </>);

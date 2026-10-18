@@ -4,15 +4,14 @@ import accounts.models
 from recipes.models import (Recipe, RecipeIngredient, 
                             RecipeStep, RecipeComment, 
                             RecipeCommentImage, ShopLstRecipe, ShoppingLst,
-                            RecipeImage, RecipeCommentVideo)
+                            RecipeImage, RecipeCommentVideo, Diets)
 
-from recipes.helpers import (collect_ingredients, assign_ingredient, collect_ingredients_x,
-                             get_pic_rep)
+from recipes.helpers import (collect_ingredients, collect_ingredients_x, ingredient_totals,
+                             format_ingredients, get_pic_rep)
 from django.shortcuts import get_object_or_404
+from django.db import transaction
 from datetime import datetime
 
-QUANTITY = 0
-UNIT = 1
 DECIMAL_PLACES = 2
 
 class RecipeCopySerializer(serializers.ModelSerializer):
@@ -55,7 +54,7 @@ class RecipeCopySerializer(serializers.ModelSerializer):
             new_step = RecipeStep(description=step.description, step_num=step.step_num, date_created=datetime.now(),recipe=new_recipe)
             new_step.save()
         for ingredient in recipe.ingredients.all():
-            new_ingredient = RecipeIngredient(recipe = new_recipe, name = ingredient.name, quantity=ingredient.quantity)
+            new_ingredient = RecipeIngredient(recipe = new_recipe, name = ingredient.name, quantity=ingredient.quantity, unit=ingredient.unit)
             new_ingredient.save()
         for image in recipe.images.all():
             new_image = RecipeImage(recipe = new_recipe, image = image.image)
@@ -88,6 +87,9 @@ class RecipeCopySerializer(serializers.ModelSerializer):
         for comment in instance.comments.all():
             curr_comment = {}
             curr_comment["description"] = comment.description
+            curr_comment["owner"] = comment.owner.email
+            curr_comment["owner_name"] = f"{comment.owner.first_name} {comment.owner.last_name}"
+            curr_comment["owner_avatar"] = comment.owner.avatar.url if comment.owner.avatar else None
             curr_comment["images"] = self.get_images(comment)
             curr_comment["videos"] = self.get_videos(comment)
             comments[f'{comment.id}'] = curr_comment
@@ -104,24 +106,66 @@ class RecipeCopySerializer(serializers.ModelSerializer):
         }
         return rep
 
+class IngredientInputSerializer(serializers.Serializer):
+    # Mirrors RecipeIngredient's name / quantity / unit constraints
+    name = serializers.CharField(max_length=255)
+    quantity = serializers.DecimalField(max_digits=7, decimal_places=2, min_value=0)
+    unit = serializers.ChoiceField(choices=RecipeIngredient.Units.choices, default=RecipeIngredient.Units.GRAM)
+
 class RecipeSerializer(serializers.ModelSerializer):
     owner = serializers.CharField(source='owner.email', read_only=True)
+    owner_display_name = serializers.SerializerMethodField()
+    rating_count = serializers.SerializerMethodField()
     star_rating = serializers.ReadOnlyField()
     likes = serializers.ReadOnlyField()
     favourited = serializers.ReadOnlyField()
+    # MultiSelectField would otherwise map to a single-value ChoiceField
+    diets = serializers.MultipleChoiceField(choices=Diets.choices, required=False)
+    # Optional: when given, these replace all of the recipe's ingredients / steps
+    ingredient_list = IngredientInputSerializer(many=True, write_only=True, required=False)
+    step_list = serializers.ListField(child=serializers.CharField(), write_only=True, required=False)
 
     class Meta:
         model = Recipe
         fields = '__all__'
-    
+
+    def get_rating_count(self, instance):
+        return instance.ratings.count()
+
+    def get_owner_display_name(self, instance):
+        # "First L." - avoids showing the owner's email address
+        first = (instance.owner.first_name or '').strip()
+        last = (instance.owner.last_name or '').strip()
+        if not first:
+            return None
+        return f"{first} {last[0].upper()}." if last else first
+
+    def _replace_children(self, recipe, ingredient_list, step_list):
+        if ingredient_list is not None:
+            recipe.ingredients.all().delete()
+            RecipeIngredient.objects.bulk_create(
+                [RecipeIngredient(recipe=recipe, **ing) for ing in ingredient_list])
+        if step_list is not None:
+            recipe.steps.all().delete()
+            RecipeStep.objects.bulk_create(
+                [RecipeStep(recipe=recipe, step_num=num, description=desc)
+                 for num, desc in enumerate(step_list, start=1)])
+
     def create(self, validated_data):
-        return super().create(validated_data | {'owner': self.context['request'].user})
+        ingredient_list = validated_data.pop('ingredient_list', None)
+        step_list = validated_data.pop('step_list', None)
+        with transaction.atomic():
+            recipe = super().create(validated_data | {'owner': self.context['request'].user})
+            self._replace_children(recipe, ingredient_list, step_list)
+        return recipe
     
     def update(self, instance, validated_data):
         user = self.context['request'].user
 
         if user.id != instance.owner.id:
             raise serializers.ValidationError({"authorize": "No Permission"})
+        ingredient_list = validated_data.pop('ingredient_list', None)
+        step_list = validated_data.pop('step_list', None)
         if 'name' in validated_data:
             instance.name = validated_data['name']
         if 'description' in validated_data:    
@@ -142,8 +186,14 @@ class RecipeSerializer(serializers.ModelSerializer):
             instance.servings = validated_data['servings']
         if 'cuisine' in validated_data:
             instance.cuisine = validated_data['cuisine']
+        if 'diets' in validated_data:
+            instance.diets = list(validated_data['diets'])
+        if 'cookingtimetag' in validated_data:
+            instance.cookingtimetag = validated_data['cookingtimetag']
 
-        instance.save()
+        with transaction.atomic():
+            instance.save()
+            self._replace_children(instance, ingredient_list, step_list)
         return instance    
 
     def get_ingredients(self, instance):
@@ -178,6 +228,9 @@ class RecipeSerializer(serializers.ModelSerializer):
         for comment in instance.comments.all():
             curr_comment = {}
             curr_comment["description"] = comment.description
+            curr_comment["owner"] = comment.owner.email
+            curr_comment["owner_name"] = f"{comment.owner.first_name} {comment.owner.last_name}"
+            curr_comment["owner_avatar"] = comment.owner.avatar.url if comment.owner.avatar else None
             curr_comment["images"] = self.get_images(comment)
             curr_comment["videos"] = self.get_videos(comment)
             comments[f'{comment.id}'] = curr_comment
@@ -190,44 +243,17 @@ class RecipeSerializer(serializers.ModelSerializer):
             'ingredients': self.get_ingredients(instance),
             'instructions': self.get_steps(instance),
             'images': self.get_images(instance),
-            'comments': self.get_comments(instance)
+            'comments': self.get_comments(instance),
+            # Unscaled, editable forms of the ingredients / steps
+            'ingredient_list': [{'id': i.id, 'name': i.name, 'quantity': str(i.quantity), 'unit': i.unit}
+                                for i in instance.ingredients.all().order_by('id')],
+            'step_list': [step.description for step in instance.steps.all().order_by('step_num')],
         }
         return rep
 
-class LikeRecipeSerializer(serializers.ModelSerializer):
-    likes = serializers.ReadOnlyField()
-    class Meta:
-        model = Recipe
-        fields = ['likes']
-    
-    def update(self, instance, validated_data):
-        instance.likes += 1
-        instance.save()
-        return instance
-    
-    def delete(self, instance):
-        instance.likes -= 1
-        instance.save()
-        return instance
-
-class FavRecipeSerializer(serializers.ModelSerializer):
-    favourited = serializers.ReadOnlyField()
-    class Meta:
-        model = Recipe
-        fields = ['favourited']
-
-    def update(self, instance, validated_data):
-        instance.favourited += 1
-        instance.save()
-        return instance
-    
-    def delete(self, instance):
-        instance.favourited -= 1
-        instance.save()
-        return instance
-        
 class RecipeImageSerializer(serializers.ModelSerializer):
     recipe = serializers.CharField(source='recipe.id', read_only=True)
+    image_url = serializers.ReadOnlyField(source='media_url')
     class Meta:
         model = RecipeImage
         fields = ['id', 'image', 'recipe', 'image_url']
@@ -302,7 +328,7 @@ class RecipeIngredientSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = RecipeIngredient
-        fields = ['id', 'recipe', 'name', 'quantity']
+        fields = ['id', 'recipe', 'name', 'quantity', 'unit']
     
     def create(self, validated_data):
         recipe = self.context['request'].parser_context['kwargs']['recipe_id']
@@ -314,9 +340,11 @@ class RecipeIngredientSerializer(serializers.ModelSerializer):
         if user.id != instance.recipe.owner.id:
             raise serializers.ValidationError({"authorize": "No Permission"})
         if 'name' in validated_data:
-            instance.description = validated_data['name']
+            instance.name = validated_data['name']
         if 'quantity' in validated_data:
-            instance.step_num = validated_data['quantity']
+            instance.quantity = validated_data['quantity']
+        if 'unit' in validated_data:
+            instance.unit = validated_data['unit']
         instance.save()
         return instance
 
@@ -354,21 +382,12 @@ class ShoppingLstSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
     def get_total_ingredients(self, instance):
-        all_ingredients = {}
+        # Sum the raw quantities of every recipe on the list (each scaled by
+        # its own servings), then format once, so units are never re-parsed
+        totals = None
         for recipe in ShopLstRecipe.objects.filter(lst=instance):
-            original_recipe = recipe.original_recipe
-            recipe_ingredients = collect_ingredients_x(original_recipe, recipe.serving)
-            for name, amount in recipe_ingredients.items():
-                if amount: quantity = amount.split()[QUANTITY]
-                else: quantity = 0
-
-                # The specified ingredient has already been
-                # adjusted based on its number of servings
-                # So, just pass in 1 as <servings>.
-                all_ingredients = assign_ingredient(name, quantity,
-                                                    all_ingredients, 
-                                                    1)
-        return all_ingredients
+            totals = ingredient_totals(recipe.original_recipe, recipe.serving, totals)
+        return format_ingredients(totals) if totals else {}
 
     def to_representation(self, instance):
         """
